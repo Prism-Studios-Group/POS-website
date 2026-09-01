@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rennes English Choir — POS</title>
   
-  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -147,7 +146,7 @@
       padding: 0 15px;
     }
 
-    /* Highly Distinct Prominent Yellow Sign-up Banner */
+    /* Prominent Yellow Sign-up Banner */
     .signup-banner {
       background: linear-gradient(135deg, #fef08a 0%, #fde047 50%, #f59e0b 100%);
       border: 3px solid #fef08a;
@@ -244,7 +243,7 @@
       gap: 10px;
     }
 
-    /* Charity Theme Highlight Card */
+    /* Charity Theme Card */
     .charity-card {
       background: linear-gradient(135deg, rgba(217, 70, 239, 0.15), rgba(251, 191, 36, 0.1));
       border: 1px solid var(--stage-magenta);
@@ -264,7 +263,7 @@
       margin-bottom: 10px;
     }
 
-    /* Program Schedule & Song Lineup */
+    /* Program Schedule */
     .program-timeline {
       position: relative;
       padding-left: 20px;
@@ -432,17 +431,16 @@
 </head>
 <body>
 
-  <!-- Sticky Global Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
-      <a href="pos-events.html" class="pos-logo-link" title="Prism Outreach Studio — Tous les événements">
+      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Tous les événements">
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
       <div class="nav-menu">
-        <a href="index.html" class="nav-tab" id="nav-cdl">Café des Langues</a>
-        <a href="choir.html" class="nav-tab active" id="nav-choir">Rennes English Choir</a>
-        <a href="classes.html" class="nav-tab" id="nav-classes">Cours de langues</a>
+        <a href="index.html" class="nav-tab" id="nav-hub">tous les événements</a>
+        <a href="cdl-code.html" class="nav-tab" id="nav-cdl">café des langues</a>
+        <a href="rec-code.html" class="nav-tab active" id="nav-choir">rennes english choir</a>
       </div>
 
       <div class="lang-toggle">
@@ -454,7 +452,6 @@
 
   <div class="container">
 
-    <!-- Highly Highlighted Yellow Sign-up Box -->
     <div class="signup-banner">
       <div class="signup-text">
         <h2 id="signup-title">🎵 rejoignez la chorale !</h2>
@@ -465,9 +462,8 @@
       </a>
     </div>
 
-    <!-- Header Section -->
     <header class="glass-card hero-header">
-      <img src="choir.jpg" alt="Rennes English Choir Poster" class="choir-img">
+      <img src="choir.png" alt="Rennes English Choir Poster" class="choir-img">
       <div class="title-area">
         <h1>Rennes English Choir</h1>
         <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">
@@ -476,7 +472,6 @@
       </div>
     </header>
 
-    <!-- Choir Goal & Description -->
     <section class="glass-card">
       <div class="section-title">🎤 <span id="title-goals">notre objectif</span></div>
       <p id="goal-text" style="line-height: 1.7;">
@@ -484,7 +479,6 @@
       </p>
     </section>
 
-    <!-- Concert Cycle & Charity Solidarity Theme -->
     <section class="glass-card">
       <div class="section-title">🎗️ <span id="title-cycle">thème du cycle de concert</span></div>
       <div class="charity-card">
@@ -498,19 +492,16 @@
       </div>
     </section>
 
-    <!-- Program Lineup & Audio Preview Links -->
     <section class="glass-card">
       <div class="section-title">🎶 <span id="title-program">programme du concert & extraits</span></div>
       
       <div class="program-timeline">
         
-        <!-- Welcome -->
         <div class="program-step">
           <span class="program-tag" id="tag-welcome">ouverture</span>
           <div style="font-weight: 700; margin-top: 4px;" id="text-welcome">accueil du public & présentation du thème</div>
         </div>
 
-        <!-- First Half -->
         <div class="program-step">
           <span class="program-tag" id="tag-part1">première partie : le problème</span>
           <div class="song-list">
@@ -533,13 +524,11 @@
           </div>
         </div>
 
-        <!-- Intermission -->
         <div class="program-step">
           <span class="program-tag" id="tag-entracte">entracte / intermission</span>
           <div style="font-size: 14px; color: var(--text-muted);" id="text-entracte">pause & rafraîchissements</div>
         </div>
 
-        <!-- Second Half -->
         <div class="program-step">
           <span class="program-tag" id="tag-part2">deuxième partie : se rassembler</span>
           <div class="song-list">
@@ -565,7 +554,6 @@
       </div>
     </section>
 
-    <!-- Choir Specific Interactive Dropdown Rules -->
     <section class="glass-card">
       <div class="section-title">📜 <span id="title-rules">règlement de la chorale</span></div>
       
@@ -599,13 +587,11 @@
         <div class="rule-body" id="r6-b">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
       </details>
 
-      <!-- Yellow Closing Line separated from rules -->
       <p id="rules-closing">
         💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !
       </p>
     </section>
 
-    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/groups/1087173560509402" class="social-btn" target="_blank" title="Facebook Group">FB</a>
@@ -618,7 +604,7 @@
   <script>
     const i18n = {
       fr: {
-        navChoir: "Rennes English Choir", navClasses: "Cours de langues",
+        navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
         signupTitle: "🎵 rejoignez la chorale !",
         signupSub: "inscriptions ouvertes à toutes et tous — aucun niveau requis",
         signupBtn: "s'inscrire au formulaire",
@@ -644,7 +630,7 @@
         closing: "💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !"
       },
       en: {
-        navChoir: "Rennes English Choir", navClasses: "Language Classes",
+        navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
         signupTitle: "🎵 join the choir!",
         signupSub: "sign-ups open to everyone — no prior experience needed",
         signupBtn: "fill sign-up form",
@@ -676,8 +662,9 @@
       document.getElementById(`btn-${lang}`).classList.add('active');
 
       const dict = i18n[lang];
+      document.getElementById('nav-hub').innerText = dict.navHub;
+      document.getElementById('nav-cdl').innerText = dict.navCdl;
       document.getElementById('nav-choir').innerText = dict.navChoir;
-      document.getElementById('nav-classes').innerText = dict.navClasses;
       
       document.getElementById('signup-title').innerText = dict.signupTitle;
       document.getElementById('signup-subtitle').innerText = dict.signupSub;
