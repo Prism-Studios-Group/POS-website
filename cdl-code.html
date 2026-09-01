@@ -405,9 +405,9 @@
       </a>
       
       <div class="nav-menu">
-        <a href="index.html" class="nav-tab active" id="nav-cdl">Café des Langues</a>
-        <a href="choir.html" class="nav-tab" id="nav-choir">Rennes English Choir</a>
-        <a href="classes.html" class="nav-tab" id="nav-classes">Cours de langues</a>
+        <a href="index.html" class="nav-tab" id="nav-hub">tous les événements</a>
+        <a href="cdl-code.html" class="nav-tab active" id="nav-cdl">café des langues</a>
+        <a href="rec-code.html" class="nav-tab" id="nav-choir">rennes english choir</a>
       </div>
 
       <div class="lang-toggle">
@@ -518,7 +518,7 @@
 
       <details class="rule-dropdown">
         <summary>2. <span id="r2-t">respect des lieux d'accueil</span></summary>
-        <div class="rule-body" id="r2-b">nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. soutien local : afin de remercier nos hôtes, la commande de boissons ou de nourriture sur place est vivement encouragée. comportement : tout état d'ivresse manifeste est strictement interdit pour garantir la convivialité et la sécurité de tous.</div>
+        <div class="rule-body" id="r2-b">nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. soutien local : afin de remercier nos hôtes, la commande de boissons ou de nourriture sur place est vivement encouragée. comportement : tout état d'ivresse manifeste est strictly interdit pour garantir la convivialité et la sécurité de tous.</div>
       </details>
 
       <details class="rule-dropdown">
@@ -572,7 +572,7 @@
   <script>
     const i18n = {
       fr: {
-        navChoir: "Rennes English Choir", navClasses: "Cours de langues",
+        navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
         about: "le Café des Langues est un groupe de \"Cafe-goers\" qui se réunissent pour discuter dans différentes langues. Pas d'enseignement, mais des interactions humaines.",
         statsTitle: "nos chiffres",
         m1: "membres actifs", m2: "moyenne par événement", m3: "années d'activité", m4: "langues représentées",
@@ -587,7 +587,7 @@
         r1t: "cadre et objectifs", 
         r1b: "le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance. ces règles s'appliquent au groupe de rennes ainsi qu'à toute branche locale du café des langues, qui peut y ajouter ses propres directives spécifiques.",
         r2t: "respect des lieux d'accueil", 
-        r2b: "nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. soutien local : afin de remercier nos hôtes, la commande de boissons ou de nourriture sur place est vivement encouragée. comportement : tout état d'ivresse manifeste est strictly interdit pour garantir la convivialité et la sécurité de tous.",
+        r2b: "nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. soutien local : afin de remercier nos hôtes, la commande de boissons ou de nourriture sur place est vivement encouragée. comportement : tout état d'ivresse manifeste est strictement interdit pour garantir la convivialité et la sécurité de tous.",
         r3t: "environnement sûr et inclusif", 
         r3b: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique. les avances romantiques ou sexuelles ne sont pas tolérées. non-discrimination : tout propos ou comportement discriminatoire (racisme, sexisme, homophobie, etc.) est formellement interdit.",
         r4t: "vie privée et communications", 
@@ -600,7 +600,7 @@
         history: "historique des cafés des langues"
       },
       en: {
-        navChoir: "Rennes English Choir", navClasses: "Language Classes",
+        navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
         about: "the café des langues is a community of cafe-goers getting together to chat in various languages. no formal teaching, just authentic human interactions.",
         statsTitle: "key figures",
         m1: "active members", m2: "avg per event", m3: "years active", m4: "languages represented",
@@ -634,8 +634,10 @@
       document.getElementById(`btn-${lang}`).classList.add('active');
 
       const dict = i18n[lang];
+      document.getElementById('nav-hub').innerText = dict.navHub;
+      document.getElementById('nav-cdl').innerText = dict.navCdl;
       document.getElementById('nav-choir').innerText = dict.navChoir;
-      document.getElementById('nav-classes').innerText = dict.navClasses;
+
       document.getElementById('about-text').innerText = dict.about;
       document.getElementById('title-stats').innerText = dict.statsTitle;
       document.getElementById('label-1').innerText = dict.m1;
