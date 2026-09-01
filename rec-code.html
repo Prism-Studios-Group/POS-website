@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rennes English Choir — POS</title>
   
+  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -18,6 +19,7 @@
       --stage-amber: #f59e0b;
       --stage-magenta: #d946ef;
       --stage-violet: #a855f7;
+      --neon-amber: #f59e0b;
       --text-main: #f8fafc;
       --text-muted: #cbd5e1;
     }
@@ -54,7 +56,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 12px;
     }
 
     .pos-logo-link {
@@ -73,17 +75,12 @@
     }
 
     .pos-logo-link:hover { transform: scale(1.08); }
-
-    .pos-logo-img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
+    .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
 
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       overflow-x: auto;
       padding-bottom: 2px;
     }
@@ -92,8 +89,8 @@
       color: var(--text-muted);
       text-decoration: none;
       font-weight: 700;
-      font-size: 14px;
-      padding: 8px 14px;
+      font-size: 13.5px;
+      padding: 6px 12px;
       border-radius: 20px;
       white-space: nowrap;
       border: 1px solid transparent;
@@ -112,6 +109,58 @@
       box-shadow: 0 0 12px var(--stage-gold);
     }
 
+    .right-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Standout Volunteer "Rejoins-nous !" Button */
+    .join-btn {
+      background: linear-gradient(135deg, var(--neon-amber), #f97316);
+      color: #000000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .join-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.7);
+      color: #000000;
+    }
+
+    /* Lock / Unlock Toggle Button */
+    .lock-btn {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .lock-btn.unlocked {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+      color: #86efac;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+    }
+
     .lang-toggle {
       display: flex;
       background: rgba(255, 255, 255, 0.08);
@@ -125,19 +174,40 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 4px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 12.5px;
       cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .lang-btn.active {
       background: var(--stage-gold);
       color: #000;
-      box-shadow: 0 0 10px var(--stage-gold);
     }
+
+    /* Pencil Edit Buttons (Visible only when unlocked) */
+    .edit-pencil {
+      display: none;
+      background: var(--neon-amber);
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 8px;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 26px;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .edit-pencil:hover { transform: scale(1.15); }
+    body.body-unlocked .edit-pencil { display: inline-block; }
 
     /* Layout Container */
     .container {
@@ -341,7 +411,7 @@
       background: #cc0000;
     }
 
-    /* Left-aligned Interactive Rules */
+    /* Interactive Rules Accordion / Dropdowns */
     .rule-dropdown {
       background: rgba(15, 12, 28, 0.7);
       border: 1px solid var(--card-border);
@@ -386,7 +456,6 @@
       text-align: left;
     }
 
-    /* Spaced Yellow Closing Text */
     #rules-closing {
       margin-top: 35px;
       padding-top: 15px;
@@ -396,7 +465,21 @@
       border-top: 1px dashed rgba(255, 255, 255, 0.1);
     }
 
-    /* Social Links Bar */
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 1000;
+    }
+
+    .modal-content {
+      background: #0f172a; border: 1px solid var(--stage-gold); border-radius: 16px;
+      max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px;
+      position: relative; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+    }
+
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
+
     .social-bar {
       display: flex;
       justify-content: center;
@@ -418,22 +501,17 @@
     .social-btn:hover { background: var(--stage-gold); color: #000; }
 
     @media (max-width: 600px) {
-      .signup-banner {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-header {
-        flex-direction: column;
-        text-align: center;
-      }
+      .signup-banner { flex-direction: column; text-align: center; }
+      .hero-header { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Sticky Global Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
-      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Tous les événements">
+      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
@@ -443,15 +521,26 @@
         <a href="rec-code.html" class="nav-tab active" id="nav-choir">rennes english choir</a>
       </div>
 
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
-        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      <div class="right-controls">
+        <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
+          <span>🙌</span> <span id="join-btn-text">rejoins-nous !</span>
+        </a>
+
+        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
+          🔒 <span id="lock-text">verrouillé</span>
+        </button>
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+          <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+        </div>
       </div>
     </div>
   </nav>
 
   <div class="container">
 
+    <!-- Highly Highlighted Yellow Sign-up Box -->
     <div class="signup-banner">
       <div class="signup-text">
         <h2 id="signup-title">🎵 rejoignez la chorale !</h2>
@@ -462,6 +551,7 @@
       </a>
     </div>
 
+    <!-- Header Section -->
     <header class="glass-card hero-header">
       <img src="choir.png" alt="Rennes English Choir Poster" class="choir-img">
       <div class="title-area">
@@ -472,7 +562,32 @@
       </div>
     </header>
 
-<!-- Program Lineup & Audio Preview Links -->
+    <!-- Choir Goal & Description -->
+    <section class="glass-card">
+      <div class="section-title">
+        <span>🎤 <span id="title-goals">notre objectif</span></span>
+        <button class="edit-pencil" onclick="editChoirGoal()">✏️</button>
+      </div>
+      <p id="goal-text" style="line-height: 1.7;">
+        rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant sa prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.
+      </p>
+    </section>
+
+    <!-- Concert Cycle & Charity Solidarity Theme -->
+    <section class="glass-card">
+      <div class="section-title">🎗️ <span id="title-cycle">thème du cycle de concert</span></div>
+      <div class="charity-card">
+        <span class="charity-badge" id="cycle-badge">thème actuel</span>
+        <h3 style="font-size: 18px; color: var(--stage-gold); margin-bottom: 8px;" id="cycle-name">
+          solidarité contre les féminicides et les violences
+        </h3>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">
+          à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.
+        </p>
+      </div>
+    </section>
+
+    <!-- Program Lineup & Audio Preview Links -->
     <section class="glass-card">
       <div class="section-title">🎶 <span id="title-program">programme du concert & extraits</span></div>
       
@@ -538,13 +653,16 @@
 
       </div>
     </section>
-    
-    <section class="glass-card">
-  <div id="pos-calendar"></div>
-</section>
-<script src="calendar.js"></script>
 
-          <div class="section-title">📜 <span id="title-rules">règlement de la chorale</span></div>
+    <!-- Interactive Calendar Container -->
+    <section class="glass-card">
+      <div id="pos-calendar"></div>
+    </section>
+    <script src="calendar.js"></script>
+
+    <!-- Choir Specific Interactive Dropdown Rules -->
+    <section class="glass-card">
+      <div class="section-title">📜 <span id="title-rules">règlement de la chorale</span></div>
       
       <details class="rule-dropdown">
         <summary>1. <span id="r1-t">cadre et objectifs</span></summary>
@@ -581,6 +699,7 @@
       </p>
     </section>
 
+    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/groups/1087173560509402" class="social-btn" target="_blank" title="Facebook Group">FB</a>
@@ -590,10 +709,55 @@
 
   </div>
 
+  <!-- General Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modal-title" style="color: var(--stage-gold); margin-bottom: 15px;"></h2>
+      <div id="modal-body" style="line-height: 1.6; color: var(--text-main);"></div>
+    </div>
+  </div>
+
   <script>
+    // SHA-256 Hash of PIN "476848674"
+    const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
+    let isUnlocked = false;
+
+    async function sha256(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function toggleLock() {
+      if (!isUnlocked) {
+        const pin = prompt("Entrez le code PIN formateur pour modifier :");
+        if (pin !== null) {
+          const inputHash = await sha256(pin);
+          if (inputHash === TRAINER_PIN_HASH) {
+            isUnlocked = true;
+            document.body.classList.add('body-unlocked');
+            document.getElementById('lock-btn').classList.add('unlocked');
+            document.getElementById('lock-text').innerText = "déverrouillé";
+          } else {
+            alert("Code PIN incorrect.");
+          }
+        }
+      } else {
+        isUnlocked = false;
+        document.body.classList.remove('body-unlocked');
+        document.getElementById('lock-btn').classList.remove('unlocked');
+        document.getElementById('lock-text').innerText = "verrouillé";
+      }
+    }
+
+    // Translation Dictionary
     const i18n = {
       fr: {
         navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
+        navJoin: "rejoins-nous !",
         signupTitle: "🎵 rejoignez la chorale !",
         signupSub: "inscriptions ouvertes à toutes et tous — aucun niveau requis",
         signupBtn: "s'inscrire au formulaire",
@@ -620,6 +784,7 @@
       },
       en: {
         navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
+        navJoin: "join us!",
         signupTitle: "🎵 join the choir!",
         signupSub: "sign-ups open to everyone — no prior experience needed",
         signupBtn: "fill sign-up form",
@@ -654,10 +819,16 @@
       document.getElementById('nav-hub').innerText = dict.navHub;
       document.getElementById('nav-cdl').innerText = dict.navCdl;
       document.getElementById('nav-choir').innerText = dict.navChoir;
+
+      if (document.getElementById('join-btn-text')) {
+        document.getElementById('join-btn-text').innerText = dict.navJoin;
+      }
       
       document.getElementById('signup-title').innerText = dict.signupTitle;
       document.getElementById('signup-subtitle').innerText = dict.signupSub;
-      document.getElementById('signup-btn-text').querySelector('span').innerText = dict.signupBtn;
+      if (document.getElementById('signup-btn-text')) {
+        document.getElementById('signup-btn-text').querySelector('span').innerText = dict.signupBtn;
+      }
 
       document.getElementById('director-subtitle').innerText = dict.directorSub;
       document.getElementById('title-goals').innerText = dict.goalsTitle;
@@ -685,7 +856,45 @@
       document.getElementById('r6-t').innerText = dict.r6t; document.getElementById('r6-b').innerText = dict.r6b;
       
       document.getElementById('rules-closing').innerText = dict.closing;
+
+      if (typeof window.syncCalendarLanguage === "function") {
+        window.syncCalendarLanguage(lang);
+      }
     }
+
+    // Inline Editing Functions
+    function editChoirGoal() {
+      const currentGoal = document.getElementById('goal-text').innerText;
+      openModal("✏️ modifier l'objectif", `
+        <div style="margin-bottom:12px;">
+          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Description de l'objectif :</label>
+          <textarea id="edit-goal-input" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:10px; border-radius:8px; font-family:inherit;" rows="4">${currentGoal}</textarea>
+        </div>
+        <button onclick="saveChoirGoal()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; margin-top:10px;">💾 enregistrer</button>
+      `);
+    }
+
+    function saveChoirGoal() {
+      const val = document.getElementById('edit-goal-input').value;
+      document.getElementById('goal-text').innerText = val;
+      localStorage.setItem('pos_choir_goal', val);
+      closeModal();
+    }
+
+    function openModal(title, bodyHtml) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      document.getElementById('modal-overlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').style.display = 'none';
+    }
+
+    window.onload = function() {
+      const savedGoal = localStorage.getItem('pos_choir_goal');
+      if (savedGoal) document.getElementById('goal-text').innerText = savedGoal;
+    };
   </script>
 </body>
 </html>
