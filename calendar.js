@@ -20,7 +20,7 @@ const EVENT_LABELS = {
   atelier: { fr: "atelier / cours", en: "workshop / class" }
 };
 
-// Default Events with Schedules
+// Default Events with Full Schedules
 const defaultCalendarEvents = [
   {
     id: 1,
@@ -68,7 +68,7 @@ let calState = {
   language: "fr"
 };
 
-/* --- Dynamic Styles Injection --- */
+/* --- CSS Injection with Strict 2-Line Text Wrapping & Day Borders --- */
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -87,35 +87,80 @@ function injectCalendarStyles() {
     .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
     .cal-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
     .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
-    .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
-    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-    .day-cell { min-height: 100px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; transition: border-color 0.2s ease; }
-    .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.1); }
-    .day-cell.other-month { opacity: 0.35; }
-    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
-    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
-    .day-events { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
-    .event-pill { font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 4px; color: #000; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; user-select: none; }
+    
+    /* Clear Day Grid Definition */
+    .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
+    .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.15); }
+    .day-cell.other-month { opacity: 0.3; background: rgba(15, 23, 42, 0.4); }
+    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
+    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
+    .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
+
+    /* Strict 2-Line Wrapping Event Pill */
+    .event-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 6px;
+      border-radius: 6px;
+      color: #000;
+      cursor: pointer;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+      user-select: none;
+    }
     .event-pill[draggable="true"] { cursor: grab; }
     .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
+
+    /* Upcoming Events List */
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
-    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; }
+    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; }
     .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
     .event-date-box { text-align: center; min-width: 40px; }
     .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
     .event-date-month { font-size: 11px; color: var(--text-muted); }
+    .event-name { font-weight: 700; font-size: 15px; }
+    .event-meta { font-size: 12.5px; color: var(--text-muted); }
+
+    /* Shadowbox Modal Styling (Image 2 Replica) */
+    .cal-shadowbox-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 2000;
+    }
+    .cal-shadowbox-card {
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px;
+      max-width: 620px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 0 30px rgba(56, 189, 248, 0.25); text-align: left;
+    }
+    .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+    .cal-shadowbox-close:hover { color: #ef4444; }
     
-    /* Calendar Schedule Timeline Styling inside Modal */
-    .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin: 15px 0; text-align: left; }
-    .cal-modal-item { position: relative; margin-bottom: 12px; padding-left: 15px; }
-    .cal-modal-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
+    .cal-modal-section {
+      background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px; padding: 16px; margin-bottom: 14px;
+    }
+    .cal-modal-section-title { font-size: 14px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 8px; }
+    .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin-top: 10px; }
+    .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
+    .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
     .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
+
+    .cal-form-group { margin-bottom: 14px; }
+    .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
+    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
   `;
   document.head.appendChild(style);
 }
 
-/* --- Mounting HTML Markup --- */
+/* --- Mounting HTML Structure --- */
 function mountCalendarHTML() {
   const target = document.getElementById('pos-calendar');
   if (!target) return;
@@ -125,7 +170,7 @@ function mountCalendarHTML() {
       <div class="cal-filters" id="cal-filters"></div>
       <div class="cal-admin-tools">
         <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
-        <button id="cal-add-btn" class="cal-btn-add" onclick="addNewCalEvent()">➕ ajouter un événement</button>
+        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
       </div>
     </div>
 
@@ -153,10 +198,17 @@ function mountCalendarHTML() {
       <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
       <div id="cal-upcoming-list"></div>
     </div>
+
+    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowbox()">
+      <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
+        <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">&times;</span>
+        <div id="cal-shadowbox-content"></div>
+      </div>
+    </div>
   `;
 }
 
-/* --- Helper Date Functions --- */
+/* --- Date Helpers & Storage Sync --- */
 function isoDateStr(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -169,7 +221,7 @@ function saveCalState() {
   renderCalendar();
 }
 
-/* --- Calendar Rendering --- */
+/* --- Render UI Functions --- */
 function renderCalendar() {
   const lang = calState.language;
 
@@ -234,7 +286,7 @@ function renderMonthGrid() {
     cell.dataset.date = cellISO;
     cell.innerHTML = `<div class="day-number">${cellDate.getDate()}</div>`;
 
-    // Drag and Drop Listeners for Day Cells
+    // Drag-and-Drop Handlers
     cell.addEventListener('dragover', (e) => {
       if (isCalUnlocked) { e.preventDefault(); cell.classList.add('drag-over'); }
     });
@@ -260,7 +312,6 @@ function renderMonthGrid() {
       pill.style.backgroundColor = EVENT_COLORS[ev.event_type] || '#ccc';
       pill.innerText = calState.language === "fr" ? ev.title_fr : ev.title_en;
       
-      // Enable Draggable when unlocked
       if (isCalUnlocked) {
         pill.setAttribute('draggable', 'true');
         pill.addEventListener('dragstart', () => { draggedEventId = ev.id; });
@@ -308,76 +359,151 @@ function renderListView() {
   renderUpcoming();
 }
 
-/* --- Event Detail Modal (With Timeline Schedule & Admin Actions) --- */
+/* --- Shadowbox Modals (Read-Only & Edit Mode matching Image 2) --- */
 function openEventDetailModal(ev) {
+  const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
-  const title = lang === "fr" ? ev.title_fr : ev.title_en;
-  const desc = lang === "fr" ? ev.description_fr : ev.description_en;
 
-  let scheduleHTML = '';
-  if (ev.schedule && ev.schedule.length > 0) {
-    scheduleHTML = `
-      <div style="margin-top: 15px; font-weight:700; color:var(--cdl-cyan, #38bdf8);">⚡ déroulement de l'événement :</div>
-      <div class="cal-modal-timeline">
-        ${ev.schedule.map(item => `
-          <div class="cal-modal-item">
-            <span class="cal-modal-badge">${item.time}</span>
-            <div>${lang === "fr" ? item.fr : item.en}</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  let adminButtons = '';
   if (isCalUnlocked) {
-    adminButtons = `
-      <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); display:flex; gap:10px;">
+    // Unlocked Edit Form inside Shadowbox
+    content.innerHTML = `
+      <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">✏️ modifier l'événement</h3>
+      
+      <div class="cal-form-group">
+        <label>Titre (FR) :</label>
+        <input type="text" id="edit-cal-title-fr" class="cal-form-input" value="${ev.title_fr}">
+      </div>
+      <div class="cal-form-group">
+        <label>Titre (EN) :</label>
+        <input type="text" id="edit-cal-title-en" class="cal-form-input" value="${ev.title_en}">
+      </div>
+      <div class="cal-form-group">
+        <label>Date (YYYY-MM-DD) :</label>
+        <input type="text" id="edit-cal-date" class="cal-form-input" value="${ev.event_date}">
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="cal-form-group" style="flex:1;">
+          <label>Début :</label>
+          <input type="text" id="edit-cal-start" class="cal-form-input" value="${ev.start_time}">
+        </div>
+        <div class="cal-form-group" style="flex:1;">
+          <label>Fin :</label>
+          <input type="text" id="edit-cal-end" class="cal-form-input" value="${ev.end_time}">
+        </div>
+      </div>
+      <div class="cal-form-group">
+        <label>Lieu :</label>
+        <input type="text" id="edit-cal-loc" class="cal-form-input" value="${ev.location}">
+      </div>
+      <div class="cal-form-group">
+        <label>Description (FR) :</label>
+        <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="3">${ev.description_fr}</textarea>
+      </div>
+
+      <div style="margin-top:20px; display:flex; gap:10px;">
+        <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(${ev.id})">💾 enregistrer</button>
         <button class="cal-btn" onclick="duplicateCalEvent(${ev.id})">📋 dupliquer</button>
         <button class="cal-btn-sec" onclick="deleteCalEvent(${ev.id})">🗑️ supprimer</button>
       </div>
     `;
-  }
-
-  const modalBody = `
-    <span style="display:inline-block; font-weight:700; font-size:12px; color:${EVENT_COLORS[ev.event_type]}; margin-bottom:8px;">
-      ${EVENT_LABELS[ev.event_type][lang]}
-    </span>
-    <h2 style="color:var(--cdl-cyan, #38bdf8); margin-bottom: 10px;">${title}</h2>
-    <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
-      📅 <strong>${ev.event_date}</strong> (${ev.start_time} - ${ev.end_time})<br>
-      📍 <strong>${ev.location}</strong>
-    </p>
-    <p style="line-height: 1.6;">${desc}</p>
-    ${scheduleHTML}
-    ${adminButtons}
-  `;
-
-  if (typeof openModal === "function") {
-    openModal(title, "");
-    document.getElementById('modal-body').innerHTML = modalBody;
   } else {
-    alert(`${title}\n\n${desc}`);
+    // Read-Only Shadowbox Modal (Identical layout to Image 2)
+    let scheduleHTML = '';
+    if (ev.schedule && ev.schedule.length > 0) {
+      scheduleHTML = `
+        <div class="cal-modal-section">
+          <div class="cal-modal-section-title">⚡ déroulement de la soirée</div>
+          <div class="cal-modal-timeline">
+            ${ev.schedule.map(s => `
+              <div class="cal-modal-item">
+                <span class="cal-modal-badge">${s.time}</span>
+                <div>${lang === "fr" ? s.fr : s.en}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    content.innerHTML = `
+      <h2 style="font-size:22px; font-weight:700; color:var(--text-main, #fff); margin-bottom: 16px;">
+        ${lang === "fr" ? ev.title_fr : ev.title_en}
+      </h2>
+
+      <div class="cal-modal-section">
+        <div class="cal-modal-section-title">📌 infos pratiques</div>
+        <p style="font-size: 13.5px; color: var(--text-muted, #cbd5e1); line-height: 1.6;">
+          📅 <strong>${ev.event_date}</strong> (${ev.start_time} — ${ev.end_time})<br>
+          📍 <strong>${ev.location}</strong>
+        </p>
+      </div>
+
+      <div class="cal-modal-section">
+        <div class="cal-modal-section-title">📝 description</div>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-main, #fff);">
+          ${lang === "fr" ? ev.description_fr : ev.description_en}
+        </p>
+      </div>
+
+      ${scheduleHTML}
+    `;
   }
+
+  document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
 }
 
-/* --- Admin Control Functions --- */
+function closeCalShadowbox() {
+  document.getElementById('cal-shadowbox-overlay').style.display = 'none';
+}
+
+/* --- Admin Edit & PIN Logic via Custom Shadowbox --- */
 function toggleCalLock() {
   if (!isCalUnlocked) {
-    const pin = prompt("Code PIN formateur :");
-    if (pin === CAL_PIN) {
-      isCalUnlocked = true;
-      document.getElementById('cal-lock-btn').classList.add('unlocked');
-      document.getElementById('cal-lock-label').innerText = "déverrouillé";
-      document.getElementById('cal-add-btn').style.display = "inline-block";
-      renderCalendar();
-    } else if (pin !== null) alert("PIN incorrect.");
+    const content = document.getElementById('cal-shadowbox-content');
+    content.innerHTML = `
+      <h3 style="color:var(--cdl-cyan, #38bdf8); margin-bottom: 12px;">🔒 déverrouiller l'édition</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">entrez le code pin formateur pour modifier les événements :</p>
+      <div class="cal-form-group">
+        <input type="password" id="cal-pin-input" class="cal-form-input" placeholder="code PIN..." autofocus>
+      </div>
+      <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:5px;" onclick="verifyCalPin()">valider</button>
+    `;
+    document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
   } else {
     isCalUnlocked = false;
     document.getElementById('cal-lock-btn').classList.remove('unlocked');
     document.getElementById('cal-lock-label').innerText = "verrouillé";
     document.getElementById('cal-add-btn').style.display = "none";
     renderCalendar();
+  }
+}
+
+function verifyCalPin() {
+  const pin = document.getElementById('cal-pin-input').value;
+  if (pin === CAL_PIN) {
+    isCalUnlocked = true;
+    document.getElementById('cal-lock-btn').classList.add('unlocked');
+    document.getElementById('cal-lock-label').innerText = "déverrouillé";
+    document.getElementById('cal-add-btn').style.display = "inline-block";
+    closeCalShadowbox();
+    renderCalendar();
+  } else {
+    alert("Code PIN incorrect.");
+  }
+}
+
+function saveCalEventEdit(id) {
+  const ev = calendarEvents.find(e => e.id === id);
+  if (ev) {
+    ev.title_fr = document.getElementById('edit-cal-title-fr').value;
+    ev.title_en = document.getElementById('edit-cal-title-en').value;
+    ev.event_date = document.getElementById('edit-cal-date').value;
+    ev.start_time = document.getElementById('edit-cal-start').value;
+    ev.end_time = document.getElementById('edit-cal-end').value;
+    ev.location = document.getElementById('edit-cal-loc').value;
+    ev.description_fr = document.getElementById('edit-cal-desc-fr').value;
+    saveCalState();
+    closeCalShadowbox();
   }
 }
 
@@ -390,7 +516,7 @@ function duplicateCalEvent(id) {
     copy.title_en += " (copy)";
     calendarEvents.push(copy);
     saveCalState();
-    if (typeof closeModal === "function") closeModal();
+    closeCalShadowbox();
   }
 }
 
@@ -398,21 +524,38 @@ function deleteCalEvent(id) {
   if (confirm("Supprimer cet événement du calendrier ?")) {
     calendarEvents = calendarEvents.filter(e => e.id !== id);
     saveCalState();
-    if (typeof closeModal === "function") closeModal();
+    closeCalShadowbox();
   }
 }
 
-function addNewCalEvent() {
-  const title = prompt("Titre (FR) :", "nouvel événement");
-  if (!title) return;
-  const date = prompt("Date (YYYY-MM-DD) :", isoDateStr(new Date()));
+function openAddCalEventShadowbox() {
+  const newId = Date.now();
+  const content = document.getElementById('cal-shadowbox-content');
+  content.innerHTML = `
+    <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 15px;">➕ ajouter un événement</h3>
+    <div class="cal-form-group">
+      <label>Titre de l'événement :</label>
+      <input type="text" id="add-cal-title" class="cal-form-input" value="nouvel événement">
+    </div>
+    <div class="cal-form-group">
+      <label>Date (YYYY-MM-DD) :</label>
+      <input type="text" id="add-cal-date" class="cal-form-input" value="${isoDateStr(new Date())}">
+    </div>
+    <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:10px;" onclick="confirmAddCalEvent(${newId})">créer l'événement</button>
+  `;
+  document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
+}
+
+function confirmAddCalEvent(newId) {
+  const title = document.getElementById('add-cal-title').value;
+  const date = document.getElementById('add-cal-date').value;
 
   calendarEvents.push({
-    id: Date.now(),
+    id: newId,
     title_fr: title,
     title_en: title,
-    description_fr: "description de l'événement...",
-    description_en: "event description...",
+    description_fr: "description...",
+    description_en: "description...",
     event_type: "cdl",
     event_date: date,
     start_time: "19:00",
@@ -420,7 +563,14 @@ function addNewCalEvent() {
     location: "rennes"
   });
   saveCalState();
+  closeCalShadowbox();
 }
+
+/* --- Global Language Synchronizer --- */
+window.syncCalendarLanguage = function(lang) {
+  calState.language = lang;
+  renderCalendar();
+};
 
 function toggleCalFilter(type) {
   if (calState.activeFilters.has(type)) calState.activeFilters.delete(type);
@@ -443,9 +593,18 @@ function setCalView(view) {
   renderCalendar();
 }
 
-/* --- Initialization --- */
+/* --- Automatic Initialization & Global Language Hook --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectCalendarStyles();
   mountCalendarHTML();
   renderCalendar();
+
+  // Hook into main setLanguage function
+  if (typeof window.setLanguage === "function") {
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      originalSetLanguage(lang);
+      window.syncCalendarLanguage(lang);
+    };
+  }
 });
