@@ -5,7 +5,7 @@
 const CAL_PIN = "476848674";
 let isCalUnlocked = false;
 let draggedEventId = null;
-let lastDeletedEvent = null; // Stores last deleted event for Undo
+let lastDeletedEvent = null;
 
 const EVENT_COLORS = {
   cdl: "#38bdf8",
@@ -41,13 +41,15 @@ const calI18n = {
     cancel: "annuler",
     detailsTitle: "📌 infos pratiques",
     descTitle: "📝 description",
+    extraTitle: "💡 détails complémentaires",
     scheduleTitle: "⚡ déroulement de la soirée",
     save: "💾 enregistrer",
     duplicate: "📋 dupliquer",
     delete: "🗑️ supprimer",
     newEventTitle: "➕ ajouter un événement",
     createBtn: "créer l'événement",
-    editTitle: "✏️ modifier l'événement"
+    editTitle: "✏️ modifier l'événement",
+    aiDisclaimer: "🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association."
   },
   en: {
     today: "today",
@@ -68,13 +70,15 @@ const calI18n = {
     cancel: "cancel",
     detailsTitle: "📌 details",
     descTitle: "📝 description",
+    extraTitle: "💡 extra details",
     scheduleTitle: "⚡ event schedule",
     save: "💾 save",
     duplicate: "📋 duplicate",
     delete: "🗑️ delete",
     newEventTitle: "➕ add an event",
     createBtn: "create event",
-    editTitle: "✏️ edit event"
+    editTitle: "✏️ edit event",
+    aiDisclaimer: "🌱 <strong>website creation note:</strong> this website was designed with the help of AI tools (~15 prompts, estimated environmental impact ~0.03 kg CO₂e). it is maintained exclusively without AI by Prism Outreach Studio. all events and content are created directly by our team."
   }
 };
 
@@ -82,15 +86,17 @@ const calI18n = {
 const defaultCalendarEvents = [
   {
     id: 1,
-    title_fr: "café des langues",
-    title_en: "café des langues",
+    title_fr: "café des langues 70",
+    title_en: "café des langues 70",
     description_fr: "rencontre hebdomadaire au bar pour pratiquer plus de 53 langues dans une ambiance conviviale.",
     description_en: "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    extra_details_fr: "pensez à commander une boisson sur place pour remercier le bar d'accueil.",
+    extra_details_en: "remember to order a drink to support our host venue.",
     event_type: "cdl",
-    event_date: "2026-09-02",
+    event_date: "2026-09-04",
     start_time: "19:00",
     end_time: "22:00",
-    location: "café des artistes, rennes",
+    location: "café des artistes, 12 rue saint-michel, rennes",
     schedule: [
       { time: "19h00 - 20h00", fr: "discussion libre aux tables de langues", en: "open discussion at language tables" },
       { time: "20h00 - 21h00", fr: "speed dating par langue (changement toutes les 15 min)", en: "language speed dating (switch every 15 mins)" },
@@ -103,11 +109,13 @@ const defaultCalendarEvents = [
     title_en: "rennes english choir rehearsal",
     description_fr: "répétition de la chorale anglophone dirigée par un chef natif.",
     description_en: "rehearsal for the english choir directed by a native speaker.",
+    extra_details_fr: "apportez une bouteille d'eau et votre bonne humeur !",
+    extra_details_en: "bring a water bottle and your enthusiasm!",
     event_type: "choir",
-    event_date: "2026-09-03",
+    event_date: "2026-09-08",
     start_time: "19:30",
     end_time: "21:30",
-    location: "maison de quartier, rennes",
+    location: "maison de quartier, 10 rue de la marbaudais, rennes",
     schedule: [
       { time: "19h30 - 20h00", fr: "accueil & échauffement vocal", en: "welcome & vocal warmup" },
       { time: "20h00 - 20h45", fr: "répétition partie 1 (travail du répertoire)", en: "rehearsal part 1 (repertoire work)" },
@@ -126,7 +134,7 @@ let calState = {
   language: "fr"
 };
 
-/* --- CSS Injection --- */
+/* --- Inject CSS Styles --- */
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -156,6 +164,7 @@ function injectCalendarStyles() {
     .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
     .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
 
+    /* Event Pill with Top Time Badge */
     .event-pill {
       font-size: 11px;
       font-weight: 700;
@@ -163,17 +172,32 @@ function injectCalendarStyles() {
       border-radius: 6px;
       color: #000;
       cursor: pointer;
-      line-height: 1.3;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      user-select: none;
+      word-break: break-word;
+    }
+    .event-pill-time {
+      font-size: 9.5px;
+      font-weight: 800;
+      opacity: 0.9;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 1px 4px;
+      border-radius: 3px;
+      align-self: flex-start;
+    }
+    .event-pill-title {
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      word-break: break-word;
-      user-select: none;
     }
     .event-pill[draggable="true"] { cursor: grab; }
     .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
 
+    /* Upcoming Events List */
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
     .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
@@ -230,11 +254,32 @@ function injectCalendarStyles() {
     .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
     .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
     .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
+
+    .map-link {
+      color: var(--cdl-cyan, #38bdf8);
+      text-decoration: underline;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .map-link:hover { color: var(--neon-amber, #f59e0b); }
+
+    /* Footer Disclaimer Banner */
+    #pos-ai-disclaimer {
+      margin-top: 25px;
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      text-align: center;
+    }
   `;
   document.head.appendChild(style);
 }
 
-/* --- Mounting HTML Markup --- */
+/* --- Mount HTML Markup --- */
 function mountCalendarHTML() {
   const target = document.getElementById('pos-calendar');
   if (!target) return;
@@ -282,6 +327,21 @@ function mountCalendarHTML() {
       </div>
     </div>
   `;
+
+  // Inject or update Footer AI Disclaimer
+  injectFooterDisclaimer();
+}
+
+function injectFooterDisclaimer() {
+  let box = document.getElementById('pos-ai-disclaimer');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'pos-ai-disclaimer';
+    const footer = document.querySelector('footer') || document.querySelector('.container');
+    if (footer) footer.appendChild(box);
+  }
+  const lang = calState.language;
+  box.innerHTML = calI18n[lang].aiDisclaimer;
 }
 
 /* --- Helpers & Storage --- */
@@ -297,6 +357,10 @@ function saveCalState() {
   renderCalendar();
 }
 
+function buildMapUrl(locationStr) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationStr)}`;
+}
+
 /* --- Render UI Functions --- */
 function renderCalendar() {
   const lang = calState.language;
@@ -309,6 +373,8 @@ function renderCalendar() {
   document.getElementById('title-upcoming').innerText = t.upcoming;
   document.getElementById('cal-lock-label').innerText = isCalUnlocked ? t.unlocked : t.locked;
   document.getElementById('cal-add-btn').innerText = t.addEvent;
+
+  injectFooterDisclaimer();
 
   // Undo button visibility
   const undoBtn = document.getElementById('cal-undo-btn');
@@ -407,7 +473,12 @@ function renderMonthGrid() {
       const pill = document.createElement('div');
       pill.className = 'event-pill';
       pill.style.backgroundColor = EVENT_COLORS[ev.event_type] || '#ccc';
-      pill.innerText = calState.language === "fr" ? ev.title_fr : ev.title_en;
+      
+      const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
+      pill.innerHTML = `
+        <span class="event-pill-time">⏰ ${ev.start_time}</span>
+        <span class="event-pill-title">${title}</span>
+      `;
       
       if (isCalUnlocked) {
         pill.setAttribute('draggable', 'true');
@@ -443,7 +514,7 @@ function renderUpcoming() {
       </div>
       <div>
         <div class="event-name">${lang === "fr" ? ev.title_fr : ev.title_en}</div>
-        <div class="event-meta">${ev.start_time} - ${ev.end_time} @ ${ev.location}</div>
+        <div class="event-meta">⏰ ${ev.start_time} - ${ev.end_time} @ ${ev.location}</div>
       </div>
     `;
     list.appendChild(row);
@@ -473,7 +544,7 @@ function renderListView() {
       </div>
       <div>
         <div class="event-name">${lang === "fr" ? ev.title_fr : ev.title_en}</div>
-        <div class="event-meta">${ev.start_time} - ${ev.end_time} @ ${ev.location}</div>
+        <div class="event-meta">⏰ ${ev.start_time} - ${ev.end_time} @ ${ev.location}</div>
       </div>
     `;
     list.appendChild(row);
@@ -487,7 +558,7 @@ function openEventDetailModal(ev) {
   const t = calI18n[lang];
 
   if (isCalUnlocked) {
-    // Unlocked Form
+    // Unlocked Form inside Shadowbox
     content.innerHTML = `
       <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">${t.editTitle}</h3>
       
@@ -514,12 +585,16 @@ function openEventDetailModal(ev) {
         </div>
       </div>
       <div class="cal-form-group">
-        <label>Lieu :</label>
+        <label>Adresse / Lieu (Lien GPS automatique) :</label>
         <input type="text" id="edit-cal-loc" class="cal-form-input" value="${ev.location}">
       </div>
       <div class="cal-form-group">
-        <label>Description (FR) :</label>
+        <label>Description :</label>
         <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="2">${ev.description_fr}</textarea>
+      </div>
+      <div class="cal-form-group">
+        <label>Détails complémentaires / Notes :</label>
+        <textarea id="edit-cal-extra-fr" class="cal-form-input" rows="2" placeholder="ex: boisson obligatoire, apporter son matériel...">${ev.extra_details_fr || ''}</textarea>
       </div>
 
       <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -529,7 +604,10 @@ function openEventDetailModal(ev) {
       </div>
     `;
   } else {
-    // Read-Only Shadowbox Modal
+    // Read-Only Shadowbox Modal with Clickable Address Map Link
+    const mapUrl = buildMapUrl(ev.location);
+    const extra = lang === "fr" ? (ev.extra_details_fr || '') : (ev.extra_details_en || ev.extra_details_fr || '');
+
     let scheduleHTML = '';
     if (ev.schedule && ev.schedule.length > 0) {
       scheduleHTML = `
@@ -547,6 +625,16 @@ function openEventDetailModal(ev) {
       `;
     }
 
+    let extraHTML = '';
+    if (extra) {
+      extraHTML = `
+        <div class="cal-modal-section">
+          <div class="cal-modal-section-title">${t.extraTitle}</div>
+          <p style="font-size: 13.5px; line-height: 1.6; color: var(--neon-amber, #f59e0b);">${extra}</p>
+        </div>
+      `;
+    }
+
     content.innerHTML = `
       <h2 style="font-size:22px; font-weight:700; color:var(--text-main, #fff); margin-bottom: 16px;">
         ${lang === "fr" ? ev.title_fr : ev.title_en}
@@ -556,7 +644,7 @@ function openEventDetailModal(ev) {
         <div class="cal-modal-section-title">${t.detailsTitle}</div>
         <p style="font-size: 13.5px; color: var(--text-muted, #cbd5e1); line-height: 1.6;">
           📅 <strong>${ev.event_date}</strong> (${ev.start_time} — ${ev.end_time})<br>
-          📍 <strong>${ev.location}</strong>
+          📍 <strong><a href="${mapUrl}" target="_blank" class="map-link">${ev.location} ↗</a></strong>
         </p>
       </div>
 
@@ -567,6 +655,7 @@ function openEventDetailModal(ev) {
         </p>
       </div>
 
+      ${extraHTML}
       ${scheduleHTML}
     `;
   }
@@ -666,6 +755,7 @@ function saveCalEventEdit(id) {
     ev.end_time = document.getElementById('edit-cal-end').value;
     ev.location = document.getElementById('edit-cal-loc').value;
     ev.description_fr = document.getElementById('edit-cal-desc-fr').value;
+    ev.extra_details_fr = document.getElementById('edit-cal-extra-fr').value;
     saveCalState();
     closeCalShadowbox();
   }
