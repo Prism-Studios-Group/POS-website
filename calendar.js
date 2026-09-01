@@ -2,10 +2,9 @@
    Prism Outreach Studio — Centralized Interactive Calendar
    ========================================================= */
 
-const CAL_PIN = "476848674";
+const CAL_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
 let isCalUnlocked = false;
 let draggedEventId = null;
-let lastDeletedEvent = null;
 
 const EVENT_COLORS = {
   cdl: "#38bdf8",
@@ -30,9 +29,9 @@ const calI18n = {
     locked: "verrouillé",
     unlocked: "déverrouillé",
     addEvent: "➕ ajouter un événement",
-    undo: "↩️ annuler suppression",
+    undo: "↩️ annuler",
     unlockTitle: "🔒 déverrouiller l'édition",
-    unlockSub: "entrez le code pin formateur pour modifier les événements :",
+    unlockSub: "entrez le code pin formateur pour modifier :",
     validate: "valider",
     incorrectPin: "Code PIN incorrect.",
     confirmTitle: "êtes-vous sûr ?",
@@ -59,9 +58,9 @@ const calI18n = {
     locked: "locked",
     unlocked: "unlocked",
     addEvent: "➕ add an event",
-    undo: "↩️ undo deletion",
+    undo: "↩️ undo",
     unlockTitle: "🔒 unlock editor",
-    unlockSub: "enter the trainer pin code to edit events:",
+    unlockSub: "enter the trainer pin code to edit:",
     validate: "submit",
     incorrectPin: "Incorrect PIN code.",
     confirmTitle: "are you sure?",
@@ -82,7 +81,6 @@ const calI18n = {
   }
 };
 
-// Default Events Data Structure
 const defaultCalendarEvents = [
   {
     id: 1,
@@ -134,7 +132,14 @@ let calState = {
   language: "fr"
 };
 
-/* --- Inject CSS Styles --- */
+async function sha256(str) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -148,7 +153,6 @@ function injectCalendarStyles() {
     .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
     .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
-    .cal-btn-undo { background: rgba(56, 189, 248, 0.2); border: 1px solid var(--cdl-cyan, #38bdf8); color: var(--cdl-cyan, #38bdf8); padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
     .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
     .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
     .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
@@ -164,40 +168,21 @@ function injectCalendarStyles() {
     .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
     .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
 
-    /* Event Pill with Top Time Badge */
     .event-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 6px;
-      border-radius: 6px;
-      color: #000;
-      cursor: pointer;
-      line-height: 1.25;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      user-select: none;
-      word-break: break-word;
+      font-size: 11px; font-weight: 700; padding: 4px 6px; border-radius: 6px; color: #000;
+      cursor: pointer; line-height: 1.25; display: flex; flex-direction: column; gap: 2px;
+      user-select: none; word-break: break-word;
     }
     .event-pill-time {
-      font-size: 9.5px;
-      font-weight: 800;
-      opacity: 0.9;
-      background: rgba(0, 0, 0, 0.15);
-      padding: 1px 4px;
-      border-radius: 3px;
-      align-self: flex-start;
+      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.15);
+      padding: 1px 4px; border-radius: 3px; align-self: flex-start;
     }
     .event-pill-title {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
     .event-pill[draggable="true"] { cursor: grab; }
     .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
 
-    /* Upcoming Events List */
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
     .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
@@ -209,41 +194,21 @@ function injectCalendarStyles() {
     .event-name { font-weight: 700; font-size: 15px; }
     .event-meta { font-size: 12.5px; color: var(--text-muted); }
 
-    /* Shadowbox Overlay & Card */
     .cal-shadowbox-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      padding: 20px;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
     }
     .cal-shadowbox-card {
-      background: #0f172a;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 16px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 26px;
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
-      text-align: left;
-      margin: auto;
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
+      text-align: left; margin: auto;
     }
     .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
     .cal-shadowbox-close:hover { color: #ef4444; }
     
-    .cal-modal-section {
-      background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px; padding: 16px; margin-bottom: 14px;
-    }
+    .cal-modal-section { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
     .cal-modal-section-title { font-size: 14px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 8px; }
     .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin-top: 10px; }
     .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
@@ -255,31 +220,18 @@ function injectCalendarStyles() {
     .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
     .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
 
-    .map-link {
-      color: var(--cdl-cyan, #38bdf8);
-      text-decoration: underline;
-      font-weight: 700;
-      transition: color 0.2s;
-    }
+    .map-link { color: var(--cdl-cyan, #38bdf8); text-decoration: underline; font-weight: 700; transition: color 0.2s; }
     .map-link:hover { color: var(--neon-amber, #f59e0b); }
 
-    /* Footer Disclaimer Banner */
     #pos-ai-disclaimer {
-      margin-top: 25px;
-      padding: 16px 20px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(56, 189, 248, 0.15);
-      border-radius: 12px;
-      font-size: 12.5px;
-      line-height: 1.6;
-      color: var(--text-muted);
-      text-align: center;
+      margin-top: 25px; padding: 16px 20px; background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
+      font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
     }
   `;
   document.head.appendChild(style);
 }
 
-/* --- Mount HTML Markup --- */
 function mountCalendarHTML() {
   const target = document.getElementById('pos-calendar');
   if (!target) return;
@@ -290,7 +242,6 @@ function mountCalendarHTML() {
       <div class="cal-admin-tools">
         <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
         <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
-        <button id="cal-undo-btn" class="cal-btn-undo" onclick="undoLastDelete()"></button>
       </div>
     </div>
 
@@ -319,7 +270,6 @@ function mountCalendarHTML() {
       <div id="cal-upcoming-list"></div>
     </div>
 
-    <!-- Centered Shadowbox Modal -->
     <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)">
       <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
         <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">&times;</span>
@@ -328,7 +278,6 @@ function mountCalendarHTML() {
     </div>
   `;
 
-  // Inject or update Footer AI Disclaimer
   injectFooterDisclaimer();
 }
 
@@ -344,7 +293,6 @@ function injectFooterDisclaimer() {
   box.innerHTML = calI18n[lang].aiDisclaimer;
 }
 
-/* --- Helpers & Storage --- */
 function isoDateStr(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -361,12 +309,10 @@ function buildMapUrl(locationStr) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationStr)}`;
 }
 
-/* --- Render UI Functions --- */
 function renderCalendar() {
   const lang = calState.language;
   const t = calI18n[lang];
 
-  // Static Translations
   document.getElementById('btn-cal-today').innerText = t.today;
   document.getElementById('btn-view-month').innerText = t.month;
   document.getElementById('btn-view-list').innerText = t.list;
@@ -376,21 +322,10 @@ function renderCalendar() {
 
   injectFooterDisclaimer();
 
-  // Undo button visibility
-  const undoBtn = document.getElementById('cal-undo-btn');
-  if (isCalUnlocked && lastDeletedEvent) {
-    undoBtn.innerText = t.undo;
-    undoBtn.style.display = "inline-block";
-  } else {
-    undoBtn.style.display = "none";
-  }
-
-  // Month Title
   document.getElementById('cal-title').innerText = calState.currentDate.toLocaleDateString(
     lang === "fr" ? "fr-FR" : "en-US", { month: "long", year: "numeric" }
   );
 
-  // Filters
   const filterBox = document.getElementById('cal-filters');
   filterBox.innerHTML = '';
   Object.keys(EVENT_COLORS).forEach(type => {
@@ -404,7 +339,6 @@ function renderCalendar() {
     filterBox.appendChild(item);
   });
 
-  // Views & Active Tab Highlight
   document.getElementById('cal-month-view').hidden = calState.currentView !== "month";
   document.getElementById('cal-list-view').hidden = calState.currentView !== "list";
 
@@ -551,14 +485,12 @@ function renderListView() {
   });
 }
 
-/* --- Shadowbox Modals --- */
 function openEventDetailModal(ev) {
   const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
   const t = calI18n[lang];
 
   if (isCalUnlocked) {
-    // Unlocked Form inside Shadowbox
     content.innerHTML = `
       <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">${t.editTitle}</h3>
       
@@ -604,7 +536,6 @@ function openEventDetailModal(ev) {
       </div>
     `;
   } else {
-    // Read-Only Shadowbox Modal with Clickable Address Map Link
     const mapUrl = buildMapUrl(ev.location);
     const extra = lang === "fr" ? (ev.extra_details_fr || '') : (ev.extra_details_en || ev.extra_details_fr || '');
 
@@ -673,7 +604,6 @@ function closeCalShadowboxOnOverlay(e) {
   }
 }
 
-/* --- "Are You Sure?" Confirmation Modal --- */
 function confirmDeleteCalEventModal(id) {
   const content = document.getElementById('cal-shadowbox-content');
   const t = calI18n[calState.language];
@@ -693,24 +623,16 @@ function confirmDeleteCalEventModal(id) {
 function executeDeleteCalEvent(id) {
   const ev = calendarEvents.find(e => e.id === id);
   if (ev) {
-    lastDeletedEvent = JSON.parse(JSON.stringify(ev));
+    if (typeof pushUndoAction === "function") {
+      pushUndoAction({ type: 'deleteCalEvent', data: JSON.parse(JSON.stringify(ev)) });
+    }
     calendarEvents = calendarEvents.filter(e => e.id !== id);
     saveCalState();
     closeCalShadowbox();
   }
 }
 
-/* --- Undo Action --- */
-function undoLastDelete() {
-  if (lastDeletedEvent) {
-    calendarEvents.push(lastDeletedEvent);
-    lastDeletedEvent = null;
-    saveCalState();
-  }
-}
-
-/* --- Admin Edit & PIN Logic --- */
-function toggleCalLock() {
+async function toggleCalLock() {
   const t = calI18n[calState.language];
   if (!isCalUnlocked) {
     const content = document.getElementById('cal-shadowbox-content');
@@ -727,17 +649,21 @@ function toggleCalLock() {
     isCalUnlocked = false;
     document.getElementById('cal-lock-btn').classList.remove('unlocked');
     document.getElementById('cal-add-btn').style.display = "none";
+    if (typeof setGlobalUnlockState === "function") setGlobalUnlockState(false);
     renderCalendar();
   }
 }
 
-function verifyCalPin() {
+async function verifyCalPin() {
   const pin = document.getElementById('cal-pin-input').value;
   const t = calI18n[calState.language];
-  if (pin === CAL_PIN) {
+  const inputHash = await sha256(pin);
+
+  if (inputHash === CAL_PIN_HASH) {
     isCalUnlocked = true;
     document.getElementById('cal-lock-btn').classList.add('unlocked');
     document.getElementById('cal-add-btn').style.display = "inline-block";
+    if (typeof setGlobalUnlockState === "function") setGlobalUnlockState(true);
     closeCalShadowbox();
     renderCalendar();
   } else {
@@ -748,6 +674,9 @@ function verifyCalPin() {
 function saveCalEventEdit(id) {
   const ev = calendarEvents.find(e => e.id === id);
   if (ev) {
+    if (typeof pushUndoAction === "function") {
+      pushUndoAction({ type: 'editCalEvent', data: JSON.parse(JSON.stringify(ev)) });
+    }
     ev.title_fr = document.getElementById('edit-cal-title-fr').value;
     ev.title_en = document.getElementById('edit-cal-title-en').value;
     ev.event_date = document.getElementById('edit-cal-date').value;
@@ -768,6 +697,9 @@ function duplicateCalEvent(id) {
     copy.id = Date.now();
     copy.title_fr += " (copie)";
     copy.title_en += " (copy)";
+    if (typeof pushUndoAction === "function") {
+      pushUndoAction({ type: 'addCalEvent', id: copy.id });
+    }
     calendarEvents.push(copy);
     saveCalState();
     closeCalShadowbox();
@@ -797,7 +729,7 @@ function confirmAddCalEvent(newId) {
   const title = document.getElementById('add-cal-title').value;
   const date = document.getElementById('add-cal-date').value;
 
-  calendarEvents.push({
+  const newEv = {
     id: newId,
     title_fr: title,
     title_en: title,
@@ -808,12 +740,17 @@ function confirmAddCalEvent(newId) {
     start_time: "19:00",
     end_time: "21:00",
     location: "rennes"
-  });
+  };
+
+  if (typeof pushUndoAction === "function") {
+    pushUndoAction({ type: 'addCalEvent', id: newId });
+  }
+
+  calendarEvents.push(newEv);
   saveCalState();
   closeCalShadowbox();
 }
 
-/* --- Language Sync Functions --- */
 window.syncCalendarLanguage = function(lang) {
   calState.language = lang;
   renderCalendar();
@@ -840,13 +777,11 @@ function setCalView(view) {
   renderCalendar();
 }
 
-/* --- Initialization & Listeners --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectCalendarStyles();
   mountCalendarHTML();
   renderCalendar();
 
-  // Instant global listener on language buttons
   document.addEventListener('click', (e) => {
     const langBtn = e.target.closest('.lang-btn');
     if (langBtn) {
@@ -855,7 +790,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Escape Key Listener to Close Shadowbox
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeCalShadowbox();
   });
