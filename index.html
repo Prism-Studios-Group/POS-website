@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prism Outreach Studio — Événements & Initiatives</title>
   
-  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -40,178 +39,109 @@
       letter-spacing: 0.02em;
     }
 
-    /* Sticky Global Navigation Bar */
+    /* Navigation Bar */
     .global-nav {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: rgba(11, 15, 25, 0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 12px 20px;
+      position: sticky; top: 0; z-index: 999;
+      background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border); padding: 12px 20px;
     }
 
     .nav-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
 
     .pos-logo-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      border: 2px solid var(--pos-coral);
-      box-shadow: 0 0 12px rgba(249, 115, 22, 0.45);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95); border: 2px solid var(--pos-coral);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.45); overflow: hidden;
+      transition: transform 0.3s ease; flex-shrink: 0;
     }
-
     .pos-logo-link:hover { transform: scale(1.08); }
     .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
 
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
+    .nav-menu { display: flex; align-items: center; gap: 8px; position: relative; }
 
     .nav-tab {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 13.5px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      white-space: nowrap;
-      border: 1px solid transparent;
-      transition: all 0.25s ease;
+      color: var(--text-muted); text-decoration: none; font-weight: 700;
+      font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
+      white-space: nowrap; border: 1px solid transparent; transition: all 0.25s ease;
     }
+    .nav-tab:hover { color: var(--text-main); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
+    .nav-tab.active { color: #000; background: var(--cdl-cyan); box-shadow: 0 0 12px var(--cdl-cyan); }
 
-    .nav-tab.active {
-      color: #000;
-      background: var(--cdl-cyan);
-      box-shadow: 0 0 12px var(--cdl-cyan);
+    /* Nav Dropdown for >3 Initiatives */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-content {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: #0f172a; border: 1px solid var(--card-border); border-radius: 12px;
+      min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 1000; padding: 8px 0;
     }
-
-    .right-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .nav-dropdown:hover .nav-dropdown-content { display: block; }
+    .nav-dropdown-item {
+      display: block; padding: 8px 16px; color: var(--text-muted);
+      text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.2s;
     }
+    .nav-dropdown-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan); }
 
-    /* Standout Volunteer "Rejoins-nous !" Button */
+    .right-controls { display: flex; align-items: center; gap: 8px; }
+
     .join-btn {
-      background: linear-gradient(135deg, var(--neon-amber), #f97316);
-      color: #000000;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+      background: linear-gradient(135deg, var(--neon-amber), #f97316); color: #000000;
+      font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 20px;
+      text-decoration: none; white-space: nowrap; box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 5px;
     }
+    .join-btn:hover { transform: scale(1.05); box-shadow: 0 0 18px rgba(245, 158, 11, 0.7); color: #000000; }
 
-    .join-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.7);
-      color: #000000;
-    }
-
-    /* Lock / Unlock Toggle Button */
     .lock-btn {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid #ef4444;
-      color: #fca5a5;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 12.5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.3s ease;
+      background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5;
+      padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px;
+      cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease;
+    }
+    .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+
+    .undo-global-btn {
+      display: none; background: rgba(56, 189, 248, 0.2); border: 1px solid var(--cdl-cyan);
+      color: var(--cdl-cyan); padding: 5px 12px; border-radius: 20px; font-weight: 700;
+      font-size: 12.5px; cursor: pointer; transition: all 0.2s ease;
     }
 
-    .lock-btn.unlocked {
-      background: rgba(34, 197, 94, 0.2);
-      border-color: #22c55e;
-      color: #86efac;
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-    }
+    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border); flex-shrink: 0; }
+    .lang-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .lang-btn.active { background: var(--cdl-cyan); color: #000; }
 
-    .lang-toggle {
-      display: flex;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 3px;
-      border-radius: 30px;
-      border: 1px solid var(--card-border);
-      flex-shrink: 0;
+    /* Pencil Buttons */
+    .edit-pencil {
+      display: none; background: var(--neon-amber); color: #000; border: none;
+      border-radius: 50%; width: 26px; height: 26px; font-size: 12px; font-weight: 700;
+      cursor: pointer; margin-left: 8px; vertical-align: middle; text-align: center;
+      line-height: 26px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); transition: transform 0.2s ease;
     }
+    .edit-pencil:hover { transform: scale(1.15); }
+    body.body-unlocked .edit-pencil { display: inline-block; }
 
-    .lang-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 12.5px;
-      cursor: pointer;
-    }
-
-    .lang-btn.active {
-      background: var(--cdl-cyan);
-      color: #000;
-    }
-
-    /* Container & Glass Cards */
-    .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
+    /* Layout Container & Buffer Margins */
+    .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 
     .glass-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 26px;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      background: var(--card-bg); backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border); border-radius: 16px; padding: 26px;
+      margin-bottom: 28px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
-    /* Hero Header with Logo Coral Glow */
     .hero-header { display: flex; align-items: center; gap: 22px; }
-    
     .hub-logo-img {
       width: 90px; height: 90px; border-radius: 50%; object-fit: contain;
       background: #ffffff; padding: 10px; border: 3px solid var(--pos-coral);
-      box-shadow: 0 0 25px rgba(249, 115, 22, 0.45);
-      flex-shrink: 0;
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.45); flex-shrink: 0;
     }
 
-    /* Vibrant Coral-to-Cyan Title Pop */
     .title-area h1 {
-      font-size: 28px;
-      font-weight: 900;
+      font-size: 28px; font-weight: 900;
       background: linear-gradient(135deg, #ff6b6b 0%, #fca5a5 40%, var(--cdl-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 2px 10px rgba(249, 115, 22, 0.3));
     }
 
@@ -220,56 +150,22 @@
       display: flex; align-items: center; justify-content: space-between;
     }
 
-    /* Dynamic Notion Cards */
-    .events-gallery {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px;
-    }
+    .events-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
 
     .notion-event-card {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--card-border);
-      border-radius: 14px; overflow: hidden;
-      color: var(--text-main); display: flex; flex-direction: column;
-      cursor: pointer; transition: all 0.35s ease; position: relative;
+      background: rgba(15, 23, 42, 0.85); border: 1px solid var(--card-border);
+      border-radius: 14px; overflow: hidden; color: var(--text-main);
+      display: flex; flex-direction: column; cursor: pointer; transition: all 0.35s ease; position: relative;
     }
-
     .notion-event-card:hover { transform: translateY(-5px); border-color: var(--cdl-cyan); }
-    
-    .card-cover { 
-      height: 140px; 
-      width: 100%;
-      overflow: hidden; 
-      background: rgba(15, 23, 42, 0.9);
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-    }
-
-    .card-cover-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .notion-event-card:hover .card-cover-img {
-      transform: scale(1.05);
-    }
-
+    .card-cover { height: 140px; width: 100%; overflow: hidden; background: rgba(15, 23, 42, 0.9); display: flex; align-items: center; justify-content: center; }
+    .card-cover-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .notion-event-card:hover .card-cover-img { transform: scale(1.05); }
     .card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; }
     .card-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; align-self: flex-start; margin-bottom: 8px; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan); }
     .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .card-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
 
-    .edit-badge {
-      position: absolute; top: 10px; right: 10px;
-      background: #f59e0b; color: #000; font-weight: 700; font-size: 11px;
-      padding: 3px 8px; border-radius: 6px; display: none; z-index: 10;
-    }
-
-    .body-unlocked .edit-badge { display: block; }
-
-    /* Rules & Dropdowns */
     .rule-dropdown { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
     .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--cdl-cyan); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
@@ -279,45 +175,18 @@
 
     #rules-closing { margin-top: 35px; padding-top: 15px; text-align: center; font-weight: 700; color: var(--neon-amber); border-top: 1px dashed rgba(255, 255, 255, 0.1); }
 
-    /* Modal Popup & Forms */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center; z-index: 1000;
-    }
-
-    .modal-content {
-      background: #0f172a; border: 1px solid var(--cdl-cyan); border-radius: 16px;
-      max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px;
-      position: relative; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
-    }
-
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: #0f172a; border: 1px solid var(--cdl-cyan); border-radius: 16px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); text-align: left; }
     .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
 
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--cdl-cyan); margin-bottom: 6px; }
-    .form-control {
-      width: 100%; background: #1e293b; border: 1px solid var(--card-border);
-      color: var(--text-main); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 14px;
-    }
-    .form-control:focus { outline: none; border-color: var(--cdl-cyan); }
+    .form-control { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 14px; }
 
-    .btn-primary {
-      background: var(--cdl-cyan); color: #000; font-weight: 700; padding: 10px 20px;
-      border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
-    }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary { background: var(--cdl-cyan); color: #000; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-danger { background: #ef4444; color: #fff; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-left: 10px; }
 
-    .btn-danger {
-      background: #ef4444; color: #fff; font-weight: 700; padding: 10px 20px;
-      border: none; border-radius: 8px; cursor: pointer; margin-left: 10px;
-    }
-
-    .action-btn {
-      background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
-      color: var(--text-main); font-weight: 700; font-size: 12px; padding: 5px 12px;
-      border-radius: 8px; cursor: pointer; display: none;
-    }
+    .action-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     .body-unlocked .action-btn { display: inline-block; }
 
     .social-bar { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
@@ -327,23 +196,23 @@
 </head>
 <body>
 
-  <!-- Sticky Global Navigation Bar -->
+  <!-- Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
       <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
-      <div class="nav-menu">
-        <a href="index.html" class="nav-tab active" id="nav-hub">tous les événements</a>
-        <a href="cdl-code.html" class="nav-tab" id="nav-cdl">café des langues</a>
-        <a href="rec-code.html" class="nav-tab" id="nav-choir">rennes english choir</a>
+      <div class="nav-menu" id="dynamic-nav-container">
+        <!-- Rendered Dynamically (Tabs or Dropdown if >3 Initiatives) -->
       </div>
 
       <div class="right-controls">
         <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
           <span>🙌</span> <span id="join-btn-text">rejoins-nous !</span>
         </a>
+
+        <button id="undo-global-btn" class="undo-global-btn" onclick="executeGlobalUndo()">↩️ annuler</button>
 
         <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
           🔒 <span id="lock-text">verrouillé</span>
@@ -359,41 +228,44 @@
 
   <div class="container">
 
-    <!-- Header Section with Logo Coral Glow & Title Pop -->
+    <!-- Hero Header -->
     <header class="glass-card hero-header">
       <img src="P-OS.png" alt="POS Logo" class="hub-logo-img">
       <div class="title-area">
-        <h1>prism outreach studio</h1>
+        <h1><span id="hero-title">prism outreach studio</span> <button class="edit-pencil" onclick="editHeroHeader()">✏️</button></h1>
         <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">
           plateforme des activités, échanges linguistiques et projets artistiques à rennes
         </p>
       </div>
     </header>
 
-    <!-- Event Notion Cards Section -->
+    <!-- Initiatives Section -->
     <section class="glass-card">
       <div class="section-title">
-        <span>✨ <span id="title-events">nos événements & initiatives</span></span>
+        <span>✨ <span id="title-events">nos initiatives</span> <button class="edit-pencil" onclick="editInitiativesSectionTitle()">✏️</button></span>
         <div>
-          <button class="action-btn" onclick="addNewEvent()">➕ ajouter un événement</button>
+          <button class="action-btn" onclick="addNewInitiative()">➕ ajouter une initiative</button>
           <button class="action-btn" onclick="exportJSON()">📥 exporter JSON</button>
         </div>
       </div>
       
       <div class="events-gallery" id="events-container">
-        <!-- Rendered dynamically via JavaScript -->
+        <!-- Rendered dynamically -->
       </div>
     </section>
 
-    <!-- Global Interactive Calendar Section -->
+    <!-- Calendar Section -->
     <section class="glass-card">
       <div id="pos-calendar"></div>
     </section>
     <script src="calendar.js"></script>
 
-    <!-- Global Community Rules Section -->
+    <!-- Community Rules Section -->
     <section class="glass-card">
-      <div class="section-title">📜 <span id="title-rules">règlement intérieur général (pos)</span></div>
+      <div class="section-title">
+        <span>📜 <span id="title-rules">règlement intérieur général (pos)</span></span>
+        <button class="edit-pencil" onclick="editIndexRulesTitle()">✏️</button>
+      </div>
       
       <details class="rule-dropdown">
         <summary>1. <span id="r1-t">cadre et objectifs</span></summary>
@@ -430,31 +302,28 @@
       </p>
     </section>
 
-    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
-        <a href="https://www.facebook.com/profile.php?id=100090407626653" class="social-btn" target="_blank" title="Facebook Café des Langues">FB</a>
-        <a href="https://www.instagram.com/rennescafedeslangues/" class="social-btn" target="_blank" title="Instagram Café des Langues">IG</a>
-        <a href="https://www.instagram.com/rennes.englishchoir/" class="social-btn" target="_blank" title="Instagram Choir">🎤</a>
+        <a href="https://www.facebook.com/profile.php?id=100090407626653" class="social-btn" target="_blank">FB</a>
+        <a href="https://www.instagram.com/rennescafedeslangues/" class="social-btn" target="_blank">IG</a>
+        <a href="https://www.instagram.com/rennes.englishchoir/" class="social-btn" target="_blank">🎤</a>
       </div>
     </footer>
 
   </div>
 
-  <!-- Interactive Event Modal -->
+  <!-- General Modal -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="closeModal()">&times;</span>
-      <div id="modal-body-container">
-        <!-- Rendered dynamically (View or Edit mode) -->
-      </div>
+      <div id="modal-body-container"></div>
     </div>
   </div>
 
   <script>
-    // SHA-256 Hash of PIN "476848674"
     const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
     let isUnlocked = false;
+    let undoHistoryStack = [];
 
     async function sha256(str) {
       const encoder = new TextEncoder();
@@ -464,53 +333,101 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
+    function pushUndoAction(actionObj) {
+      undoHistoryStack.push(actionObj);
+      updateUndoButtonVisibility();
+    }
+
+    function updateUndoButtonVisibility() {
+      const btn = document.getElementById('undo-global-btn');
+      if (btn) btn.style.display = (isUnlocked && undoHistoryStack.length > 0) ? 'inline-block' : 'none';
+    }
+
+    function executeGlobalUndo() {
+      if (undoHistoryStack.length === 0) return;
+      const lastAction = undoHistoryStack.pop();
+
+      if (lastAction.type === 'initiatives') {
+        eventsData = lastAction.previousData;
+        localStorage.setItem('pos_events_data', JSON.stringify(eventsData));
+        renderEvents();
+        renderDynamicNav();
+      } else if (lastAction.type === 'heroTitle') {
+        document.getElementById('hero-title').innerText = lastAction.previousVal;
+        localStorage.setItem('pos_hero_title', lastAction.previousVal);
+      } else if (lastAction.type === 'heroSubtitle') {
+        document.getElementById('hub-subtitle').innerText = lastAction.previousVal;
+        localStorage.setItem('pos_hero_subtitle', lastAction.previousVal);
+      }
+
+      updateUndoButtonVisibility();
+    }
+
+    function setGlobalUnlockState(state) {
+      isUnlocked = state;
+      if (state) {
+        document.body.classList.add('body-unlocked');
+        document.getElementById('lock-btn').classList.add('unlocked');
+        document.getElementById('lock-text').innerText = "déverrouillé";
+      } else {
+        document.body.classList.remove('body-unlocked');
+        document.getElementById('lock-btn').classList.remove('unlocked');
+        document.getElementById('lock-text').innerText = "verrouillé";
+      }
+      updateUndoButtonVisibility();
+    }
+
     async function toggleLock() {
       if (!isUnlocked) {
         const pin = prompt("Entrez le code PIN formateur pour modifier :");
         if (pin !== null) {
           const inputHash = await sha256(pin);
           if (inputHash === TRAINER_PIN_HASH) {
-            isUnlocked = true;
-            document.body.classList.add('body-unlocked');
-            document.getElementById('lock-btn').classList.add('unlocked');
-            document.getElementById('lock-text').innerText = "déverrouillé";
+            setGlobalUnlockState(true);
           } else {
             alert("Code PIN incorrect.");
           }
         }
       } else {
-        isUnlocked = false;
-        document.body.classList.remove('body-unlocked');
-        document.getElementById('lock-btn').classList.remove('unlocked');
-        document.getElementById('lock-text').innerText = "verrouillé";
+        setGlobalUnlockState(false);
       }
     }
 
-    // Default Notion Cards Data Structure
     const defaultEvents = [
-      {
-        id: "cdl",
-        image: "hermine-futuristic.png",
-        tag: "échanges linguistiques",
-        title: "rennes café des langues",
-        desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.",
-        details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.",
-        url: "cdl-code.html"
-      },
-      {
-        id: "choir",
-        image: "choir.png",
-        tag: "chorale & musique",
-        title: "rennes english choir",
-        desc: "ensemble vocal anglophone dirigé par un chef natif. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives.",
-        details: "répétitions régulières et concerts engagés. 50% de la billetterie est reversée à des associations d'aide aux victimes de violences.",
-        url: "rec-code.html"
-      }
+      { id: "cdl", image: "hermine-futuristic.png", tag: "échanges linguistiques", title: "rennes café des langues", desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.", details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.", url: "cdl-code.html" },
+      { id: "choir", image: "choir.png", tag: "chorale & musique", title: "rennes english choir", desc: "ensemble vocal anglophone dirigé par un chef natif. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives.", details: "répétitions régulières et concerts engagés. 50% de la billetterie est reversée à des associations d'aide aux victimes de violences.", url: "rec-code.html" }
     ];
 
     let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
 
-    // Render Event Notion Cards
+    /* Dynamic Nav Menu Renderer: Shows Dropdown if >3 Initiatives */
+    function renderDynamicNav() {
+      const navContainer = document.getElementById('dynamic-nav-container');
+      if (!navContainer) return;
+      navContainer.innerHTML = '';
+
+      if (eventsData.length > 3) {
+        let dropdownItems = eventsData.map(item => `
+          <a href="${item.url}" class="nav-dropdown-item">${item.title}</a>
+        `).join('');
+
+        navContainer.innerHTML = `
+          <div class="nav-dropdown">
+            <a href="index.html" class="nav-tab active">tous les événements ▼</a>
+            <div class="nav-dropdown-content">
+              ${dropdownItems}
+            </div>
+          </div>
+        `;
+      } else {
+        let navTabs = `<a href="index.html" class="nav-tab active" id="nav-hub">tous les événements</a>`;
+        eventsData.forEach(item => {
+          navTabs += `<a href="${item.url}" class="nav-tab">${item.title}</a>`;
+        });
+        navContainer.innerHTML = navTabs;
+      }
+    }
+
     function renderEvents() {
       const container = document.getElementById('events-container');
       if (!container) return;
@@ -534,6 +451,8 @@
         `;
         container.appendChild(card);
       });
+
+      renderDynamicNav();
     }
 
     function openEventModal(index) {
@@ -542,7 +461,7 @@
 
       if (isUnlocked) {
         container.innerHTML = `
-          <h2 style="color: var(--neon-amber); margin-bottom: 20px;">✏️ modifier l'événement</h2>
+          <h2 style="color: var(--neon-amber); margin-bottom: 20px;">✏️ modifier l'initiative</h2>
           <div class="form-group">
             <label>Fichier Image (ex: hermine-futuristic.png) :</label>
             <input type="text" id="edit-image" class="form-control" value="${item.image || ''}">
@@ -552,7 +471,7 @@
             <input type="text" id="edit-tag" class="form-control" value="${item.tag}">
           </div>
           <div class="form-group">
-            <label>Titre de l'événement :</label>
+            <label>Titre de l'initiative :</label>
             <input type="text" id="edit-title" class="form-control" value="${item.title}">
           </div>
           <div class="form-group">
@@ -580,7 +499,7 @@
           <span style="display:inline-block; font-weight:700; font-size:12px; color:var(--cdl-cyan); margin-bottom:10px;">${item.tag}</span>
           <h2 style="color: var(--cdl-cyan); margin-bottom: 15px;">${item.title}</h2>
           <p style="line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">${item.details}</p>
-          <a href="${item.url}" class="btn-primary" style="display:inline-block; text-decoration:none; text-align:center;">voir la page de l'événement ↗</a>
+          <a href="${item.url}" class="btn-primary" style="display:inline-block; text-decoration:none; text-align:center;">voir la page ↗</a>
         `;
       }
 
@@ -588,6 +507,8 @@
     }
 
     function saveEvent(index) {
+      pushUndoAction({ type: 'initiatives', previousData: JSON.parse(JSON.stringify(eventsData)) });
+
       eventsData[index].image = document.getElementById('edit-image').value;
       eventsData[index].tag = document.getElementById('edit-tag').value;
       eventsData[index].title = document.getElementById('edit-title').value;
@@ -600,23 +521,27 @@
       closeModal();
     }
 
-    function addNewEvent() {
+    function addNewInitiative() {
+      pushUndoAction({ type: 'initiatives', previousData: JSON.parse(JSON.stringify(eventsData)) });
+
       eventsData.push({
-        id: "event-" + Date.now(),
+        id: "initiative-" + Date.now(),
         image: "P-OS.png",
-        tag: "nouvel événement",
-        title: "titre de l'événement",
+        tag: "nouvelle initiative",
+        title: "nouvelle initiative",
         desc: "description courte...",
         details: "description détaillée...",
         url: "index.html"
       });
+
       localStorage.setItem('pos_events_data', JSON.stringify(eventsData));
       renderEvents();
       openEventModal(eventsData.length - 1);
     }
 
     function deleteEvent(index) {
-      if (confirm("Voulez-vous vraiment supprimer cet événement ?")) {
+      if (confirm("Voulez-vous vraiment supprimer cette initiative ?")) {
+        pushUndoAction({ type: 'initiatives', previousData: JSON.parse(JSON.stringify(eventsData)) });
         eventsData.splice(index, 1);
         localStorage.setItem('pos_events_data', JSON.stringify(eventsData));
         renderEvents();
@@ -624,11 +549,45 @@
       }
     }
 
+    function editHeroHeader() {
+      const currentTitle = document.getElementById('hero-title').innerText;
+      const currentSub = document.getElementById('hub-subtitle').innerText;
+
+      const container = document.getElementById('modal-body-container');
+      container.innerHTML = `
+        <h3 style="color:var(--cdl-cyan); margin-bottom:15px;">✏️ modifier le titre principal</h3>
+        <div class="form-group">
+          <label>Titre :</label>
+          <input type="text" id="edit-hero-title-in" class="form-control" value="${currentTitle}">
+        </div>
+        <div class="form-group">
+          <label>Sous-titre :</label>
+          <input type="text" id="edit-hero-sub-in" class="form-control" value="${currentSub}">
+        </div>
+        <button class="btn-primary" onclick="saveHeroHeader()">💾 enregistrer</button>
+      `;
+      document.getElementById('modal-overlay').style.display = 'flex';
+    }
+
+    function saveHeroHeader() {
+      const t = document.getElementById('edit-hero-title-in').value;
+      const s = document.getElementById('edit-hero-sub-in').value;
+
+      pushUndoAction({ type: 'heroTitle', previousVal: document.getElementById('hero-title').innerText });
+
+      document.getElementById('hero-title').innerText = t;
+      document.getElementById('hub-subtitle').innerText = s;
+
+      localStorage.setItem('pos_hero_title', t);
+      localStorage.setItem('pos_hero_subtitle', s);
+      closeModal();
+    }
+
     function exportJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(eventsData, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", "pos_events_data.json");
+      downloadAnchor.setAttribute("download", "pos_initiatives_data.json");
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -638,13 +597,12 @@
       document.getElementById('modal-overlay').style.display = 'none';
     }
 
-    // i18n Translation Dictionary
     const i18n = {
       fr: {
         navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "rejoins-nous !",
         hubSubtitle: "plateforme des activités, échanges linguistiques et projets artistiques à rennes",
-        titleEvents: "nos événements & initiatives", rulesTitle: "règlement intérieur général (pos)",
+        titleEvents: "nos initiatives", rulesTitle: "règlement intérieur général (pos)",
         r1t: "cadre et objectifs", r1b: "toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà.",
         r2t: "respect des lieux et partenaires", r2b: "nos activités se déroulent dans divers établissements partenaires. la consommation sur place est vivement encouragée.",
         r3t: "environnement sûr et inclusif", r3b: "zéro harcèlement, zéro discrimination. nos événements sont des espaces d'apprentissage et de partage.",
@@ -657,7 +615,7 @@
         navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "join us!",
         hubSubtitle: "community hub for language exchanges, vocal music, and cultural projects in rennes",
-        titleEvents: "our events & initiatives", rulesTitle: "general community guidelines (pos)",
+        titleEvents: "our initiatives", rulesTitle: "general community guidelines (pos)",
         r1t: "framework & goals", r1b: "all initiatives under prism outreach studio (pos) aim to create a welcoming, supportive, and inclusive environment in rennes and beyond.",
         r2t: "venue & partner respect", r2b: "our activities take place in partner venues. supporting hosts by purchasing food/drinks is strongly encouraged.",
         r3t: "safe & inclusive space", r3b: "zero harassment, zero discrimination. learning and community space.",
@@ -673,9 +631,7 @@
       document.getElementById(`btn-${lang}`).classList.add('active');
 
       const dict = i18n[lang];
-      document.getElementById('nav-hub').innerText = dict.navHub;
-      document.getElementById('nav-cdl').innerText = dict.navCdl;
-      document.getElementById('nav-choir').innerText = dict.navChoir;
+      if (document.getElementById('nav-hub')) document.getElementById('nav-hub').innerText = dict.navHub;
 
       if (document.getElementById('join-btn-text')) {
         document.getElementById('join-btn-text').innerText = dict.navJoin;
@@ -699,6 +655,12 @@
     }
 
     window.onload = function() {
+      const savedTitle = localStorage.getItem('pos_hero_title');
+      if (savedTitle) document.getElementById('hero-title').innerText = savedTitle;
+
+      const savedSub = localStorage.getItem('pos_hero_subtitle');
+      if (savedSub) document.getElementById('hub-subtitle').innerText = savedSub;
+
       renderEvents();
     };
   </script>
