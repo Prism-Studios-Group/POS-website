@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prism Outreach Studio — Événements & Initiatives</title>
   
+  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -186,7 +187,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
 
-    /* Dynamic Notion Cards */
+    /* Dynamic Notion Cards with Image Support */
     .events-gallery {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px;
     }
@@ -200,7 +201,28 @@
     }
 
     .notion-event-card:hover { transform: translateY(-5px); border-color: var(--cdl-cyan); }
-    .card-cover { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 38px; background: linear-gradient(135deg, #0c4a6e 0%, #31104b 100%); }
+    
+    .card-cover { 
+      height: 140px; 
+      width: 100%;
+      overflow: hidden; 
+      background: rgba(15, 23, 42, 0.9);
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+
+    .card-cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .notion-event-card:hover .card-cover-img {
+      transform: scale(1.05);
+    }
+
     .card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; }
     .card-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; align-self: flex-start; margin-bottom: 8px; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan); }
     .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
@@ -209,7 +231,7 @@
     .edit-badge {
       position: absolute; top: 10px; right: 10px;
       background: #f59e0b; color: #000; font-weight: 700; font-size: 11px;
-      padding: 3px 8px; border-radius: 6px; display: none;
+      padding: 3px 8px; border-radius: 6px; display: none; z-index: 10;
     }
 
     .body-unlocked .edit-badge { display: block; }
@@ -272,6 +294,7 @@
 </head>
 <body>
 
+  <!-- Sticky Global Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
       <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
@@ -299,6 +322,7 @@
 
   <div class="container">
 
+    <!-- Header Section -->
     <header class="glass-card hero-header">
       <img src="P-OS.png" alt="POS Logo" class="hub-logo-img">
       <div class="title-area">
@@ -309,6 +333,7 @@
       </div>
     </header>
 
+    <!-- Event Notion Cards Section -->
     <section class="glass-card">
       <div class="section-title">
         <span>✨ <span id="title-events">nos événements & initiatives</span></span>
@@ -319,9 +344,11 @@
       </div>
       
       <div class="events-gallery" id="events-container">
-        </div>
+        <!-- Rendered via JavaScript -->
+      </div>
     </section>
 
+    <!-- Global Interactive Calendar Section -->
     <section class="glass-card">
       <div class="section-title">📅 <span id="title-cal">calendrier du mois</span></div>
       <div id="calendar-embed-slot" style="text-align: center; padding: 25px; border: 2px dashed var(--card-border); border-radius: 10px;">
@@ -329,6 +356,7 @@
       </div>
     </section>
 
+    <!-- Global Community Rules Section -->
     <section class="glass-card">
       <div class="section-title">📜 <span id="title-rules">règlement intérieur général (pos)</span></div>
       
@@ -367,6 +395,7 @@
       </p>
     </section>
 
+    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/profile.php?id=100090407626653" class="social-btn" target="_blank" title="Facebook Café des Langues">FB</a>
@@ -377,24 +406,26 @@
 
   </div>
 
+  <!-- Interactive Event Modal -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="closeModal()">&times;</span>
       <div id="modal-body-container">
-        </div>
+        <!-- Rendered dynamically (View or Edit mode) -->
+      </div>
     </div>
   </div>
 
   <script>
-    // Customizable Admin PIN Code
+    // Updated PIN Code
     const TRAINER_PIN = "476848674";
     let isUnlocked = false;
 
-    // Default Events Data Structure
+    // Default Events Data Structure with Image Support
     const defaultEvents = [
       {
         id: "cdl",
-        icon: "🗣️",
+        image: "hermine-futuristic.png",
         tag: "échanges linguistiques",
         title: "rennes café des langues",
         desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.",
@@ -403,7 +434,7 @@
       },
       {
         id: "choir",
-        icon: "🎶",
+        image: "choir.png",
         tag: "chorale & musique",
         title: "rennes english choir",
         desc: "ensemble vocal anglophone dirigé par un chef natif. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives.",
@@ -415,7 +446,7 @@
     // Load Events from LocalStorage or defaults
     let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
 
-    // Render Event Notion Cards
+    // Render Event Notion Cards with Image Cover
     function renderEvents() {
       const container = document.getElementById('events-container');
       container.innerHTML = '';
@@ -427,7 +458,9 @@
 
         card.innerHTML = `
           <div class="edit-badge">✏️ modifier</div>
-          <div class="card-cover">${item.icon}</div>
+          <div class="card-cover">
+            <img src="${item.image}" alt="${item.title}" class="card-cover-img" onerror="this.style.display='none'">
+          </div>
           <div class="card-body">
             <span class="card-tag">${item.tag}</span>
             <div class="card-title">${item.title}</div>
@@ -468,8 +501,8 @@
         container.innerHTML = `
           <h2 style="color: var(--neon-amber); margin-bottom: 20px;">✏️ modifier l'événement</h2>
           <div class="form-group">
-            <label>Émoji / Icône :</label>
-            <input type="text" id="edit-icon" class="form-control" value="${item.icon}">
+            <label>Fichier Image (ex: hermine-futuristic.png) :</label>
+            <input type="text" id="edit-image" class="form-control" value="${item.image || ''}">
           </div>
           <div class="form-group">
             <label>Catégorie / Tag :</label>
@@ -499,7 +532,9 @@
       } else {
         // Read-Only Popup View
         container.innerHTML = `
-          <div style="font-size: 40px; text-align: center; margin-bottom: 10px;">${item.icon}</div>
+          <div style="width: 100%; height: 180px; overflow: hidden; border-radius: 10px; margin-bottom: 15px;">
+            <img src="${item.image}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+          </div>
           <span style="display:inline-block; font-weight:700; font-size:12px; color:var(--cdl-cyan); margin-bottom:10px;">${item.tag}</span>
           <h2 style="color: var(--cdl-cyan); margin-bottom: 15px;">${item.title}</h2>
           <p style="line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">${item.details}</p>
@@ -512,7 +547,7 @@
 
     // Save Event Changes
     function saveEvent(index) {
-      eventsData[index].icon = document.getElementById('edit-icon').value;
+      eventsData[index].image = document.getElementById('edit-image').value;
       eventsData[index].tag = document.getElementById('edit-tag').value;
       eventsData[index].title = document.getElementById('edit-title').value;
       eventsData[index].desc = document.getElementById('edit-desc').value;
@@ -528,7 +563,7 @@
     function addNewEvent() {
       eventsData.push({
         id: "event-" + Date.now(),
-        icon: "🌟",
+        image: "P-OS.png",
         tag: "nouvel événement",
         title: "titre de l'événement",
         desc: "description courte...",
