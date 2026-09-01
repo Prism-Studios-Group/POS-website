@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rennes English Choir — POS</title>
+  
+  <!-- Dyslexia-Friendly & Legible Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0814;
+      --card-bg: rgba(26, 20, 41, 0.82);
+      --card-border: rgba(251, 191, 36, 0.25);
+      --stage-gold: #fbbf24;
+      --stage-amber: #f59e0b;
+      --stage-magenta: #d946ef;
+      --stage-violet: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 20% 15%, rgba(217, 70, 239, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(251, 191, 36, 0.15) 0%, transparent 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+
+    /* Sticky Global Navigation Bar */
+    .global-nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(10, 8, 20, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 20px;
+    }
+
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .pos-logo-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid var(--stage-gold);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .pos-logo-link:hover { transform: scale(1.08); }
+
+    .pos-logo-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .nav-tab {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .nav-tab:hover {
+      color: var(--text-main);
+      border-color: rgba(251, 191, 36, 0.3);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-tab.active {
+      color: #0f172a;
+      background: var(--stage-gold);
+      box-shadow: 0 0 12px var(--stage-gold);
+    }
+
+    .lang-toggle {
+      display: flex;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 3px;
+      border-radius: 30px;
+      border: 1px solid var(--card-border);
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--stage-gold);
+      color: #000;
+      box-shadow: 0 0 10px var(--stage-gold);
+    }
+
+    /* Layout Container */
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    /* Highly Distinct Prominent Yellow Sign-up Banner */
+    .signup-banner {
+      background: linear-gradient(135deg, #fef08a 0%, #fde047 50%, #f59e0b 100%);
+      border: 3px solid #fef08a;
+      border-radius: 18px;
+      padding: 22px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: #0f172a;
+    }
+
+    .signup-text h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .signup-text p {
+      font-size: 14.5px;
+      color: #334155;
+      font-weight: 700;
+    }
+
+    .signup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #0f172a;
+      color: #fef08a;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .signup-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: #1e293b;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.6);
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    /* Hero Header */
+    .hero-header {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .choir-img {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--stage-gold);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+      flex-shrink: 0;
+    }
+
+    .title-area h1 {
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--stage-gold), var(--stage-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--stage-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Charity Theme Highlight Card */
+    .charity-card {
+      background: linear-gradient(135deg, rgba(217, 70, 239, 0.15), rgba(251, 191, 36, 0.1));
+      border: 1px solid var(--stage-magenta);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+
+    .charity-badge {
+      display: inline-block;
+      background: var(--stage-magenta);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* Program Schedule & Song Lineup */
+    .program-timeline {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid var(--stage-gold);
+    }
+
+    .program-step {
+      position: relative;
+      margin-bottom: 22px;
+      padding-left: 20px;
+    }
+
+    .program-step::before {
+      content: '';
+      position: absolute;
+      left: -27px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--stage-gold);
+      box-shadow: 0 0 10px var(--stage-gold);
+    }
+
+    .program-tag {
+      display: inline-block;
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--stage-gold);
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .song-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 14px;
+      border-radius: 8px;
+      gap: 10px;
+    }
+
+    .song-info {
+      font-size: 14.5px;
+    }
+
+    .yt-listen-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ff0000;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .yt-listen-btn:hover {
+      transform: scale(1.05);
+      background: #cc0000;
+    }
+
+    /* Left-aligned Interactive Rules */
+    .rule-dropdown {
+      background: rgba(15, 12, 28, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .rule-dropdown summary {
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--stage-gold);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+
+    .rule-dropdown summary::-webkit-details-marker { display: none; }
+
+    .rule-dropdown summary::after {
+      content: "▼";
+      font-size: 12px;
+      transition: transform 0.2s ease;
+      margin-left: 10px;
+    }
+
+    .rule-dropdown[open] summary::after {
+      transform: rotate(180deg);
+      color: var(--stage-magenta);
+    }
+
+    .rule-body {
+      padding: 0 18px 16px 18px;
+      color: var(--text-muted);
+      font-size: 14.5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+      text-align: left;
+    }
+
+    /* Spaced Yellow Closing Text */
+    #rules-closing {
+      margin-top: 35px;
+      padding-top: 15px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--stage-gold);
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    /* Social Links Bar */
+    .social-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-main); text-decoration: none;
+      font-weight: 700; font-size: 13px;
+      transition: 0.3s;
+    }
+
+    .social-btn:hover { background: var(--stage-gold); color: #000; }
+
+    @media (max-width: 600px) {
+      .signup-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Global Navigation Bar -->
+  <nav class="global-nav">
+    <div class="nav-inner">
+      <a href="pos-events.html" class="pos-logo-link" title="Prism Outreach Studio — Tous les événements">
+        <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
+      </a>
+      
+      <div class="nav-menu">
+        <a href="index.html" class="nav-tab" id="nav-cdl">Café des Langues</a>
+        <a href="choir.html" class="nav-tab active" id="nav-choir">Rennes English Choir</a>
+        <a href="classes.html" class="nav-tab" id="nav-classes">Cours de langues</a>
+      </div>
+
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Highly Highlighted Yellow Sign-up Box -->
+    <div class="signup-banner">
+      <div class="signup-text">
+        <h2 id="signup-title">🎵 rejoignez la chorale !</h2>
+        <p id="signup-subtitle">inscriptions ouvertes à toutes et tous — aucun niveau requis</p>
+      </div>
+      <a href="https://forms.gle/ShLsiv7pqAgxkqXU9" target="_blank" class="signup-btn" id="signup-btn-text">
+        <span>s'inscrire au formulaire</span> ↗
+      </a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="glass-card hero-header">
+      <img src="choir.jpg" alt="Rennes English Choir Poster" class="choir-img">
+      <div class="title-area">
+        <h1>Rennes English Choir</h1>
+        <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">
+          direction musicale par un chef natif (+15 ans d'expérience : chorale, symphonie, fanfares & show choir)
+        </p>
+      </div>
+    </header>
+
+    <!-- Choir Goal & Description -->
+    <section class="glass-card">
+      <div class="section-title">🎤 <span id="title-goals">notre objectif</span></div>
+      <p id="goal-text" style="line-height: 1.7;">
+        rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant sa prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.
+      </p>
+    </section>
+
+    <!-- Concert Cycle & Charity Solidarity Theme -->
+    <section class="glass-card">
+      <div class="section-title">🎗️ <span id="title-cycle">thème du cycle de concert</span></div>
+      <div class="charity-card">
+        <span class="charity-badge" id="cycle-badge">thème actuel</span>
+        <h3 style="font-size: 18px; color: var(--stage-gold); margin-bottom: 8px;" id="cycle-name">
+          solidarité contre les féminicides et les violences
+        </h3>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">
+          à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.
+        </p>
+      </div>
+    </section>
+
+    <!-- Program Lineup & Audio Preview Links -->
+    <section class="glass-card">
+      <div class="section-title">🎶 <span id="title-program">programme du concert & extraits</span></div>
+      
+      <div class="program-timeline">
+        
+        <!-- Welcome -->
+        <div class="program-step">
+          <span class="program-tag" id="tag-welcome">ouverture</span>
+          <div style="font-weight: 700; margin-top: 4px;" id="text-welcome">accueil du public & présentation du thème</div>
+        </div>
+
+        <!-- First Half -->
+        <div class="program-step">
+          <span class="program-tag" id="tag-part1">première partie : le problème</span>
+          <div class="song-list">
+            <div class="song-item">
+              <span class="song-info">1. "Chandelier" — Sia</span>
+              <a href="https://www.youtube.com/results?search_query=Sia+Chandelier" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">2. "Behind These Hazel Eyes" — Kelly Clarkson</span>
+              <a href="https://www.youtube.com/results?search_query=Kelly+Clarkson+Behind+These+Hazel+Eyes" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">3. "Cell Block Tango" — Chicago Musical</span>
+              <a href="https://www.youtube.com/results?search_query=Cell+Block+Tango" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">4. "Praying" — Kesha</span>
+              <a href="https://www.youtube.com/results?search_query=Kesha+Praying" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intermission -->
+        <div class="program-step">
+          <span class="program-tag" id="tag-entracte">entracte / intermission</span>
+          <div style="font-size: 14px; color: var(--text-muted);" id="text-entracte">pause & rafraîchissements</div>
+        </div>
+
+        <!-- Second Half -->
+        <div class="program-step">
+          <span class="program-tag" id="tag-part2">deuxième partie : se rassembler</span>
+          <div class="song-list">
+            <div class="song-item">
+              <span class="song-info">5. "Brave" — Sara Bareilles</span>
+              <a href="https://www.youtube.com/results?search_query=Sara+Bareilles+Brave" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">6. "You Will Be Found" — Dear Evan Hansen</span>
+              <a href="https://www.youtube.com/results?search_query=Dear+Evan+Hansen+You+Will+Be+Found" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">7. "Rise Up" — Andra Day</span>
+              <a href="https://www.youtube.com/results?search_query=Andra+Day+Rise+Up" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">8. "You're the Voice" — Finale</span>
+              <a href="https://www.youtube.com/results?search_query=John+Farnham+You%27re+The+Voice" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Choir Specific Interactive Dropdown Rules -->
+    <section class="glass-card">
+      <div class="section-title">📜 <span id="title-rules">règlement de la chorale</span></div>
+      
+      <details class="rule-dropdown">
+        <summary>1. <span id="r1-t">cadre et objectifs</span></summary>
+        <div class="rule-body" id="r1-b">le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer sa prononciation et partager des moments musicaux chaleureux sans jugement de niveau.</div>
+      </details>
+
+      <details class="rule-dropdown">
+        <summary>2. <span id="r2-t">assiduité et répétitions</span></summary>
+        <div class="rule-body" id="r2-b">la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.</div>
+      </details>
+
+      <details class="rule-dropdown">
+        <summary>3. <span id="r3-t">environnement sûr et bienveillant</span></summary>
+        <div class="rule-body" id="r3-b">notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.</div>
+      </details>
+
+      <details class="rule-dropdown">
+        <summary>4. <span id="r4-t">engagement caritatif et concerts</span></summary>
+        <div class="rule-body" id="r4-b">chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.</div>
+      </details>
+
+      <details class="rule-dropdown">
+        <summary>5. <span id="r5-t">vie privée et communications</span></summary>
+        <div class="rule-body" id="r5-b">les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.</div>
+      </details>
+
+      <details class="rule-dropdown">
+        <summary>6. <span id="r6-t">modération et contact</span></summary>
+        <div class="rule-body" id="r6-b">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
+      </details>
+
+      <!-- Yellow Closing Line separated from rules -->
+      <p id="rules-closing">
+        💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
+      <div class="social-bar">
+        <a href="https://www.facebook.com/groups/1087173560509402" class="social-btn" target="_blank" title="Facebook Group">FB</a>
+        <a href="https://www.instagram.com/rennes.englishchoir/" class="social-btn" target="_blank" title="Instagram">IG</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const i18n = {
+      fr: {
+        navChoir: "Rennes English Choir", navClasses: "Cours de langues",
+        signupTitle: "🎵 rejoignez la chorale !",
+        signupSub: "inscriptions ouvertes à toutes et tous — aucun niveau requis",
+        signupBtn: "s'inscrire au formulaire",
+        directorSub: "direction musicale par un chef natif (+15 ans d'expérience : chorale, symphonie, fanfares & show choir)",
+        goalsTitle: "notre objectif",
+        goalText: "rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant sa prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.",
+        cycleTitle: "thème du cycle de concert",
+        cycleBadge: "thème actuel",
+        cycleName: "solidarité contre les féminicides et les violences",
+        cycleDesc: "à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.",
+        progTitle: "programme du concert & extraits",
+        tagWelcome: "ouverture", textWelcome: "accueil du public & présentation du thème",
+        tagPart1: "première partie : le problème",
+        tagEntracte: "entracte / intermission", textEntracte: "pause & rafraîchissements",
+        tagPart2: "deuxième partie : se rassembler",
+        rulesTitle: "règlement de la chorale",
+        r1t: "cadre et objectifs", r1b: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer sa prononciation et partager des moments musicaux chaleureux sans jugement de niveau.",
+        r2t: "assiduité et répétitions", r2b: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.",
+        r3t: "environnement sûr et bienveillant", r3b: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.",
+        r4t: "engagement caritatif et concerts", r4b: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.",
+        r5t: "vie privée et communications", r5b: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.",
+        r6t: "modération et contact", r6b: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.",
+        closing: "💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !"
+      },
+      en: {
+        navChoir: "Rennes English Choir", navClasses: "Language Classes",
+        signupTitle: "🎵 join the choir!",
+        signupSub: "sign-ups open to everyone — no prior experience needed",
+        signupBtn: "fill sign-up form",
+        directorSub: "musical direction by a native speaker (+15 years experience: choir, symphony, marching band & show choir)",
+        goalsTitle: "our goal",
+        goalText: "getting people together to sing fun and challenging music! the choir allows everyone to gather, speak english, and stretch their pronunciation—making english speech easier and more natural. above all, it's about having fun, laughing a lot, and enjoying time with a passionate native director.",
+        cycleTitle: "concert cycle theme",
+        cycleBadge: "current theme",
+        cycleName: "solidarity against feminicide and abuse",
+        cycleDesc: "every concert cycle features a distinct cause: 50% of ticket sales are donated directly to expert charities helping real people on the ground in those situations.",
+        progTitle: "concert lineup & audio previews",
+        tagWelcome: "opening", textWelcome: "welcome & theme presentation",
+        tagPart1: "first half: the problem",
+        tagEntracte: "intermission", textEntracte: "break & refreshments",
+        tagPart2: "second half: coming together",
+        rulesTitle: "choir guidelines",
+        r1t: "framework & goals", r1b: "rennes english choir is an initiative by prism outreach studio (pos). our mission is to provide a warm and encouraging environment to sing in english, improve pronunciation, and share music without judgment.",
+        r2t: "attendance & rehearsals", r2b: "preparing for concerts requires collective effort. regular attendance at rehearsals is strongly encouraged to ensure group cohesion and concert readiness.",
+        r3t: "safe & supportive environment", r3b: "our choir is built on mutual respect and inclusivity. zero tolerance for harassment or discrimination. we learn and sing together with joy.",
+        r4t: "charity commitment", r4b: "each cycle connects with a social cause. by performing, every singer directly supports partner charities through 50% of ticket sale proceeds.",
+        r5t: "privacy & messaging", r5b: "member interactions must remain respectful. unsolicited direct messaging (dm) is forbidden. official updates take place in public group channels.",
+        r6t: "moderation & contact", r6b: "the association reserves the right to remove members whose behavior harms the community or violates guidelines. contact: rennescafedeslangues@gmail.com.",
+        closing: "💫 we can't wait to sing with you! see you soon at rehearsals!"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`btn-${lang}`).classList.add('active');
+
+      const dict = i18n[lang];
+      document.getElementById('nav-choir').innerText = dict.navChoir;
+      document.getElementById('nav-classes').innerText = dict.navClasses;
+      
+      document.getElementById('signup-title').innerText = dict.signupTitle;
+      document.getElementById('signup-subtitle').innerText = dict.signupSub;
+      document.getElementById('signup-btn-text').querySelector('span').innerText = dict.signupBtn;
+
+      document.getElementById('director-subtitle').innerText = dict.directorSub;
+      document.getElementById('title-goals').innerText = dict.goalsTitle;
+      document.getElementById('goal-text').innerText = dict.goalText;
+
+      document.getElementById('title-cycle').innerText = dict.cycleTitle;
+      document.getElementById('cycle-badge').innerText = dict.cycleBadge;
+      document.getElementById('cycle-name').innerText = dict.cycleName;
+      document.getElementById('cycle-desc').innerText = dict.cycleDesc;
+
+      document.getElementById('title-program').innerText = dict.progTitle;
+      document.getElementById('tag-welcome').innerText = dict.tagWelcome;
+      document.getElementById('text-welcome').innerText = dict.textWelcome;
+      document.getElementById('tag-part1').innerText = dict.tagPart1;
+      document.getElementById('tag-entracte').innerText = dict.tagEntracte;
+      document.getElementById('text-entracte').innerText = dict.textEntracte;
+      document.getElementById('tag-part2').innerText = dict.tagPart2;
+
+      document.getElementById('title-rules').innerText = dict.rulesTitle;
+      document.getElementById('r1-t').innerText = dict.r1t; document.getElementById('r1-b').innerText = dict.r1b;
+      document.getElementById('r2-t').innerText = dict.r2t; document.getElementById('r2-b').innerText = dict.r2b;
+      document.getElementById('r3-t').innerText = dict.r3t; document.getElementById('r3-b').innerText = dict.r3b;
+      document.getElementById('r4-t').innerText = dict.r4t; document.getElementById('r4-b').innerText = dict.r4b;
+      document.getElementById('r5-t').innerText = dict.r5t; document.getElementById('r5-b').innerText = dict.r5b;
+      document.getElementById('r6-t').innerText = dict.r6t; document.getElementById('r6-b').innerText = dict.r6b;
+      
+      document.getElementById('rules-closing').innerText = dict.closing;
+    }
+  </script>
+</body>
+</html>
