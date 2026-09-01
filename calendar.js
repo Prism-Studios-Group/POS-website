@@ -5,6 +5,7 @@
 const CAL_PIN = "476848674";
 let isCalUnlocked = false;
 let draggedEventId = null;
+let lastDeletedEvent = null; // Stores last deleted event for Undo
 
 const EVENT_COLORS = {
   cdl: "#38bdf8",
@@ -29,11 +30,15 @@ const calI18n = {
     locked: "verrouillé",
     unlocked: "déverrouillé",
     addEvent: "➕ ajouter un événement",
+    undo: "↩️ annuler suppression",
     unlockTitle: "🔒 déverrouiller l'édition",
     unlockSub: "entrez le code pin formateur pour modifier les événements :",
     validate: "valider",
     incorrectPin: "Code PIN incorrect.",
-    confirmDelete: "Supprimer cet événement du calendrier ?",
+    confirmTitle: "êtes-vous sûr ?",
+    confirmDelete: "voulez-vous vraiment supprimer cet événement ?",
+    yesDelete: "oui, supprimer",
+    cancel: "annuler",
     detailsTitle: "📌 infos pratiques",
     descTitle: "📝 description",
     scheduleTitle: "⚡ déroulement de la soirée",
@@ -52,11 +57,15 @@ const calI18n = {
     locked: "locked",
     unlocked: "unlocked",
     addEvent: "➕ add an event",
+    undo: "↩️ undo deletion",
     unlockTitle: "🔒 unlock editor",
     unlockSub: "enter the trainer pin code to edit events:",
     validate: "submit",
     incorrectPin: "Incorrect PIN code.",
-    confirmDelete: "Delete this event from calendar?",
+    confirmTitle: "are you sure?",
+    confirmDelete: "are you sure you want to delete this event?",
+    yesDelete: "yes, delete",
+    cancel: "cancel",
     detailsTitle: "📌 details",
     descTitle: "📝 description",
     scheduleTitle: "⚡ event schedule",
@@ -117,7 +126,7 @@ let calState = {
   language: "fr"
 };
 
-/* --- CSS Injection with Viewport Centering & Multi-line Text Wrapping --- */
+/* --- CSS Injection --- */
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -127,10 +136,11 @@ function injectCalendarStyles() {
     .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
     .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .cal-filter-checkbox { accent-color: var(--cdl-cyan, #38bdf8); width: 15px; height: 15px; cursor: pointer; }
-    .cal-admin-tools { display: flex; gap: 10px; }
+    .cal-admin-tools { display: flex; gap: 8px; flex-wrap: wrap; }
     .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
     .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
+    .cal-btn-undo { background: rgba(56, 189, 248, 0.2); border: 1px solid var(--cdl-cyan, #38bdf8); color: var(--cdl-cyan, #38bdf8); padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
     .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
     .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
     .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
@@ -146,7 +156,6 @@ function injectCalendarStyles() {
     .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
     .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
 
-    /* Strict 2-Line Text Wrapping Pill */
     .event-pill {
       font-size: 11px;
       font-weight: 700;
@@ -165,7 +174,6 @@ function injectCalendarStyles() {
     .event-pill[draggable="true"] { cursor: grab; }
     .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
 
-    /* Upcoming Events List */
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
     .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
@@ -177,13 +185,11 @@ function injectCalendarStyles() {
     .event-name { font-weight: 700; font-size: 15px; }
     .event-meta { font-size: 12.5px; color: var(--text-muted); }
 
-    /* Perfectly Viewport-Centered Shadowbox Modal */
+    /* Shadowbox Overlay & Card */
     .cal-shadowbox-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -239,6 +245,7 @@ function mountCalendarHTML() {
       <div class="cal-admin-tools">
         <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
         <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
+        <button id="cal-undo-btn" class="cal-btn-undo" onclick="undoLastDelete()"></button>
       </div>
     </div>
 
@@ -295,14 +302,24 @@ function renderCalendar() {
   const lang = calState.language;
   const t = calI18n[lang];
 
-  // Static Button / Header Translations
+  // Static Translations
   document.getElementById('btn-cal-today').innerText = t.today;
   document.getElementById('btn-view-month').innerText = t.month;
   document.getElementById('btn-view-list').innerText = t.list;
   document.getElementById('title-upcoming').innerText = t.upcoming;
   document.getElementById('cal-lock-label').innerText = isCalUnlocked ? t.unlocked : t.locked;
+  document.getElementById('cal-add-btn').innerText = t.addEvent;
 
-  // Title
+  // Undo button visibility
+  const undoBtn = document.getElementById('cal-undo-btn');
+  if (isCalUnlocked && lastDeletedEvent) {
+    undoBtn.innerText = t.undo;
+    undoBtn.style.display = "inline-block";
+  } else {
+    undoBtn.style.display = "none";
+  }
+
+  // Month Title
   document.getElementById('cal-title').innerText = calState.currentDate.toLocaleDateString(
     lang === "fr" ? "fr-FR" : "en-US", { month: "long", year: "numeric" }
   );
@@ -321,7 +338,7 @@ function renderCalendar() {
     filterBox.appendChild(item);
   });
 
-  // Toggle Views & View Button Highlight
+  // Views & Active Tab Highlight
   document.getElementById('cal-month-view').hidden = calState.currentView !== "month";
   document.getElementById('cal-list-view').hidden = calState.currentView !== "list";
 
@@ -463,14 +480,14 @@ function renderListView() {
   });
 }
 
-/* --- Shadowbox Modal (Image 2 Replica & In-Modal Editing) --- */
+/* --- Shadowbox Modals --- */
 function openEventDetailModal(ev) {
   const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
   const t = calI18n[lang];
 
   if (isCalUnlocked) {
-    // Unlocked Form inside Shadowbox
+    // Unlocked Form
     content.innerHTML = `
       <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">${t.editTitle}</h3>
       
@@ -508,11 +525,11 @@ function openEventDetailModal(ev) {
       <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
         <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(${ev.id})">${t.save}</button>
         <button class="cal-btn" onclick="duplicateCalEvent(${ev.id})">${t.duplicate}</button>
-        <button class="cal-btn-sec" onclick="deleteCalEvent(${ev.id})">${t.delete}</button>
+        <button class="cal-btn-sec" onclick="confirmDeleteCalEventModal(${ev.id})">${t.delete}</button>
       </div>
     `;
   } else {
-    // Read-Only Shadowbox Modal matching Image 2
+    // Read-Only Shadowbox Modal
     let scheduleHTML = '';
     if (ev.schedule && ev.schedule.length > 0) {
       scheduleHTML = `
@@ -564,6 +581,42 @@ function closeCalShadowbox() {
 function closeCalShadowboxOnOverlay(e) {
   if (e.target.id === 'cal-shadowbox-overlay') {
     closeCalShadowbox();
+  }
+}
+
+/* --- "Are You Sure?" Confirmation Modal --- */
+function confirmDeleteCalEventModal(id) {
+  const content = document.getElementById('cal-shadowbox-content');
+  const t = calI18n[calState.language];
+
+  content.innerHTML = `
+    <h3 style="color:#ef4444; margin-bottom: 12px;">⚠️ ${t.confirmTitle}</h3>
+    <p style="font-size:14px; color:var(--text-main, #fff); margin-bottom: 20px;">${t.confirmDelete}</p>
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <button class="cal-btn" onclick="openEventDetailModal(calendarEvents.find(e=>e.id===${id}))">${t.cancel}</button>
+      <button class="cal-btn-sec" style="background:#ef4444; color:#fff;" onclick="executeDeleteCalEvent(${id})">
+        ${t.yesDelete}
+      </button>
+    </div>
+  `;
+}
+
+function executeDeleteCalEvent(id) {
+  const ev = calendarEvents.find(e => e.id === id);
+  if (ev) {
+    lastDeletedEvent = JSON.parse(JSON.stringify(ev));
+    calendarEvents = calendarEvents.filter(e => e.id !== id);
+    saveCalState();
+    closeCalShadowbox();
+  }
+}
+
+/* --- Undo Action --- */
+function undoLastDelete() {
+  if (lastDeletedEvent) {
+    calendarEvents.push(lastDeletedEvent);
+    lastDeletedEvent = null;
+    saveCalState();
   }
 }
 
@@ -622,20 +675,10 @@ function duplicateCalEvent(id) {
   const ev = calendarEvents.find(e => e.id === id);
   if (ev) {
     const copy = JSON.parse(JSON.stringify(ev));
-    const t = calI18n[calState.language];
     copy.id = Date.now();
-    copy.title_fr += t.copySuffix;
-    copy.title_en += t.copySuffix;
+    copy.title_fr += " (copie)";
+    copy.title_en += " (copy)";
     calendarEvents.push(copy);
-    saveCalState();
-    closeCalShadowbox();
-  }
-}
-
-function deleteCalEvent(id) {
-  const t = calI18n[calState.language];
-  if (confirm(t.confirmDelete)) {
-    calendarEvents = calendarEvents.filter(e => e.id !== id);
     saveCalState();
     closeCalShadowbox();
   }
@@ -707,7 +750,7 @@ function setCalView(view) {
   renderCalendar();
 }
 
-/* --- Initialization & Event Listeners --- */
+/* --- Initialization & Listeners --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectCalendarStyles();
   mountCalendarHTML();
