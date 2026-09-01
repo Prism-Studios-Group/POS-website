@@ -20,7 +20,56 @@ const EVENT_LABELS = {
   atelier: { fr: "atelier / cours", en: "workshop / class" }
 };
 
-// Default Events with Full Schedules
+const calI18n = {
+  fr: {
+    today: "aujourd'hui",
+    month: "mois",
+    list: "liste",
+    upcoming: "⚡ événements à venir",
+    locked: "verrouillé",
+    unlocked: "déverrouillé",
+    addEvent: "➕ ajouter un événement",
+    unlockTitle: "🔒 déverrouiller l'édition",
+    unlockSub: "entrez le code pin formateur pour modifier les événements :",
+    validate: "valider",
+    incorrectPin: "Code PIN incorrect.",
+    confirmDelete: "Supprimer cet événement du calendrier ?",
+    detailsTitle: "📌 infos pratiques",
+    descTitle: "📝 description",
+    scheduleTitle: "⚡ déroulement de la soirée",
+    save: "💾 enregistrer",
+    duplicate: "📋 dupliquer",
+    delete: "🗑️ supprimer",
+    newEventTitle: "➕ ajouter un événement",
+    createBtn: "créer l'événement",
+    editTitle: "✏️ modifier l'événement"
+  },
+  en: {
+    today: "today",
+    month: "month",
+    list: "list",
+    upcoming: "⚡ upcoming events",
+    locked: "locked",
+    unlocked: "unlocked",
+    addEvent: "➕ add an event",
+    unlockTitle: "🔒 unlock editor",
+    unlockSub: "enter the trainer pin code to edit events:",
+    validate: "submit",
+    incorrectPin: "Incorrect PIN code.",
+    confirmDelete: "Delete this event from calendar?",
+    detailsTitle: "📌 details",
+    descTitle: "📝 description",
+    scheduleTitle: "⚡ event schedule",
+    save: "💾 save",
+    duplicate: "📋 duplicate",
+    delete: "🗑️ delete",
+    newEventTitle: "➕ add an event",
+    createBtn: "create event",
+    editTitle: "✏️ edit event"
+  }
+};
+
+// Default Events Data Structure
 const defaultCalendarEvents = [
   {
     id: 1,
@@ -68,7 +117,7 @@ let calState = {
   language: "fr"
 };
 
-/* --- CSS Injection with Strict 2-Line Text Wrapping & Day Borders --- */
+/* --- CSS Injection with Viewport Centering & Multi-line Text Wrapping --- */
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -84,11 +133,10 @@ function injectCalendarStyles() {
     .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
     .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
     .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
-    .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
-    .cal-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
+    .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
+    .cal-btn.active { background: var(--cdl-cyan, #38bdf8) !important; color: #000 !important; }
     .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
     
-    /* Clear Day Grid Definition */
     .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
     .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
     .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
@@ -98,7 +146,7 @@ function injectCalendarStyles() {
     .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
     .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
 
-    /* Strict 2-Line Wrapping Event Pill */
+    /* Strict 2-Line Text Wrapping Pill */
     .event-pill {
       font-size: 11px;
       font-weight: 700;
@@ -120,7 +168,8 @@ function injectCalendarStyles() {
     /* Upcoming Events List */
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
-    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; }
+    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
+    .event-row:hover { transform: translateX(4px); border-color: var(--cdl-cyan, #38bdf8); }
     .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
     .event-date-box { text-align: center; min-width: 40px; }
     .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
@@ -128,16 +177,35 @@ function injectCalendarStyles() {
     .event-name { font-weight: 700; font-size: 15px; }
     .event-meta { font-size: 12.5px; color: var(--text-muted); }
 
-    /* Shadowbox Modal Styling (Image 2 Replica) */
+    /* Perfectly Viewport-Centered Shadowbox Modal */
     .cal-shadowbox-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center; z-index: 2000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
     }
     .cal-shadowbox-card {
-      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px;
-      max-width: 620px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 26px;
-      position: relative; box-shadow: 0 0 30px rgba(56, 189, 248, 0.25); text-align: left;
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 26px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
+      text-align: left;
+      margin: auto;
     }
     .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
     .cal-shadowbox-close:hover { color: #ef4444; }
@@ -160,7 +228,7 @@ function injectCalendarStyles() {
   document.head.appendChild(style);
 }
 
-/* --- Mounting HTML Structure --- */
+/* --- Mounting HTML Markup --- */
 function mountCalendarHTML() {
   const target = document.getElementById('pos-calendar');
   if (!target) return;
@@ -182,8 +250,8 @@ function mountCalendarHTML() {
       </div>
       <h2 class="cal-month-title" id="cal-title">...</h2>
       <div class="cal-view-group">
-        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')">mois</button>
-        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')">liste</button>
+        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
+        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
       </div>
     </div>
 
@@ -199,7 +267,8 @@ function mountCalendarHTML() {
       <div id="cal-upcoming-list"></div>
     </div>
 
-    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowbox()">
+    <!-- Centered Shadowbox Modal -->
+    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)">
       <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
         <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">&times;</span>
         <div id="cal-shadowbox-content"></div>
@@ -208,7 +277,7 @@ function mountCalendarHTML() {
   `;
 }
 
-/* --- Date Helpers & Storage Sync --- */
+/* --- Helpers & Storage --- */
 function isoDateStr(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -224,6 +293,14 @@ function saveCalState() {
 /* --- Render UI Functions --- */
 function renderCalendar() {
   const lang = calState.language;
+  const t = calI18n[lang];
+
+  // Static Button / Header Translations
+  document.getElementById('btn-cal-today').innerText = t.today;
+  document.getElementById('btn-view-month').innerText = t.month;
+  document.getElementById('btn-view-list').innerText = t.list;
+  document.getElementById('title-upcoming').innerText = t.upcoming;
+  document.getElementById('cal-lock-label').innerText = isCalUnlocked ? t.unlocked : t.locked;
 
   // Title
   document.getElementById('cal-title').innerText = calState.currentDate.toLocaleDateString(
@@ -244,9 +321,13 @@ function renderCalendar() {
     filterBox.appendChild(item);
   });
 
-  // Toggle Views
+  // Toggle Views & View Button Highlight
   document.getElementById('cal-month-view').hidden = calState.currentView !== "month";
   document.getElementById('cal-list-view').hidden = calState.currentView !== "list";
+
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === calState.currentView);
+  });
 
   if (calState.currentView === "month") {
     renderWeekdays();
@@ -286,7 +367,6 @@ function renderMonthGrid() {
     cell.dataset.date = cellISO;
     cell.innerHTML = `<div class="day-number">${cellDate.getDate()}</div>`;
 
-    // Drag-and-Drop Handlers
     cell.addEventListener('dragover', (e) => {
       if (isCalUnlocked) { e.preventDefault(); cell.classList.add('drag-over'); }
     });
@@ -356,18 +436,43 @@ function renderUpcoming() {
 function renderListView() {
   const list = document.getElementById('cal-list-view');
   list.innerHTML = '';
-  renderUpcoming();
+  const lang = calState.language;
+  const filtered = calendarEvents.filter(e => calState.activeFilters.has(e.event_type)).sort((a,b) => a.event_date.localeCompare(b.event_date));
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">[ aucun événement ]</p>`;
+    return;
+  }
+
+  filtered.forEach(ev => {
+    const row = document.createElement('div');
+    row.className = 'event-row';
+    row.onclick = () => openEventDetailModal(ev);
+    row.innerHTML = `
+      <div class="event-color-bar" style="background:${EVENT_COLORS[ev.event_type]}"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">${ev.event_date.slice(8,10)}</div>
+        <div class="event-date-month">${ev.event_date.slice(5,7)}</div>
+      </div>
+      <div>
+        <div class="event-name">${lang === "fr" ? ev.title_fr : ev.title_en}</div>
+        <div class="event-meta">${ev.start_time} - ${ev.end_time} @ ${ev.location}</div>
+      </div>
+    `;
+    list.appendChild(row);
+  });
 }
 
-/* --- Shadowbox Modals (Read-Only & Edit Mode matching Image 2) --- */
+/* --- Shadowbox Modal (Image 2 Replica & In-Modal Editing) --- */
 function openEventDetailModal(ev) {
   const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
+  const t = calI18n[lang];
 
   if (isCalUnlocked) {
-    // Unlocked Edit Form inside Shadowbox
+    // Unlocked Form inside Shadowbox
     content.innerHTML = `
-      <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">✏️ modifier l'événement</h3>
+      <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">${t.editTitle}</h3>
       
       <div class="cal-form-group">
         <label>Titre (FR) :</label>
@@ -397,22 +502,22 @@ function openEventDetailModal(ev) {
       </div>
       <div class="cal-form-group">
         <label>Description (FR) :</label>
-        <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="3">${ev.description_fr}</textarea>
+        <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="2">${ev.description_fr}</textarea>
       </div>
 
-      <div style="margin-top:20px; display:flex; gap:10px;">
-        <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(${ev.id})">💾 enregistrer</button>
-        <button class="cal-btn" onclick="duplicateCalEvent(${ev.id})">📋 dupliquer</button>
-        <button class="cal-btn-sec" onclick="deleteCalEvent(${ev.id})">🗑️ supprimer</button>
+      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(${ev.id})">${t.save}</button>
+        <button class="cal-btn" onclick="duplicateCalEvent(${ev.id})">${t.duplicate}</button>
+        <button class="cal-btn-sec" onclick="deleteCalEvent(${ev.id})">${t.delete}</button>
       </div>
     `;
   } else {
-    // Read-Only Shadowbox Modal (Identical layout to Image 2)
+    // Read-Only Shadowbox Modal matching Image 2
     let scheduleHTML = '';
     if (ev.schedule && ev.schedule.length > 0) {
       scheduleHTML = `
         <div class="cal-modal-section">
-          <div class="cal-modal-section-title">⚡ déroulement de la soirée</div>
+          <div class="cal-modal-section-title">${t.scheduleTitle}</div>
           <div class="cal-modal-timeline">
             ${ev.schedule.map(s => `
               <div class="cal-modal-item">
@@ -431,7 +536,7 @@ function openEventDetailModal(ev) {
       </h2>
 
       <div class="cal-modal-section">
-        <div class="cal-modal-section-title">📌 infos pratiques</div>
+        <div class="cal-modal-section-title">${t.detailsTitle}</div>
         <p style="font-size: 13.5px; color: var(--text-muted, #cbd5e1); line-height: 1.6;">
           📅 <strong>${ev.event_date}</strong> (${ev.start_time} — ${ev.end_time})<br>
           📍 <strong>${ev.location}</strong>
@@ -439,7 +544,7 @@ function openEventDetailModal(ev) {
       </div>
 
       <div class="cal-modal-section">
-        <div class="cal-modal-section-title">📝 description</div>
+        <div class="cal-modal-section-title">${t.descTitle}</div>
         <p style="font-size: 14px; line-height: 1.6; color: var(--text-main, #fff);">
           ${lang === "fr" ? ev.description_fr : ev.description_en}
         </p>
@@ -456,23 +561,29 @@ function closeCalShadowbox() {
   document.getElementById('cal-shadowbox-overlay').style.display = 'none';
 }
 
-/* --- Admin Edit & PIN Logic via Custom Shadowbox --- */
+function closeCalShadowboxOnOverlay(e) {
+  if (e.target.id === 'cal-shadowbox-overlay') {
+    closeCalShadowbox();
+  }
+}
+
+/* --- Admin Edit & PIN Logic --- */
 function toggleCalLock() {
+  const t = calI18n[calState.language];
   if (!isCalUnlocked) {
     const content = document.getElementById('cal-shadowbox-content');
     content.innerHTML = `
-      <h3 style="color:var(--cdl-cyan, #38bdf8); margin-bottom: 12px;">🔒 déverrouiller l'édition</h3>
-      <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">entrez le code pin formateur pour modifier les événements :</p>
+      <h3 style="color:var(--cdl-cyan, #38bdf8); margin-bottom: 12px;">${t.unlockTitle}</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">${t.unlockSub}</p>
       <div class="cal-form-group">
         <input type="password" id="cal-pin-input" class="cal-form-input" placeholder="code PIN..." autofocus>
       </div>
-      <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:5px;" onclick="verifyCalPin()">valider</button>
+      <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:5px;" onclick="verifyCalPin()">${t.validate}</button>
     `;
     document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
   } else {
     isCalUnlocked = false;
     document.getElementById('cal-lock-btn').classList.remove('unlocked');
-    document.getElementById('cal-lock-label').innerText = "verrouillé";
     document.getElementById('cal-add-btn').style.display = "none";
     renderCalendar();
   }
@@ -480,15 +591,15 @@ function toggleCalLock() {
 
 function verifyCalPin() {
   const pin = document.getElementById('cal-pin-input').value;
+  const t = calI18n[calState.language];
   if (pin === CAL_PIN) {
     isCalUnlocked = true;
     document.getElementById('cal-lock-btn').classList.add('unlocked');
-    document.getElementById('cal-lock-label').innerText = "déverrouillé";
     document.getElementById('cal-add-btn').style.display = "inline-block";
     closeCalShadowbox();
     renderCalendar();
   } else {
-    alert("Code PIN incorrect.");
+    alert(t.incorrectPin);
   }
 }
 
@@ -511,9 +622,10 @@ function duplicateCalEvent(id) {
   const ev = calendarEvents.find(e => e.id === id);
   if (ev) {
     const copy = JSON.parse(JSON.stringify(ev));
+    const t = calI18n[calState.language];
     copy.id = Date.now();
-    copy.title_fr += " (copie)";
-    copy.title_en += " (copy)";
+    copy.title_fr += t.copySuffix;
+    copy.title_en += t.copySuffix;
     calendarEvents.push(copy);
     saveCalState();
     closeCalShadowbox();
@@ -521,7 +633,8 @@ function duplicateCalEvent(id) {
 }
 
 function deleteCalEvent(id) {
-  if (confirm("Supprimer cet événement du calendrier ?")) {
+  const t = calI18n[calState.language];
+  if (confirm(t.confirmDelete)) {
     calendarEvents = calendarEvents.filter(e => e.id !== id);
     saveCalState();
     closeCalShadowbox();
@@ -530,18 +643,19 @@ function deleteCalEvent(id) {
 
 function openAddCalEventShadowbox() {
   const newId = Date.now();
+  const t = calI18n[calState.language];
   const content = document.getElementById('cal-shadowbox-content');
   content.innerHTML = `
-    <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 15px;">➕ ajouter un événement</h3>
+    <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 15px;">${t.newEventTitle}</h3>
     <div class="cal-form-group">
-      <label>Titre de l'événement :</label>
+      <label>Titre (FR) :</label>
       <input type="text" id="add-cal-title" class="cal-form-input" value="nouvel événement">
     </div>
     <div class="cal-form-group">
       <label>Date (YYYY-MM-DD) :</label>
       <input type="text" id="add-cal-date" class="cal-form-input" value="${isoDateStr(new Date())}">
     </div>
-    <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:10px;" onclick="confirmAddCalEvent(${newId})">créer l'événement</button>
+    <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:10px;" onclick="confirmAddCalEvent(${newId})">${t.createBtn}</button>
   `;
   document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
 }
@@ -566,7 +680,7 @@ function confirmAddCalEvent(newId) {
   closeCalShadowbox();
 }
 
-/* --- Global Language Synchronizer --- */
+/* --- Language Sync Functions --- */
 window.syncCalendarLanguage = function(lang) {
   calState.language = lang;
   renderCalendar();
@@ -593,18 +707,23 @@ function setCalView(view) {
   renderCalendar();
 }
 
-/* --- Automatic Initialization & Global Language Hook --- */
+/* --- Initialization & Event Listeners --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectCalendarStyles();
   mountCalendarHTML();
   renderCalendar();
 
-  // Hook into main setLanguage function
-  if (typeof window.setLanguage === "function") {
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      originalSetLanguage(lang);
+  // Instant global listener on language buttons
+  document.addEventListener('click', (e) => {
+    const langBtn = e.target.closest('.lang-btn');
+    if (langBtn) {
+      const lang = langBtn.id === 'btn-en' || langBtn.innerText.trim().toLowerCase() === 'en' ? 'en' : 'fr';
       window.syncCalendarLanguage(lang);
-    };
-  }
+    }
+  });
+
+  // Escape Key Listener to Close Shadowbox
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCalShadowbox();
+  });
 });
