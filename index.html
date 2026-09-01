@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prism Outreach Studio — Événements & Initiatives</title>
   
-  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -219,7 +218,7 @@
       position: relative;
     }
 
-    /* Cafe des Langues Specific Colors */
+    /* Cafe des Langues Card Theme */
     .card-cdl {
       border: 1px solid var(--cdl-cyan);
     }
@@ -231,7 +230,7 @@
       background: linear-gradient(135deg, #0c4a6e 0%, #31104b 100%);
     }
 
-    /* Rennes English Choir Specific Colors */
+    /* Rennes English Choir Card Theme */
     .card-choir {
       border: 1px solid var(--choir-gold);
     }
@@ -290,7 +289,7 @@
       line-height: 1.5;
     }
 
-    /* Interactive Rules Accordion / Dropdowns (Left-aligned & Spaced) */
+    /* Interactive Rules Accordion / Dropdowns */
     .rule-dropdown {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid var(--card-border);
@@ -335,7 +334,7 @@
       text-align: left;
     }
 
-    /* Yellow Closing Line with Top Margin Space */
+    /* Yellow Closing Line */
     #rules-closing {
       margin-top: 35px;
       padding-top: 15px;
@@ -369,17 +368,16 @@
 </head>
 <body>
 
-  <!-- Sticky POS Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
-      <a href="https://prism-studios-group.github.io/POS-website/index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
+      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
       <div class="nav-menu">
-        <a href="https://prism-studios-group.github.io/POS-website/index.html" class="nav-tab active" id="nav-hub">tous les événements</a>
-        <a href="https://prism-studios-group.github.io/POS-website/cdl.html" class="nav-tab" id="nav-cdl">café des langues</a>
-        <a href="https://prism-studios-group.github.io/POS-website/choir.html" class="nav-tab" id="nav-choir">rennes english choir</a>
+        <a href="index.html" class="nav-tab active" id="nav-hub">tous les événements</a>
+        <a href="cdl-code.html" class="nav-tab" id="nav-cdl">café des langues</a>
+        <a href="rec-code.html" class="nav-tab" id="nav-choir">rennes english choir</a>
       </div>
 
       <div class="lang-toggle">
@@ -391,7 +389,6 @@
 
   <div class="container">
 
-    <!-- Header Section -->
     <header class="glass-card hero-header">
       <img src="P-OS.png" alt="POS Logo" class="hub-logo-img">
       <div class="title-area">
@@ -402,14 +399,12 @@
       </div>
     </header>
 
-    <!-- Event Notion-Style Cards Section -->
     <section class="glass-card">
       <div class="section-title">✨ <span id="title-events">nos événements & initiatives</span></div>
       
       <div class="events-gallery">
         
-        <!-- Café des Langues Notion Box -->
-        <a href="https://prism-studios-group.github.io/POS-website/cdl.html" class="notion-event-card card-cdl">
+        <a href="cdl-code.html" class="notion-event-card card-cdl">
           <div class="card-cover">🗣️</div>
           <div class="card-body">
             <span class="card-tag">échanges linguistiques</span>
@@ -420,8 +415,7 @@
           </div>
         </a>
 
-        <!-- Rennes English Choir Notion Box -->
-        <a href="https://prism-studios-group.github.io/POS-website/choir.html" class="notion-event-card card-choir">
+        <a href="rec-code.html" class="notion-event-card card-choir">
           <div class="card-cover">🎶</div>
           <div class="card-body">
             <span class="card-tag">chorale & musique</span>
@@ -435,7 +429,6 @@
       </div>
     </section>
 
-    <!-- Global Interactive Calendar Section -->
     <section class="glass-card">
       <div class="section-title">📅 <span id="title-cal">calendrier du mois</span></div>
       <div id="calendar-embed-slot" style="text-align: center; padding: 25px; border: 2px dashed var(--card-border); border-radius: 10px;">
@@ -443,7 +436,6 @@
       </div>
     </section>
 
-    <!-- Global Community Rules Section -->
     <section class="glass-card">
       <div class="section-title">📜 <span id="title-rules">règlement intérieur général (pos)</span></div>
       
@@ -477,13 +469,11 @@
         <div class="rule-body" id="r6-b">le respect de ce règlement est indispensable pour maintenir l'esprit communautaire. l'association se réserve le droit d'exclure toute personne d'un événement ou du groupe en cas de comportement nuisible. contact et signalements : rennescafedeslangues@gmail.com.</div>
       </details>
 
-      <!-- Yellow Closing Line separated from rules -->
       <p id="rules-closing">
         💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !
       </p>
     </section>
 
-    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/profile.php?id=100090407626653" class="social-btn" target="_blank" title="Facebook Café des Langues">FB</a>
@@ -508,7 +498,7 @@
         r1t: "cadre et objectifs", 
         r1b: "toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association.",
         r2t: "respect des lieux et partenaires", 
-        r2b: "nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictement interdit.",
+        r2b: "nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictly interdit.",
         r3t: "environnement sûr et inclusif", 
         r3b: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées. toute discrimination (racisme, sexisme, homophobie, etc.) est formellement interdite.",
         r4t: "vie privée et communications", 
