@@ -29,18 +29,24 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsletterTitle: "💌 ne manque aucune édition !",
-    newsletterSub: "reçois nos dernières actualités, exclusivités et invitations directement dans ta boîte mail. 100 % gratuit !"
+    newsletterBadge: "NEWSLETTER POS",
+    newsletterTitle: "Reste au cœur de l'action",
+    newsletterSub: "Abonne-toi pour recevoir nos actualités hebdomadaires, événements exclusifs et coulisses directement dans ta boîte mail. 100 % gratuit !",
+    placeholder: "ton.email@exemple.com",
+    btnText: "S'ABONNER ➔"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsletterTitle: "💌 stay in the loop!",
-    newsletterSub: "get our latest news, behind-the-scenes updates, and event invitations delivered straight to your inbox. 100% free!"
+    newsletterBadge: "POS NEWSLETTER",
+    newsletterTitle: "Stay in the Loop",
+    newsletterSub: "Subscribe to get our weekly recaps, exclusive event invites, and behind-the-scenes news delivered straight to your inbox. 100% free!",
+    placeholder: "your.email@example.com",
+    btnText: "SUBSCRIBE ➔"
   }
 };
 
-/* --- CSS Injection with High-Specificity Kit Overrides --- */
+/* --- CSS Injection: Futuristic Glassmorphism Styling --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -84,17 +90,17 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Futuristic Glassmorphism Wrapper for Newsletter Signup */
+    /* Futuristic Glassmorphism Newsletter Card */
     .posts-newsletter-wrapper {
       margin-top: 35px;
-      padding: 28px 26px;
-      background: rgba(15, 23, 42, 0.75);
+      padding: 28px;
+      background: rgba(15, 23, 42, 0.82);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.35));
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.3));
       border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.05);
       position: relative;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.05);
       overflow: hidden;
     }
     .posts-newsletter-wrapper::before {
@@ -103,104 +109,80 @@ function injectPostsStyles() {
       top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
     }
-    .posts-newsletter-header {
-      margin-bottom: 18px;
-    }
-    .posts-newsletter-header h3 {
-      font-size: 20px;
+    .newsletter-badge {
+      display: inline-block;
+      font-size: 11px;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--neon-cyan, #38bdf8), #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neon-cyan, #38bdf8);
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
     }
-    .posts-newsletter-header p {
+    .newsletter-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main, #ffffff);
+      margin-bottom: 6px;
+    }
+    .newsletter-sub {
       font-size: 14px;
       color: var(--text-muted, #cbd5e1);
+      margin-bottom: 20px;
+      max-width: 650px;
       line-height: 1.6;
     }
-
-    /* DIRECT HIGH-SPECIFICITY OVERRIDES FOR KIT EMBEDDED FORM */
-    #kit-embed-container form.formkit-form,
-    #kit-embed-container .seva-form {
-      background: transparent !important;
-      border: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-shadow: none !important;
-      max-width: 100% !important;
+    .pos-custom-form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 620px;
     }
-
-    #kit-embed-container .formkit-fields,
-    #kit-embed-container .seva-fields {
-      display: flex !important;
-      gap: 12px !important;
-      flex-wrap: wrap !important;
-      align-items: center !important;
+    .pos-newsletter-input {
+      flex: 1 1 280px;
+      background: rgba(11, 15, 25, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.25s ease;
     }
-
-    #kit-embed-container .formkit-field {
-      flex: 1 1 280px !important;
-      margin: 0 !important;
+    .pos-newsletter-input::placeholder {
+      color: #94a3b8;
     }
-
-    #kit-embed-container .formkit-input {
-      background: #0b0f19 !important;
-      border: 1px solid var(--neon-cyan, #38bdf8) !important;
-      color: #ffffff !important;
-      border-radius: 30px !important;
-      padding: 12px 20px !important;
-      font-size: 14px !important;
-      font-family: inherit !important;
-      outline: none !important;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
-      transition: all 0.25s ease !important;
+    .pos-newsletter-input:focus {
+      border-color: var(--neon-amber, #f59e0b);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.35);
     }
-    #kit-embed-container .formkit-input::placeholder {
-      color: #94a3b8 !important;
+    .pos-newsletter-btn {
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316);
+      color: #000000;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.04em;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      transition: all 0.25s ease;
     }
-    #kit-embed-container .formkit-input:focus {
-      border-color: var(--neon-amber, #f59e0b) !important;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important;
-    }
-
-    #kit-embed-container .formkit-submit,
-    #kit-embed-container button.formkit-submit {
-      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316) !important;
-      color: #000000 !important;
-      font-weight: 800 !important;
-      font-size: 14px !important;
-      letter-spacing: 0.03em !important;
-      border-radius: 30px !important;
-      padding: 12px 28px !important;
-      border: none !important;
-      margin: 0 !important;
-      cursor: pointer !important;
-      flex: 0 0 auto !important;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important;
-      transition: all 0.25s ease !important;
-    }
-
-    #kit-embed-container .formkit-submit:hover {
-      transform: translateY(-2px) scale(1.05) !important;
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.75) !important;
-      color: #000000 !important;
-    }
-
-    #kit-embed-container .formkit-powered-by-convertkit-container {
-      margin-top: 12px !important;
-      justify-content: flex-start !important;
-      opacity: 0.4 !important;
-      filter: invert(1);
+    .pos-newsletter-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.7);
     }
   `;
   document.head.appendChild(style);
 }
 
-/* --- Mounting Markup & Kit Script Injection --- */
+/* --- Mounting Markup --- */
 function mountPostsHTML() {
   const target = document.getElementById('pos-posts');
   if (!target) return;
@@ -217,13 +199,16 @@ function mountPostsHTML() {
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- Official Styled Kit Newsletter Wrapper -->
+    <!-- POS Glassmorphic Newsletter Section Posting Directly to Kit Endpoint -->
     <div class="posts-newsletter-wrapper">
-      <div class="posts-newsletter-header">
-        <h3 id="posts-news-title">${t.newsletterTitle}</h3>
-        <p id="posts-news-sub">${t.newsletterSub}</p>
-      </div>
-      <div id="kit-embed-container"></div>
+      <span class="newsletter-badge" id="posts-news-badge">${t.newsletterBadge}</span>
+      <h3 class="newsletter-title" id="posts-news-title">${t.newsletterTitle}</h3>
+      <p class="newsletter-sub" id="posts-news-sub">${t.newsletterSub}</p>
+      
+      <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="pos-custom-form">
+        <input type="email" name="email_address" id="posts-news-input" class="pos-newsletter-input" placeholder="${t.placeholder}" required>
+        <button type="submit" id="posts-news-btn" class="pos-newsletter-btn">${t.btnText}</button>
+      </form>
     </div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
@@ -233,17 +218,6 @@ function mountPostsHTML() {
       </div>
     </div>
   `;
-
-  // Dynamic Kit Script Injection
-  const kitContainer = document.getElementById('kit-embed-container');
-  if (kitContainer && !document.getElementById('kit-embed-script')) {
-    const kitScript = document.createElement('script');
-    kitScript.id = 'kit-embed-script';
-    kitScript.async = true;
-    kitScript.setAttribute('data-uid', '3c9defa9e3');
-    kitScript.src = 'https://rennes-cafe-des-langues.kit.com/3c9defa9e3/index.js';
-    kitContainer.appendChild(kitScript);
-  }
 }
 
 /* --- Save & Render --- */
@@ -430,11 +404,20 @@ window.syncPostsLanguage = function(lang) {
   const addBtn = document.getElementById('posts-add-btn');
   if (addBtn) addBtn.innerText = t.addEdition;
 
+  const newsBadge = document.getElementById('posts-news-badge');
+  if (newsBadge) newsBadge.innerText = t.newsletterBadge;
+
   const newsTitle = document.getElementById('posts-news-title');
   if (newsTitle) newsTitle.innerText = t.newsletterTitle;
 
   const newsSub = document.getElementById('posts-news-sub');
   if (newsSub) newsSub.innerText = t.newsletterSub;
+
+  const newsInput = document.getElementById('posts-news-input');
+  if (newsInput) newsInput.placeholder = t.placeholder;
+
+  const newsBtn = document.getElementById('posts-news-btn');
+  if (newsBtn) newsBtn.innerText = t.btnText;
 };
 
 /* --- Initialization & Global Language Listener --- */
