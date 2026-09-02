@@ -19,6 +19,7 @@
       --neon-amber: #f59e0b;
       --text-main: #f8fafc;
       --text-muted: #cbd5e1;
+      --pos-coral: #f97316;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -211,6 +212,7 @@
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
+    /* Container du Formulaire Officiel Kit */
     .posts-newsletter-card {
       margin-top: 30px;
       padding-top: 25px;
@@ -301,8 +303,7 @@
       border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
       font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
     }
-  </style>
-</head>
+  </style></head>
 <body class="">
 
   <!-- Navigation Bar -->
@@ -312,7 +313,7 @@
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
-      <div class="nav-menu" id="nav-dynamic-tabs"><a href="index.html" class="nav-tab ">tous les événements</a><a href="cdl-code.html" class="nav-tab active">rennes café des langues</a><a href="rec-code.html" class="nav-tab ">rennes english choir</a></div>
+      <div class="nav-menu" id="nav-dynamic-tabs"><a href="index.html" class="nav-tab ">tous les événements</a><a href="cdl-code.html" class="nav-tab ">rennes café des langues</a><a href="rec-code.html" class="nav-tab active">rennes english choir</a></div>
 
       <div class="right-controls">
         <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
@@ -587,30 +588,7 @@
       </div>
       
       <div id="rules-list-container">
-        <details class="rule-dropdown">
-          <summary>1. <span>cadre et objectifs</span></summary>
-          <div class="rule-body">le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance.</div>
-        </details>
-        <details class="rule-dropdown">
-          <summary>2. <span>respect des lieux d'accueil</span></summary>
-          <div class="rule-body">nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. la commande de boissons ou de nourriture sur place est vivement encouragée.</div>
-        </details>
-        <details class="rule-dropdown">
-          <summary>3. <span>environnement sûr et inclusif</span></summary>
-          <div class="rule-body">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique.</div>
-        </details>
-        <details class="rule-dropdown">
-          <summary>4. <span>vie privée et communications</span></summary>
-          <div class="rule-body">il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein du groupe.</div>
-        </details>
-        <details class="rule-dropdown">
-          <summary>5. <span>activités commerciales et publicité</span></summary>
-          <div class="rule-body">l'association est à but non lucratif. aucune publicité ou vente de services (cours privés, services commerciaux) n'est autorisée.</div>
-        </details>
-        <details class="rule-dropdown">
-          <summary>6. <span>sanctions et modération</span></summary>
-          <div class="rule-body">le respect de ces règles est indispensable. contact et signalements : rennescafedeslangues@gmail.com.</div>
-        </details>
+        <!-- Rendered dynamically with bilingual support -->
       </div>
 
       <p id="rules-closing">
@@ -642,7 +620,6 @@
   </div>
 
   <script>
-    // SHA-256 Hash of PIN "476848674"
     const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
     let isUnlocked = false;
     let currentLanguage = localStorage.getItem('pos_lang') || 'fr';
@@ -750,35 +727,48 @@
       }
     }
 
-    /* --- Default Rules Data --- */
+    /* Helper function to dynamically extract active language text */
+    function getRuleText(rule, lang) {
+      if (rule[lang]) return rule[lang];
+      if (lang === 'fr' && rule.fr) return rule.fr;
+      if (lang === 'en' && rule.en) return rule.en;
+      return { title: rule.title || "", body: rule.body || "" };
+    }
+
+    /* Dynamic Bilingual CDL Rules System */
     const defaultRulesData = [
       {
-        title: "cadre et objectifs",
-        body: "le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance."
+        fr: { title: "cadre et objectifs", body: "le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance." },
+        en: { title: "framework and goals", body: "the café des langues is an initiative of the prism outreach studio (pos) association. our mission is to create a welcoming and supportive environment in rennes and beyond, where everyone can practice languages and gain confidence." }
       },
       {
-        title: "respect des lieux d'accueil",
-        body: "nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. la commande de boissons ou de nourriture sur place est vivement encouragée."
+        fr: { title: "respect des lieux d'accueil", body: "nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. la commande de boissons ou de nourriture sur place est vivement encouragée." },
+        en: { title: "respect for host venues", body: "our gatherings take place in various partner venues (bars, hostels, etc.) that graciously host us. ordering drinks or food on-site is strongly encouraged to support them." }
       },
       {
-        title: "environnement sûr et inclusif",
-        body: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique."
+        fr: { title: "environnement sûr et inclusif", body: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique." },
+        en: { title: "safe and inclusive space", body: "in accordance with article 21 of our bylaws, we promote inclusion and diversity. zero tolerance for harassment: café des langues is a learning environment, not a dating venue." }
       },
       {
-        title: "vie privée et communications",
-        body: "il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein du groupe."
+        fr: { title: "vie privée et communications", body: "il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein du groupe." },
+        en: { title: "privacy and communications", body: "contacting members directly via DM without prior consent is forbidden. discussions must remain public and respectful within group channels." }
       },
       {
-        title: "activités commerciales et publicité",
-        body: "l'association est à but non lucratif. aucune publicité ou vente de services (cours privés, services commerciaux) n'est autorisée."
+        fr: { title: "activités commerciales et publicité", body: "l'association est à but non lucratif. aucune publicité ou vente de services (cours privés, services commerciaux) n'est autorisée." },
+        en: { title: "commercial activity and advertising", body: "the association is non-profit. no advertising, solicitation, or sale of private services (e.g. private lessons) is permitted." }
       },
       {
-        title: "sanctions et modération",
-        body: "le respect de ces règles est indispensable. contact et signalements : rennescafedeslangues@gmail.com."
+        fr: { title: "sanctions et modération", body: "le respect de ces règles est indispensable. contact et signalements : rennescafedeslangues@gmail.com." },
+        en: { title: "moderation and contact", body: "adherence to these rules is required. reports and contact: rennescafedeslangues@gmail.com." }
       }
     ];
 
     let rulesData = JSON.parse(localStorage.getItem('pos_cdl_rules')) || defaultRulesData;
+
+    const cdlClosingText = {
+      fr: "💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !",
+      en: "💫 we are thrilled to have you with us! see you soon at café des langues!"
+    };
 
     function renderRules() {
       const container = document.getElementById('rules-list-container');
@@ -786,31 +776,39 @@
       container.innerHTML = '';
 
       rulesData.forEach((rule, idx) => {
+        const text = getRuleText(rule, currentLanguage);
         const details = document.createElement('details');
         details.className = 'rule-dropdown';
         details.innerHTML = `
-          <summary>${idx + 1}. <span>${rule.title}</span></summary>
-          <div class="rule-body">${rule.body}</div>
+          <summary>${idx + 1}. <span>${text.title}</span></summary>
+          <div class="rule-body">${text.body}</div>
         `;
         container.appendChild(details);
       });
+
+      const closingEl = document.getElementById('rules-closing');
+      if (closingEl) closingEl.innerText = cdlClosingText[currentLanguage] || cdlClosingText.fr;
     }
 
     /* --- Rules Manager Modal --- */
     function openRulesManagerModal() {
       let formHtml = `
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifiez, ajoutez ou supprimez les règles du règlement intérieur :</p>
+        <h3 style="color:var(--neon-cyan); margin-bottom:15px;">✏️ gérer le règlement intérieur [${currentLanguage.toUpperCase()}]</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifiez les règles de la langue actuelle (${currentLanguage.toUpperCase()}) :</p>
         <div id="rules-form-list">
-          ${rulesData.map((r, i) => `
-            <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <strong style="color:var(--neon-cyan);">Règle #${i + 1}</strong>
-                <button onclick="removeRuleFromForm(${i})" class="btn-danger" style="padding:2px 8px; font-size:11px;">🗑️ supprimer</button>
+          ${rulesData.map((r, i) => {
+            const text = getRuleText(r, currentLanguage);
+            return `
+              <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <strong style="color:var(--neon-cyan);">Règle #${i + 1}</strong>
+                  <button onclick="removeRuleFromForm(${i})" class="btn-danger" style="padding:2px 8px; font-size:11px;">🗑️ supprimer</button>
+                </div>
+                <input type="text" id="rule-title-${i}" class="form-control" value="${text.title}" style="margin-bottom:6px;">
+                <textarea id="rule-body-${i}" class="form-control" rows="2">${text.body}</textarea>
               </div>
-              <input type="text" id="rule-title-${i}" class="form-control" value="${r.title}" style="margin-bottom:6px;">
-              <textarea id="rule-body-${i}" class="form-control" rows="2">${r.body}</textarea>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
         <button onclick="addRuleToForm()" class="btn-sec" style="width:100%; margin-bottom:15px;">➕ ajouter une règle</button>
         <button onclick="saveAllRules()" class="btn-primary" style="width:100%;">💾 enregistrer le règlement</button>
@@ -819,7 +817,11 @@
     }
 
     function addRuleToForm() {
-      rulesData.push({ title: "nouvelle règle", body: "description de la règle..." });
+      const newRule = {
+        fr: { title: "nouvelle règle", body: "description de la règle..." },
+        en: { title: "new rule", body: "rule description..." }
+      };
+      rulesData.push(newRule);
       openRulesManagerModal();
     }
 
@@ -833,8 +835,9 @@
         const tEl = document.getElementById(`rule-title-${i}`);
         const bEl = document.getElementById(`rule-body-${i}`);
         if (tEl && bEl) {
-          r.title = tEl.value;
-          r.body = bEl.value;
+          if (!r[currentLanguage]) r[currentLanguage] = {};
+          r[currentLanguage].title = tEl.value;
+          r[currentLanguage].body = bEl.value;
         }
       });
       localStorage.setItem('pos_cdl_rules', JSON.stringify(rulesData));
@@ -1048,6 +1051,7 @@
       }
 
       renderNavTabs();
+      renderRules();
 
       if (typeof window.syncCalendarLanguage === "function") {
         window.syncCalendarLanguage(lang);
