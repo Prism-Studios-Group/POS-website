@@ -56,7 +56,7 @@
     .pos-logo-link:hover { transform: scale(1.08); }
     .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
 
-    .nav-menu { display: flex; align-items: center; gap: 8px; }
+    .nav-menu { display: flex; align-items: center; gap: 8px; position: relative; }
     .nav-tab {
       color: var(--text-muted); text-decoration: none; font-weight: 700;
       font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
@@ -64,6 +64,20 @@
     }
     .nav-tab:hover { color: var(--text-main); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
     .nav-tab.active { color: #000; background: var(--neon-cyan); box-shadow: 0 0 12px var(--neon-cyan); }
+
+    /* Nav Dropdown for >3 Initiatives */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-content {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: #0f172a; border: 1px solid var(--card-border); border-radius: 12px;
+      min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 10000; padding: 8px 0;
+    }
+    .nav-dropdown:hover .nav-dropdown-content { display: block; }
+    .nav-dropdown-item {
+      display: block; padding: 8px 16px; color: var(--text-muted);
+      text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.2s;
+    }
+    .nav-dropdown-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--neon-cyan); }
 
     .right-controls { display: flex; align-items: center; gap: 8px; }
 
@@ -81,6 +95,14 @@
       cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease;
     }
     .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+
+    .download-icon-btn {
+      display: none; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border);
+      color: var(--text-main); font-size: 15px; padding: 5px 10px; border-radius: 20px;
+      cursor: pointer; transition: all 0.25s ease; vertical-align: middle;
+    }
+    .download-icon-btn:hover { background: var(--neon-amber); transform: scale(1.1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+    body.body-unlocked .download-icon-btn { display: inline-block; }
 
     .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border); flex-shrink: 0; }
     .lang-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
@@ -121,14 +143,6 @@
     .timeline-item::before { content: ''; position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
     .time-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--neon-cyan); font-weight: 700; padding: 2px 10px; border-radius: 6px; font-size: 13px; margin-bottom: 4px; }
 
-    /* Archives Gallery */
-    .notion-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-    .notion-card { background: rgba(15, 23, 42, 0.85); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; position: relative; }
-    .notion-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
-    .notion-card-cover { height: 90px; background: linear-gradient(135deg, #1e1b4b, #31104b); display: flex; align-items: center; justify-content: center; font-size: 32px; overflow: hidden; }
-    .notion-card-cover img { width: 100%; height: 100%; object-fit: cover; }
-    .notion-card-body { padding: 15px; }
-
     /* Dropdown Rules */
     .rule-dropdown { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
     .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--neon-cyan); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
@@ -148,11 +162,6 @@
     .form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--neon-cyan); margin-bottom: 5px; }
     .form-control { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
 
-    /* Rich Text Formatting Toolbar */
-    .editor-toolbar { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px; }
-    .tool-btn { background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; }
-    .tool-btn:hover { background: var(--neon-cyan); color: #000; }
-
     .btn-primary { background: var(--neon-cyan); color: #000; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
     .btn-sec { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
     .btn-danger { background: #ef4444; color: #fff; font-weight: 700; padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; }
@@ -164,79 +173,51 @@
     .social-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
     .social-btn:hover { background: var(--neon-cyan); color: #000; }
   </style>
-<style id="pos-nav-styles">
-    .global-nav {
-      position: sticky; top: 0; z-index: 9999;
-      background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); padding: 12px 20px;
+  <style id="pos-posts-styles">
+    .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .posts-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .posts-card {
+      background: rgba(15, 23, 42, 0.85); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; position: relative;
     }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .pos-logo-link {
-      display: flex; align-items: center; justify-content: center;
-      width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95); border: 2px solid var(--pos-coral, #f97316);
-      box-shadow: 0 0 12px rgba(249, 115, 22, 0.45); overflow: hidden;
-      transition: transform 0.3s ease; flex-shrink: 0;
-    }
-    .pos-logo-link:hover { transform: scale(1.08); }
-    .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
+    .posts-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan, #38bdf8); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
+    .posts-card-cover { height: 100px; background: linear-gradient(135deg, #1e1b4b, #31104b); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; }
+    .posts-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+    .posts-card-body { padding: 15px; }
+    .posts-card-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text-main, #fff); }
+    .posts-card-date { font-size: 12px; color: var(--text-muted, #cbd5e1); }
 
-    .nav-menu { display: flex; align-items: center; gap: 8px; position: relative; }
-    .nav-tab {
-      color: var(--text-muted, #cbd5e1); text-decoration: none; font-weight: 700;
-      font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
-      white-space: nowrap; border: 1px solid transparent; transition: all 0.25s ease;
+    .posts-modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
     }
-    .nav-tab:hover { color: var(--text-main, #fff); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
-    .nav-tab.active { color: #000; background: var(--cdl-cyan, #38bdf8); box-shadow: 0 0 12px var(--cdl-cyan, #38bdf8); }
-
-    /* Reduced Dropdown Menu for >3 Initiatives */
-    .nav-dropdown { position: relative; display: inline-block; }
-    .nav-dropdown-content {
-      display: none; position: absolute; top: 100%; left: 0;
-      background: #0f172a; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); border-radius: 12px;
-      min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 10000; padding: 8px 0;
+    .posts-modal-card {
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); text-align: left; margin: auto;
     }
-    .nav-dropdown:hover .nav-dropdown-content { display: block; }
-    .nav-dropdown-item {
-      display: block; padding: 8px 16px; color: var(--text-muted, #cbd5e1);
-      text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.2s;
+    .posts-modal-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted, #cbd5e1); cursor: pointer; }
+    .posts-modal-close:hover { color: #ef4444; }
+
+    .posts-form-group { margin-bottom: 14px; }
+    .posts-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--neon-cyan, #38bdf8); margin-bottom: 5px; }
+    .posts-form-input { width: 100%; background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+
+    .posts-editor-toolbar { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px; }
+    .posts-tool-btn { background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .posts-tool-btn:hover { background: var(--neon-cyan, #38bdf8); color: #000; }
+
+    .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
+    body.body-unlocked .posts-btn-add { display: inline-block; }
+
+    .posts-newsletter-card {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
     }
-    .nav-dropdown-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); }
-    .nav-dropdown-item.active { color: var(--cdl-cyan, #38bdf8); font-weight: 900; }
-
-    .right-controls { display: flex; align-items: center; gap: 8px; }
-
-    .join-btn {
-      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316); color: #000000;
-      font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 20px;
-      text-decoration: none; white-space: nowrap; box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
-      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 5px;
-    }
-    .join-btn:hover { transform: scale(1.05); box-shadow: 0 0 18px rgba(245, 158, 11, 0.7); color: #000000; }
-
-    .lock-btn {
-      background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5;
-      padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px;
-      cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease;
-    }
-    .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
-
-    .download-icon-btn {
-      display: none; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
-      color: var(--text-main, #fff); font-size: 15px; padding: 5px 10px; border-radius: 20px;
-      cursor: pointer; transition: all 0.25s ease; vertical-align: middle;
-    }
-    .download-icon-btn:hover { background: var(--neon-amber, #f59e0b); transform: scale(1.1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
-    body.body-unlocked .download-icon-btn { display: inline-block; }
-
-    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); flex-shrink: 0; }
-    .lang-btn { background: transparent; border: none; color: var(--text-muted, #cbd5e1); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
-    .lang-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
-  </style><style id="pos-cal-styles">
+  </style>
+  <style id="pos-cal-styles">
     .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
     .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
     .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
@@ -320,11 +301,12 @@
       border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
       font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
     }
-  </style></head>
+  </style>
+</head>
 <body class="">
 
-<!-- Centralized Navigation Bar -->
-<nav id="pos-nav" class="global-nav">
+  <!-- Navigation Bar -->
+  <nav class="global-nav">
     <div class="nav-inner">
       <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
@@ -339,22 +321,21 @@
 
         <button class="download-icon-btn" onclick="downloadUpdatedHTML()" id="nav-download-btn" title="Télécharger le fichier HTML mis à jour">📥</button>
 
-        <button id="nav-lock-btn" class="lock-btn unlocked" onclick="toggleNavLock()">
-          🔒 <span id="nav-lock-label">déverrouillé</span>
+        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
+          🔒 <span id="lock-text">verrouillé</span>
         </button>
 
         <div class="lang-toggle">
-          <button class="lang-btn active" id="nav-btn-fr" onclick="setNavLanguage('fr')">FR</button>
-          <button class="lang-btn" id="nav-btn-en" onclick="setNavLanguage('en')">EN</button>
+          <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+          <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
         </div>
       </div>
     </div>
   </nav>
-<script src="nav.js"></script>
 
   <div class="container">
 
-    <!-- Header Section (Updated structure without duplicate presentation section) -->
+    <!-- Header Section -->
     <header class="glass-card hero-header">
       <img src="hermine-futuristic.png" alt="L'hermine Mascot" class="mascot-img">
       <div class="title-area">
@@ -366,7 +347,7 @@
       </div>
     </header>
 
-    <!-- Key Stats Section (Editable numbers & labels) -->
+    <!-- Key Stats Section -->
     <section class="glass-card">
       <div class="section-title">
         <span>📊 <span id="title-stats">nos chiffres</span></span>
@@ -417,113 +398,184 @@
     <!-- Interactive Calendar Container -->
     <section class="glass-card">
       <div id="pos-calendar">
-    <div class="cal-toolbar-top">
-      <div class="cal-filters" id="cal-filters"><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
-      <span style="color:#38bdf8">●</span> café des langues
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
-      <span style="color:#fbbf24">●</span> rennes english choir
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
-      <span style="color:#e74c3c">●</span> événement spécial
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
-      <span style="color:#a855f7">●</span> atelier / cours
-    </label></div>
-      <div class="cal-admin-tools">
-        <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
-        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
-      </div>
-    </div>
+        <div class="cal-toolbar-top">
+          <div class="cal-filters" id="cal-filters">
+            <label class="cal-filter-item">
+              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
+              <span style="color:#38bdf8">●</span> café des langues
+            </label>
+            <label class="cal-filter-item">
+              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
+              <span style="color:#fbbf24">●</span> rennes english choir
+            </label>
+            <label class="cal-filter-item">
+              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
+              <span style="color:#e74c3c">●</span> événement spécial
+            </label>
+            <label class="cal-filter-item">
+              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
+              <span style="color:#a855f7">●</span> atelier / cours
+            </label>
+          </div>
+          <div class="cal-admin-tools">
+            <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
+            <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
+          </div>
+        </div>
 
-    <div class="cal-header">
-      <div class="cal-nav-group">
-        <button class="cal-btn" onclick="navCal(-1)">‹</button>
-        <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
-        <button class="cal-btn" onclick="navCal(1)">›</button>
-      </div>
-      <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
-      <div class="cal-view-group">
-        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
-        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
-      </div>
-    </div>
+        <div class="cal-header">
+          <div class="cal-nav-group">
+            <button class="cal-btn" onclick="navCal(-1)">‹</button>
+            <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
+            <button class="cal-btn" onclick="navCal(1)">›</button>
+          </div>
+          <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
+          <div class="cal-view-group">
+            <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
+            <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
+          </div>
+        </div>
 
-    <div id="cal-month-view">
-      <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
-        <span class="event-pill-time">⏰ 19:00</span>
-        <span class="event-pill-title">☕ café des langues 70</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
-        <span class="event-pill-time">⏰ 19:00</span>
-        <span class="event-pill-title">☕ café des langues 71</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
-    </div>
+        <div id="cal-month-view">
+          <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
+          <div class="month-grid" id="cal-month-grid">
+            <div class="day-cell other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div>
+            <div class="day-cell other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div>
+            <div class="day-cell today" data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-04">
+              <div class="day-number">4</div>
+              <div class="day-events">
+                <div class="event-pill" style="background-color: rgb(56, 189, 248);">
+                  <span class="event-pill-time">⏰ 19:00</span>
+                  <span class="event-pill-title">☕ café des langues 70</span>
+                </div>
+              </div>
+            </div>
+            <div class="day-cell" data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-08">
+              <div class="day-number">8</div>
+              <div class="day-events">
+                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
+                  <span class="event-pill-time">⏰ 20:00</span>
+                  <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
+                </div>
+              </div>
+            </div>
+            <div class="day-cell" data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-15">
+              <div class="day-number">15</div>
+              <div class="day-events">
+                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
+                  <span class="event-pill-time">⏰ 20:00</span>
+                  <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
+                </div>
+              </div>
+            </div>
+            <div class="day-cell" data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-18">
+              <div class="day-number">18</div>
+              <div class="day-events">
+                <div class="event-pill" style="background-color: rgb(56, 189, 248);">
+                  <span class="event-pill-time">⏰ 19:00</span>
+                  <span class="event-pill-title">☕ café des langues 71</span>
+                </div>
+              </div>
+            </div>
+            <div class="day-cell" data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-22">
+              <div class="day-number">22</div>
+              <div class="day-events">
+                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
+                  <span class="event-pill-time">⏰ 20:00</span>
+                  <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
+                </div>
+              </div>
+            </div>
+            <div class="day-cell" data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div>
+            <div class="day-cell" data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div>
+            <div class="day-cell other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div>
+            <div class="day-cell other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div>
+            <div class="day-cell other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div>
+          </div>
+        </div>
 
-    <div id="cal-list-view" hidden=""></div>
+        <div id="cal-list-view" hidden=""></div>
 
-    <div class="upcoming-section">
-      <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
-      <div id="cal-upcoming-list"><div class="event-row">
-      <div class="event-color-bar" style="background:#38bdf8"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">04</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">☕ café des langues 70</div>
-        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#fbbf24"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">08</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">🎤 répétition rennes english choir 1</div>
-        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#fbbf24"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">15</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">🎤 répétition rennes english choir 2</div>
-        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#38bdf8"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">18</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">☕ café des langues 71</div>
-        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-      </div>
-    </div></div>
-    </div>
+        <div class="upcoming-section">
+          <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
+          <div id="cal-upcoming-list">
+            <div class="event-row">
+              <div class="event-color-bar" style="background:#38bdf8"></div>
+              <div class="event-date-box">
+                <div class="event-date-day">04</div>
+                <div class="event-date-month">09</div>
+              </div>
+              <div>
+                <div class="event-name">☕ café des langues 70</div>
+                <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-color-bar" style="background:#fbbf24"></div>
+              <div class="event-date-box">
+                <div class="event-date-day">08</div>
+                <div class="event-date-month">09</div>
+              </div>
+              <div>
+                <div class="event-name">🎤 répétition rennes english choir 1</div>
+                <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-color-bar" style="background:#fbbf24"></div>
+              <div class="event-date-box">
+                <div class="event-date-day">15</div>
+                <div class="event-date-month">09</div>
+              </div>
+              <div>
+                <div class="event-name">🎤 répétition rennes english choir 2</div>
+                <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-color-bar" style="background:#38bdf8"></div>
+              <div class="event-date-box">
+                <div class="event-date-day">18</div>
+                <div class="event-date-month">09</div>
+              </div>
+              <div>
+                <div class="event-name">☕ café des langues 71</div>
+                <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
-      <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
-        <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
-        <div id="cal-shadowbox-content"></div>
+        <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
+          <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
+            <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
+            <div id="cal-shadowbox-content"></div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
     </section>
     <script src="calendar.js"></script>
 
@@ -534,25 +586,32 @@
         <button class="edit-pencil" onclick="openRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="rules-list-container"><details class="rule-dropdown">
+      <div id="rules-list-container">
+        <details class="rule-dropdown">
           <summary>1. <span>cadre et objectifs</span></summary>
           <div class="rule-body">le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance.</div>
-        </details><details class="rule-dropdown">
+        </details>
+        <details class="rule-dropdown">
           <summary>2. <span>respect des lieux d'accueil</span></summary>
           <div class="rule-body">nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. la commande de boissons ou de nourriture sur place est vivement encouragée.</div>
-        </details><details class="rule-dropdown">
+        </details>
+        <details class="rule-dropdown">
           <summary>3. <span>environnement sûr et inclusif</span></summary>
           <div class="rule-body">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique.</div>
-        </details><details class="rule-dropdown">
+        </details>
+        <details class="rule-dropdown">
           <summary>4. <span>vie privée et communications</span></summary>
           <div class="rule-body">il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein du groupe.</div>
-        </details><details class="rule-dropdown">
+        </details>
+        <details class="rule-dropdown">
           <summary>5. <span>activités commerciales et publicité</span></summary>
           <div class="rule-body">l'association est à but non lucratif. aucune publicité ou vente de services (cours privés, services commerciaux) n'est autorisée.</div>
-        </details><details class="rule-dropdown">
+        </details>
+        <details class="rule-dropdown">
           <summary>6. <span>sanctions et modération</span></summary>
           <div class="rule-body">le respect de ces règles est indispensable. contact et signalements : rennescafedeslangues@gmail.com.</div>
-        </details></div>
+        </details>
+      </div>
 
       <p id="rules-closing">
         💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !
@@ -568,7 +627,8 @@
       <p style="margin-top: 15px;">
         <a href="https://tinyurl.com/Rennescdl" style="color: var(--text-muted);" target="_blank" id="link-history">historique des cafés des langues</a>
       </p>
-    <div id="pos-ai-disclaimer">🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association.</div></footer>
+      <div id="pos-ai-disclaimer">🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association.</div>
+    </footer>
 
   </div>
 
@@ -585,6 +645,7 @@
     // SHA-256 Hash of PIN "476848674"
     const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
     let isUnlocked = false;
+    let currentLanguage = localStorage.getItem('pos_lang') || 'fr';
 
     async function sha256(str) {
       const encoder = new TextEncoder();
@@ -594,27 +655,98 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
+    function setGlobalUnlockState(state) {
+      isUnlocked = state;
+      const lockBtn = document.getElementById('lock-btn');
+      const lockText = document.getElementById('lock-text');
+
+      if (state) {
+        document.body.classList.add('body-unlocked');
+        if (lockBtn) lockBtn.classList.add('unlocked');
+        if (lockText) lockText.innerText = currentLanguage === 'en' ? "unlocked" : "déverrouillé";
+      } else {
+        document.body.classList.remove('body-unlocked');
+        if (lockBtn) lockBtn.classList.remove('unlocked');
+        if (lockText) lockText.innerText = currentLanguage === 'en' ? "locked" : "verrouillé";
+      }
+      renderRules();
+    }
+
     async function toggleLock() {
       if (!isUnlocked) {
         const pin = prompt("Entrez le code PIN formateur pour modifier :");
         if (pin !== null) {
           const inputHash = await sha256(pin);
           if (inputHash === TRAINER_PIN_HASH) {
-            isUnlocked = true;
-            document.body.classList.add('body-unlocked');
-            document.getElementById('lock-btn').classList.add('unlocked');
-            document.getElementById('lock-text').innerText = "déverrouillé";
-            renderRules();
+            setGlobalUnlockState(true);
           } else {
             alert("Code PIN incorrect.");
           }
         }
       } else {
-        isUnlocked = false;
-        document.body.classList.remove('body-unlocked');
-        document.getElementById('lock-btn').classList.remove('unlocked');
-        document.getElementById('lock-text').innerText = "verrouillé";
-        renderRules();
+        setGlobalUnlockState(false);
+      }
+    }
+
+    function downloadUpdatedHTML() {
+      if (typeof closeModal === 'function') closeModal();
+      if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
+      if (typeof closePostsModal === 'function') closePostsModal();
+
+      const wasUnlocked = document.body.classList.contains('body-unlocked');
+      document.body.classList.remove('body-unlocked');
+
+      const cleanHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+      if (wasUnlocked) document.body.classList.add('body-unlocked');
+
+      const blob = new Blob([cleanHTML], { type: "text/html;charset=utf-8" });
+      const link = document.createElement("a");
+      let fileName = window.location.pathname.split("/").pop() || "cdl-code.html";
+      
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    const defaultEvents = [
+      { id: "cdl", image: "hermine-futuristic.png", tag: "échanges linguistiques", title: "rennes café des langues", desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.", details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.", url: "cdl-code.html" },
+      { id: "choir", image: "choir.png", tag: "chorale & musique", title: "rennes english choir", desc: "ensemble vocal anglophone dirigé par un chef natif. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives.", details: "répétitions régulières et concerts engagés. 50% de la billetterie est reversée à des associations d'aide aux victimes de violences.", url: "rec-code.html" }
+    ];
+
+    let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
+
+    function renderNavTabs() {
+      const container = document.getElementById('nav-dynamic-tabs');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const currentPath = window.location.pathname.split("/").pop() || "cdl-code.html";
+      const hubTitle = currentLanguage === 'en' ? "all events" : "tous les événements";
+      const isHubPage = currentPath === "index.html" || currentPath === "";
+
+      if (eventsData.length > 3) {
+        let dropdownItems = eventsData.map(item => `
+          <a href="${item.url}" class="nav-dropdown-item ${currentPath === item.url ? 'active' : ''}">${item.title}</a>
+        `).join('');
+
+        container.innerHTML = `
+          <div class="nav-dropdown">
+            <a href="index.html" class="nav-tab ${isHubPage ? 'active' : ''}">${hubTitle} ▼</a>
+            <div class="nav-dropdown-content">
+              ${dropdownItems}
+            </div>
+          </div>
+        `;
+      } else {
+        let navTabs = `<a href="index.html" class="nav-tab ${isHubPage ? 'active' : ''}">${hubTitle}</a>`;
+        eventsData.forEach(item => {
+          const isActive = (currentPath === item.url || (currentPath.includes('cdl') && item.url.includes('cdl'))) ? "active" : "";
+          navTabs += `<a href="${item.url}" class="nav-tab ${isActive}">${item.title}</a>`;
+        });
+        container.innerHTML = navTabs;
       }
     }
 
@@ -663,25 +795,6 @@
         container.appendChild(details);
       });
     }
-
-    /* --- Rich Text Editing Helpers --- */
-    function insertTag(textareaId, tagOpen, tagClose = '') {
-      const el = document.getElementById(textareaId);
-      if (!el) return;
-      const start = el.selectionStart;
-      const end = el.selectionEnd;
-      const text = el.value;
-      const selected = text.substring(start, end);
-      const replacement = tagOpen + selected + tagClose;
-      el.value = text.substring(0, start) + replacement + text.substring(end);
-      el.focus();
-    }
-
-    function insertImageUrl(textareaId) {
-      const url = prompt("Entrez l'URL de l'image :");
-      if (url) insertTag(textareaId, `<img src="${url}" style="width:100%; border-radius:8px; margin:10px 0;">`);
-    }
-
 
     /* --- Rules Manager Modal --- */
     function openRulesManagerModal() {
@@ -886,27 +999,23 @@
 
     const i18n = {
       fr: {
-        navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "rejoins-nous !",
         statsTitle: "nos chiffres",
         schedTitle: "déroulement de la soirée",
         s1: "discussion libre aux tables de langues",
         s2: "speed dating par langue (changement de partenaire toutes les 15 minutes)",
         s3: "discussion libre aux tables de langues",
-        newsTitle: "archive des actualités",
         rulesTitle: "règlement intérieur",
         closing: "💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !",
         history: "historique des cafés des langues"
       },
       en: {
-        navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "join us!",
         statsTitle: "key figures",
         schedTitle: "evening schedule",
         s1: "open discussion at language tables",
         s2: "language speed dating (switch partners every 15 minutes)",
         s3: "open discussion at language tables",
-        newsTitle: "newsletter archives",
         rulesTitle: "community guidelines",
         closing: "💫 we are thrilled to have you with us! see you soon at café des langues!",
         history: "café des langues history"
@@ -914,31 +1023,37 @@
     };
 
     function setLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('pos_lang', lang);
+
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`btn-${lang}`).classList.add('active');
+      const activeBtn = document.getElementById(`btn-${lang}`);
+      if (activeBtn) activeBtn.classList.add('active');
 
-      const dict = i18n[lang];
-      document.getElementById('nav-hub').innerText = dict.navHub;
-      document.getElementById('nav-cdl').innerText = dict.navCdl;
-      document.getElementById('nav-choir').innerText = dict.navChoir;
+      const dict = i18n[lang] || i18n.fr;
 
-      if (document.getElementById('join-btn-text')) {
-        document.getElementById('join-btn-text').innerText = dict.navJoin;
+      if (document.getElementById('nav-join-text')) document.getElementById('nav-join-text').innerText = dict.navJoin;
+      if (document.getElementById('title-stats')) document.getElementById('title-stats').innerText = dict.statsTitle;
+      if (document.getElementById('title-schedule')) document.getElementById('title-schedule').innerText = dict.schedTitle;
+      if (document.getElementById('sched-1')) document.getElementById('sched-1').innerText = dict.s1;
+      if (document.getElementById('sched-2')) document.getElementById('sched-2').innerText = dict.s2;
+      if (document.getElementById('sched-3')) document.getElementById('sched-3').innerText = dict.s3;
+      if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.rulesTitle;
+      if (document.getElementById('rules-closing')) document.getElementById('rules-closing').innerText = dict.closing;
+      if (document.getElementById('link-history')) document.getElementById('link-history').innerText = dict.history;
+
+      const lockText = document.getElementById('lock-text');
+      if (lockText) {
+        lockText.innerText = isUnlocked ? (lang === 'en' ? 'unlocked' : 'déverrouillé') : (lang === 'en' ? 'locked' : 'verrouillé');
       }
 
-      document.getElementById('title-stats').innerText = dict.statsTitle;
-      document.getElementById('title-schedule').innerText = dict.schedTitle;
-      document.getElementById('sched-1').innerText = dict.s1;
-      document.getElementById('sched-2').innerText = dict.s2;
-      document.getElementById('sched-3').innerText = dict.s3;
-      document.getElementById('title-news').innerText = dict.newsTitle;
-      document.getElementById('title-rules').innerText = dict.rulesTitle;
-      
-      document.getElementById('rules-closing').innerText = dict.closing;
-      document.getElementById('link-history').innerText = dict.history;
+      renderNavTabs();
 
       if (typeof window.syncCalendarLanguage === "function") {
         window.syncCalendarLanguage(lang);
+      }
+      if (typeof window.syncPostsLanguage === "function") {
+        window.syncPostsLanguage(lang);
       }
     }
 
@@ -959,10 +1074,10 @@
       const savedL3 = localStorage.getItem('pos_cdl_l3'); if (savedL3) document.getElementById('label-3').innerText = savedL3;
       const savedL4 = localStorage.getItem('pos_cdl_l4'); if (savedL4) document.getElementById('label-4').innerText = savedL4;
 
+      setLanguage(currentLanguage);
       renderRules();
       animateCounters();
     };
   </script>
-
 
 </body></html>
