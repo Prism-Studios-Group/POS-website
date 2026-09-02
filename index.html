@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
+<html lang="fr"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prism Outreach Studio — Événements & Initiatives</title>
+  <title>Prism Outreach Studio — Événements &amp; Initiatives</title>
   
   <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -197,11 +196,237 @@
     .social-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; }
     .social-btn:hover { background: var(--cdl-cyan); color: #000; }
   </style>
-</head>
-<body>
+<style id="pos-nav-styles">
+    .global-nav {
+      position: sticky; top: 0; z-index: 9999;
+      background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); padding: 12px 20px;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .pos-logo-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95); border: 2px solid var(--pos-coral, #f97316);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.45); overflow: hidden;
+      transition: transform 0.3s ease; flex-shrink: 0;
+    }
+    .pos-logo-link:hover { transform: scale(1.08); }
+    .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
+
+    .nav-menu { display: flex; align-items: center; gap: 8px; position: relative; }
+    .nav-tab {
+      color: var(--text-muted, #cbd5e1); text-decoration: none; font-weight: 700;
+      font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
+      white-space: nowrap; border: 1px solid transparent; transition: all 0.25s ease;
+    }
+    .nav-tab:hover { color: var(--text-main, #fff); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
+    .nav-tab.active { color: #000; background: var(--cdl-cyan, #38bdf8); box-shadow: 0 0 12px var(--cdl-cyan, #38bdf8); }
+
+    /* Reduced Dropdown Menu for >3 Initiatives */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-content {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: #0f172a; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); border-radius: 12px;
+      min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 10000; padding: 8px 0;
+    }
+    .nav-dropdown:hover .nav-dropdown-content { display: block; }
+    .nav-dropdown-item {
+      display: block; padding: 8px 16px; color: var(--text-muted, #cbd5e1);
+      text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.2s;
+    }
+    .nav-dropdown-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); }
+    .nav-dropdown-item.active { color: var(--cdl-cyan, #38bdf8); font-weight: 900; }
+
+    .right-controls { display: flex; align-items: center; gap: 8px; }
+
+    .join-btn {
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316); color: #000000;
+      font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 20px;
+      text-decoration: none; white-space: nowrap; box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .join-btn:hover { transform: scale(1.05); box-shadow: 0 0 18px rgba(245, 158, 11, 0.7); color: #000000; }
+
+    .lock-btn {
+      background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5;
+      padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px;
+      cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease;
+    }
+    .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+
+    .download-icon-btn {
+      display: none; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      color: var(--text-main, #fff); font-size: 15px; padding: 5px 10px; border-radius: 20px;
+      cursor: pointer; transition: all 0.25s ease; vertical-align: middle;
+    }
+    .download-icon-btn:hover { background: var(--neon-amber, #f59e0b); transform: scale(1.1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+    body.body-unlocked .download-icon-btn { display: inline-block; }
+
+    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); flex-shrink: 0; }
+    .lang-btn { background: transparent; border: none; color: var(--text-muted, #cbd5e1); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .lang-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
+  </style><style id="pos-posts-styles">
+    .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .posts-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .posts-card {
+      background: rgba(15, 23, 42, 0.85); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; position: relative;
+    }
+    .posts-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan, #38bdf8); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
+    .posts-card-cover { height: 100px; background: linear-gradient(135deg, #1e1b4b, #31104b); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; }
+    .posts-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+    .posts-card-body { padding: 15px; }
+    .posts-card-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text-main, #fff); }
+    .posts-card-date { font-size: 12px; color: var(--text-muted, #cbd5e1); }
+
+    /* Modal Overlay */
+    .posts-modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
+    }
+    .posts-modal-card {
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); text-align: left; margin: auto;
+    }
+    .posts-modal-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted, #cbd5e1); cursor: pointer; }
+    .posts-modal-close:hover { color: #ef4444; }
+
+    .posts-form-group { margin-bottom: 14px; }
+    .posts-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--neon-cyan, #38bdf8); margin-bottom: 5px; }
+    .posts-form-input { width: 100%; background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+
+    .posts-editor-toolbar { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px; }
+    .posts-tool-btn { background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .posts-tool-btn:hover { background: var(--neon-cyan, #38bdf8); color: #000; }
+
+    .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
+    body.body-unlocked .posts-btn-add { display: inline-block; }
+
+    /* Container du Formulaire Officiel Kit */
+    .posts-newsletter-card {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+  </style><style id="pos-cal-styles">
+    .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
+    .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
+    .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .cal-filter-checkbox { accent-color: var(--cdl-cyan, #38bdf8); width: 15px; height: 15px; cursor: pointer; }
+    .cal-admin-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
+    .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
+    .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
+    .cal-btn.active { background: var(--cdl-cyan, #38bdf8) !important; color: #000 !important; }
+    .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
+    
+    .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
+    .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.15); }
+    .day-cell.other-month { opacity: 0.3; background: rgba(15, 23, 42, 0.4); }
+    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
+    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
+    .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
+
+    .event-pill {
+      font-size: 11px; font-weight: 700; padding: 4px 6px; border-radius: 6px; color: #000;
+      cursor: pointer; line-height: 1.25; display: flex; flex-direction: column; gap: 2px;
+      user-select: none; word-break: break-word;
+    }
+    .event-pill-time {
+      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.15);
+      padding: 1px 4px; border-radius: 3px; align-self: flex-start;
+    }
+    .event-pill-title {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .event-pill[draggable="true"] { cursor: grab; }
+    .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
+
+    .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
+    .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
+    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
+    .event-row:hover { transform: translateX(4px); border-color: var(--cdl-cyan, #38bdf8); }
+    .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
+    .event-date-box { text-align: center; min-width: 40px; }
+    .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
+    .event-date-month { font-size: 11px; color: var(--text-muted); }
+    .event-name { font-weight: 700; font-size: 15px; }
+    .event-meta { font-size: 12.5px; color: var(--text-muted); }
+
+    .cal-shadowbox-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
+    }
+    .cal-shadowbox-card {
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
+      text-align: left; margin: auto;
+    }
+    .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+    .cal-shadowbox-close:hover { color: #ef4444; }
+    
+    .cal-modal-section { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .cal-modal-section-title { font-size: 14px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 8px; }
+    .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin-top: 10px; }
+    .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
+    .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
+    .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
+
+    .cal-form-group { margin-bottom: 14px; }
+    .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
+    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
+
+    .map-link { color: var(--cdl-cyan, #38bdf8); text-decoration: underline; font-weight: 700; transition: color 0.2s; }
+    .map-link:hover { color: var(--neon-amber, #f59e0b); }
+
+    #pos-ai-disclaimer {
+      margin-top: 25px; padding: 16px 20px; background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
+      font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
+    }
+  </style></head>
+<body class="">
 
   <!-- Centralized Navigation Bar -->
-  <nav id="pos-nav"></nav>
+  <nav id="pos-nav" class="global-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
+        <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
+      </a>
+      
+      <div class="nav-menu" id="nav-dynamic-tabs"><a href="index.html" class="nav-tab active">tous les événements</a><a href="cdl-code.html" class="nav-tab ">rennes café des langues</a><a href="rec-code.html" class="nav-tab ">rennes english choir</a></div>
+
+      <div class="right-controls">
+        <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
+          <span>🙌</span> <span id="nav-join-text">rejoins-nous !</span>
+        </a>
+
+        <button class="download-icon-btn" onclick="downloadUpdatedHTML()" id="nav-download-btn" title="Télécharger le fichier HTML mis à jour">📥</button>
+
+        <button id="nav-lock-btn" class="lock-btn unlocked" onclick="toggleNavLock()">
+          🔒 <span id="nav-lock-label">déverrouillé</span>
+        </button>
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="nav-btn-fr" onclick="setNavLanguage('fr')">FR</button>
+          <button class="lang-btn" id="nav-btn-en" onclick="setNavLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
   <script src="nav.js"></script>
 
   <div class="container">
@@ -214,9 +439,7 @@
       </div>
       <div class="title-area">
         <h1><span id="hero-title">prism outreach studio</span> <button class="edit-pencil" onclick="editHeroHeader()">✏️</button></h1>
-        <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">
-          plateforme des activités, échanges linguistiques et projets artistiques à rennes
-        </p>
+        <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">association 1901 des activités et échanges linguistiques et projets de confiance en soi à rennes</p>
       </div>
     </header>
 
@@ -230,20 +453,219 @@
         </div>
       </div>
       
-      <div class="events-gallery" id="events-container">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="events-gallery" id="events-container"><div class="notion-event-card">
+          <div class="card-cover">
+            <img src="hermine-futuristic.png" alt="rennes café des langues" class="card-cover-img" onerror="this.style.display='none'">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">échanges linguistiques</span>
+            <div class="card-title">rennes café des langues</div>
+            <div class="card-desc">rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.</div>
+          </div>
+        </div><div class="notion-event-card">
+          <div class="card-cover">
+            <img src="choir.png" alt="rennes english choir" class="card-cover-img" onerror="this.style.display='none'">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">chorale &amp; musique</span>
+            <div class="card-title">rennes english choir</div>
+            <div class="card-desc">chorale anglophone dirigé par un chef natif. chante des morceaux stimulants, travaille votre prononciation et soutiens des causes caritatives.</div>
+          </div>
+        </div></div>
     </section>
 
     <!-- Centralized Posts / Newsletter Archives Section -->
     <section class="glass-card">
-      <div id="pos-posts"></div>
+      <div id="pos-posts">
+    <div class="posts-header-bar">
+      <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
+        📰 <span id="title-news-heading">archive des actualités</span>
+      </div>
+      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">➕ ajouter une édition</button>
+    </div>
+    
+    <div class="posts-gallery" id="posts-gallery-container"><div class="posts-card">
+      <div class="posts-card-cover">🗣️</div>
+      <div class="posts-card-body">
+        <div class="posts-card-title">The POS Weekly Scoop #12</div>
+        <div class="posts-card-date">Septembre 2026</div>
+      </div>
+    </div><div class="posts-card">
+      <div class="posts-card-cover">🌍</div>
+      <div class="posts-card-body">
+        <div class="posts-card-title">The POS Weekly Scoop #11</div>
+        <div class="posts-card-date">Août 2026</div>
+      </div>
+    </div></div>
+
+    <!-- Emplacement officiel du formulaire Kit -->
+    <div class="posts-newsletter-card">
+      <div id="kit-embed-container"><form action="https://app.kit.com/forms/9871438/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9871438" data-uid="3c9defa9e3" data-format="inline" data-version="5" min-width="400 500 600 700"><div data-style="clean"><ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul><div data-element="fields" data-stacked="false" class="seva-fields formkit-fields"><div class="formkit-field"><input class="formkit-input" name="email_address" style="color:#000;border-color:#e3e3e3;border-radius:4px;font-weight:400" aria-label="exemple@email.com" placeholder="exemple@email.com" required="" type="text"></div><button data-element="submit" class="formkit-submit formkit-submit" style="color:#fff;background-color:#1677be;border-radius:4px;font-weight:400"><div class="formkit-spinner"><div></div><div></div><div></div></div><span class="">m'inscrire</span></button></div><div class="formkit-powered-by-convertkit-container"><a href="https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic" data-element="powered-by" class="formkit-powered-by-convertkit" data-variant="dark" target="_blank" rel="nofollow noopener">Built with Kit</a></div></div><style>.formkit-form[data-uid="3c9defa9e3"] *{box-sizing:border-box;}.formkit-form[data-uid="3c9defa9e3"]{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}.formkit-form[data-uid="3c9defa9e3"] legend{border:none;font-size:inherit;margin-bottom:10px;padding:0;position:relative;display:table;}.formkit-form[data-uid="3c9defa9e3"] fieldset{border:0;padding:0.01em 0 0 0;margin:0;min-width:0;}.formkit-form[data-uid="3c9defa9e3"] body:not(:-moz-handler-blocked) fieldset{display:table-cell;}.formkit-form[data-uid="3c9defa9e3"] h1,.formkit-form[data-uid="3c9defa9e3"] h2,.formkit-form[data-uid="3c9defa9e3"] h3,.formkit-form[data-uid="3c9defa9e3"] h4,.formkit-form[data-uid="3c9defa9e3"] h5,.formkit-form[data-uid="3c9defa9e3"] h6{color:inherit;font-size:inherit;font-weight:inherit;}.formkit-form[data-uid="3c9defa9e3"] h2{font-size:1.5em;margin:1em 0;}.formkit-form[data-uid="3c9defa9e3"] h3{font-size:1.17em;margin:1em 0;}.formkit-form[data-uid="3c9defa9e3"] p{color:inherit;font-size:inherit;font-weight:inherit;}.formkit-form[data-uid="3c9defa9e3"] ol:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] ul:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] blockquote:not([template-default]){text-align:left;}.formkit-form[data-uid="3c9defa9e3"] p:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] hr:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] blockquote:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] ol:not([template-default]),.formkit-form[data-uid="3c9defa9e3"] ul:not([template-default]){color:inherit;font-style:initial;}.formkit-form[data-uid="3c9defa9e3"] .ordered-list,.formkit-form[data-uid="3c9defa9e3"] .unordered-list{list-style-position:outside !important;padding-left:1em;}.formkit-form[data-uid="3c9defa9e3"] .list-item{padding-left:0;}.formkit-form[data-uid="3c9defa9e3"][data-format="modal"]{display:none;}.formkit-form[data-uid="3c9defa9e3"][data-format="slide in"]{display:none;}.formkit-form[data-uid="3c9defa9e3"][data-format="sticky bar"]{display:none;}.formkit-sticky-bar .formkit-form[data-uid="3c9defa9e3"][data-format="sticky bar"]{display:block;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input,.formkit-form[data-uid="3c9defa9e3"] .formkit-select,.formkit-form[data-uid="3c9defa9e3"] .formkit-checkboxes{width:100%;}.formkit-form[data-uid="3c9defa9e3"] .formkit-button,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit{border:0;border-radius:5px;color:#ffffff;cursor:pointer;display:inline-block;text-align:center;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:15px;overflow:hidden;padding:0;position:relative;vertical-align:middle;}.formkit-form[data-uid="3c9defa9e3"] .formkit-button:hover,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit:hover,.formkit-form[data-uid="3c9defa9e3"] .formkit-button:focus,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit:focus{outline:none;}.formkit-form[data-uid="3c9defa9e3"] .formkit-button:hover > span,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit:hover > span,.formkit-form[data-uid="3c9defa9e3"] .formkit-button:focus > span,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit:focus > span{background-color:rgba(0,0,0,0.1);}.formkit-form[data-uid="3c9defa9e3"] .formkit-button > span,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit > span{display:block;-webkit-transition:all 300ms ease-in-out;transition:all 300ms ease-in-out;padding:12px 24px;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input{background:#ffffff;font-size:15px;padding:12px;border:1px solid #e3e3e3;-webkit-flex:1 0 auto;-ms-flex:1 0 auto;flex:1 0 auto;line-height:1.4;margin:0;-webkit-transition:border-color ease-out 300ms;transition:border-color ease-out 300ms;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input:focus{outline:none;border-color:#1677be;-webkit-transition:border-color ease 300ms;transition:border-color ease 300ms;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input::-webkit-input-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input::-moz-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input:-ms-input-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="3c9defa9e3"] .formkit-input::placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="3c9defa9e3"] [data-group="dropdown"]{position:relative;display:inline-block;width:100%;}.formkit-form[data-uid="3c9defa9e3"] [data-group="dropdown"]::before{content:"";top:calc(50% - 2.5px);right:10px;position:absolute;pointer-events:none;border-color:#4f4f4f transparent transparent transparent;border-style:solid;border-width:6px 6px 0 6px;height:0;width:0;z-index:999;}.formkit-form[data-uid="3c9defa9e3"] [data-group="dropdown"] select{height:auto;width:100%;cursor:pointer;color:#333333;line-height:1.4;margin-bottom:0;padding:0 6px;-webkit-appearance:none;-moz-appearance:none;appearance:none;font-size:15px;padding:12px;padding-right:25px;border:1px solid #e3e3e3;background:#ffffff;}.formkit-form[data-uid="3c9defa9e3"] [data-group="dropdown"] select:focus{outline:none;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"]{text-align:left;margin:0;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"]{margin-bottom:10px;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] *{cursor:pointer;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"]:last-of-type{margin-bottom:0;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]{display:none;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"] + label::after{content:none;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]:checked + label::after{border-color:#ffffff;content:"";}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]:checked + label::before{background:#10bf7a;border-color:#10bf7a;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] label{position:relative;display:inline-block;padding-left:28px;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] label::before,.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] label::after{position:absolute;content:"";display:inline-block;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] label::before{height:16px;width:16px;border:1px solid #e3e3e3;background:#ffffff;left:0px;top:3px;}.formkit-form[data-uid="3c9defa9e3"] [data-group="checkboxes"] [data-group="checkbox"] label::after{height:4px;width:8px;border-left:2px solid #4d4d4d;border-bottom:2px solid #4d4d4d;-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg);left:4px;top:8px;}.formkit-form[data-uid="3c9defa9e3"] .formkit-alert{background:#f9fafb;border:1px solid #e3e3e3;border-radius:5px;-webkit-flex:1 0 auto;-ms-flex:1 0 auto;flex:1 0 auto;list-style:none;margin:25px auto;padding:12px;text-align:center;width:100%;}.formkit-form[data-uid="3c9defa9e3"] .formkit-alert:empty{display:none;}.formkit-form[data-uid="3c9defa9e3"] .formkit-alert-success{background:#d3fbeb;border-color:#10bf7a;color:#0c905c;}.formkit-form[data-uid="3c9defa9e3"] .formkit-alert-error{background:#fde8e2;border-color:#f2643b;color:#ea4110;}.formkit-form[data-uid="3c9defa9e3"] .formkit-spinner{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:0px;width:0px;margin:0 auto;position:absolute;top:0;left:0;right:0;width:0px;overflow:hidden;text-align:center;-webkit-transition:all 300ms ease-in-out;transition:all 300ms ease-in-out;}.formkit-form[data-uid="3c9defa9e3"] .formkit-spinner > div{margin:auto;width:12px;height:12px;background-color:#fff;opacity:0.3;border-radius:100%;display:inline-block;-webkit-animation:formkit-bouncedelay-formkit-form-data-uid-3c9defa9e3- 1.4s infinite ease-in-out both;animation:formkit-bouncedelay-formkit-form-data-uid-3c9defa9e3- 1.4s infinite ease-in-out both;}.formkit-form[data-uid="3c9defa9e3"] .formkit-spinner > div:nth-child(1){-webkit-animation-delay:-0.32s;animation-delay:-0.32s;}.formkit-form[data-uid="3c9defa9e3"] .formkit-spinner > div:nth-child(2){-webkit-animation-delay:-0.16s;animation-delay:-0.16s;}.formkit-form[data-uid="3c9defa9e3"] .formkit-submit[data-active] .formkit-spinner{opacity:1;height:100%;width:50px;}.formkit-form[data-uid="3c9defa9e3"] .formkit-submit[data-active] .formkit-spinner ~ span{opacity:0;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by[data-active="false"]{opacity:0.35;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit-container{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;margin:10px 0;position:relative;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit-container[data-active="false"]{opacity:0.35;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit{-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;background-color:#ffffff;border-radius:9px;color:#3d3d3d;cursor:pointer;display:block;height:36px;margin:0 auto;opacity:0.95;padding:0;-webkit-text-decoration:none;text-decoration:none;text-indent:100%;-webkit-transition:ease-in-out all 200ms;transition:ease-in-out all 200ms;white-space:nowrap;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:157px;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml;charset=utf8,%3Csvg width='133' height='36' viewBox='0 0 133 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.861 25.5C0.735 25.5 0.651 25.416 0.651 25.29V10.548C0.651 10.422 0.735 10.338 0.861 10.338H6.279C9.072 10.338 10.668 11.451 10.668 13.824C10.668 15.819 9.219 16.932 8.001 17.226C7.707 17.268 7.707 17.625 8.022 17.688C9.912 18.108 11.088 19.116 11.088 21.321C11.088 23.715 9.429 25.5 6.426 25.5H0.861ZM5.397 23.085C6.825 23.085 7.518 22.224 7.518 21.006C7.518 19.683 6.825 18.948 5.397 18.948H4.2V23.085H5.397ZM5.313 16.617C6.51 16.617 7.245 15.945 7.245 14.601C7.245 13.383 6.51 12.753 5.25 12.753H4.2V16.617H5.313ZM17.9758 23.883C17.9758 23.568 17.6608 23.505 17.5348 23.799C17.0308 24.954 16.1698 25.731 14.5528 25.731C12.8728 25.731 12.0958 24.471 12.0958 22.707V14.937C12.0958 14.811 12.1798 14.727 12.3058 14.727H15.2248C15.3508 14.727 15.4348 14.811 15.4348 14.937V21.657C15.4348 22.581 15.7708 23.022 16.4638 23.022C17.1778 23.022 17.6188 22.581 17.6188 21.657V14.937C17.6188 14.811 17.7028 14.727 17.8288 14.727H20.7478C20.8738 14.727 20.9578 14.811 20.9578 14.937V25.29C20.9578 25.416 20.8738 25.5 20.7478 25.5H18.1858C18.0598 25.5 17.9758 25.416 17.9758 25.29V23.883ZM25.6141 25.29C25.6141 25.416 25.5301 25.5 25.4041 25.5H22.4851C22.3591 25.5 22.2751 25.416 22.2751 25.29V14.937C22.2751 14.811 22.3591 14.727 22.4851 14.727H25.4041C25.5301 14.727 25.6141 14.811 25.6141 14.937V25.29ZM23.9131 13.74C22.8001 13.74 22.0441 12.942 22.0441 11.934C22.0441 10.926 22.8001 10.107 23.9131 10.107C25.0051 10.107 25.7611 10.926 25.7611 11.934C25.7611 12.942 25.0051 13.74 23.9131 13.74ZM26.7883 10.548C26.7883 10.422 26.8723 10.338 26.9983 10.338H29.9173C30.0433 10.338 30.1273 10.422 30.1273 10.548V22.056C30.1273 22.749 30.2533 23.085 30.8203 23.085C31.0093 23.085 31.1983 23.043 31.3663 23.001C31.5133 22.959 31.6183 22.959 31.6183 23.127V25.059C31.6183 25.164 31.5763 25.269 31.4923 25.311C30.9673 25.521 30.2953 25.71 29.5813 25.71C27.7123 25.71 26.7883 24.639 26.7883 22.476V10.548ZM32.4237 14.727C32.8227 14.727 32.9277 14.538 32.9697 14.055L33.1167 12.039C33.1167 11.913 33.2217 11.829 33.3477 11.829H35.8887C36.0147 11.829 36.0987 11.913 36.0987 12.039V14.517C36.0987 14.643 36.1827 14.727 36.3087 14.727H38.2827C38.4087 14.727 38.4927 14.811 38.4927 14.937V16.659C38.4927 16.785 38.4087 16.869 38.2827 16.869H36.0777V22.056C36.0777 22.875 36.5397 23.085 37.0647 23.085C37.4847 23.085 37.9467 22.938 38.3247 22.707C38.4717 22.623 38.5767 22.665 38.5767 22.833V24.828C38.5767 24.933 38.5347 25.017 38.4507 25.08C37.8417 25.458 36.9807 25.71 36.0357 25.71C34.2927 25.71 32.7387 24.912 32.7387 22.476V16.869H31.8567C31.7307 16.869 31.6467 16.785 31.6467 16.659V14.937C31.6467 14.811 31.7307 14.727 31.8567 14.727H32.4237ZM51.3808 14.727C51.5068 14.727 51.5908 14.79 51.6118 14.916L52.3888 19.851L52.5778 21.174C52.6198 21.468 52.9558 21.468 52.9768 21.174C53.0398 20.712 53.0818 20.271 53.1658 19.83L53.8798 14.916C53.9008 14.79 53.9848 14.727 54.1108 14.727H56.6728C56.8198 14.727 56.8828 14.811 56.8618 14.958L54.6778 25.311C54.6568 25.437 54.5728 25.5 54.4468 25.5H51.3178C51.1918 25.5 51.1078 25.437 51.0868 25.311L50.1208 20.082L49.8898 18.633C49.8688 18.444 49.6588 18.444 49.6378 18.633L49.4068 20.103L48.5458 25.311C48.5248 25.437 48.4408 25.5 48.3148 25.5H45.2068C45.0808 25.5 44.9968 25.437 44.9758 25.311L42.8128 14.958C42.7918 14.811 42.8548 14.727 43.0018 14.727H45.9628C46.0888 14.727 46.1728 14.79 46.1938 14.916L46.9288 19.83C47.0128 20.271 47.0758 20.754 47.1388 21.195C47.2018 21.51 47.4748 21.531 47.5378 21.195L47.7478 19.872L48.6088 14.916C48.6298 14.79 48.7138 14.727 48.8398 14.727H51.3808ZM61.1582 25.29C61.1582 25.416 61.0742 25.5 60.9482 25.5H58.0292C57.9032 25.5 57.8192 25.416 57.8192 25.29V14.937C57.8192 14.811 57.9032 14.727 58.0292 14.727H60.9482C61.0742 14.727 61.1582 14.811 61.1582 14.937V25.29ZM59.4572 13.74C58.3442 13.74 57.5882 12.942 57.5882 11.934C57.5882 10.926 58.3442 10.107 59.4572 10.107C60.5492 10.107 61.3052 10.926 61.3052 11.934C61.3052 12.942 60.5492 13.74 59.4572 13.74ZM62.8154 14.727C63.2144 14.727 63.3194 14.538 63.3614 14.055L63.5084 12.039C63.5084 11.913 63.6134 11.829 63.7394 11.829H66.2804C66.4064 11.829 66.4904 11.913 66.4904 12.039V14.517C66.4904 14.643 66.5744 14.727 66.7004 14.727H68.6744C68.8004 14.727 68.8844 14.811 68.8844 14.937V16.659C68.8844 16.785 68.8004 16.869 68.6744 16.869H66.4694V22.056C66.4694 22.875 66.9314 23.085 67.4564 23.085C67.8764 23.085 68.3384 22.938 68.7164 22.707C68.8634 22.623 68.9684 22.665 68.9684 22.833V24.828C68.9684 24.933 68.9264 25.017 68.8424 25.08C68.2334 25.458 67.3724 25.71 66.4274 25.71C64.6844 25.71 63.1304 24.912 63.1304 22.476V16.869H62.2484C62.1224 16.869 62.0384 16.785 62.0384 16.659V14.937C62.0384 14.811 62.1224 14.727 62.2484 14.727H62.8154ZM73.4298 16.323C73.4298 16.638 73.7868 16.68 73.9128 16.407C74.3748 15.315 75.1308 14.496 76.6008 14.496C78.2178 14.496 78.9528 15.609 78.9528 17.373V25.29C78.9528 25.416 78.8688 25.5 78.7428 25.5H75.8238C75.6978 25.5 75.6138 25.416 75.6138 25.29V18.633C75.6138 17.709 75.2778 17.268 74.5848 17.268C73.8708 17.268 73.4298 17.709 73.4298 18.633V25.29C73.4298 25.416 73.3458 25.5 73.2198 25.5H70.3008C70.1748 25.5 70.0908 25.416 70.0908 25.29V10.548C70.0908 10.422 70.1748 10.338 70.3008 10.338H73.2198C73.3458 10.338 73.4298 10.422 73.4298 10.548V16.323Z' fill='%231E1E1E'/%3E%3Cpath d='M100.132 16.3203C105.58 17.3761 107.272 22.4211 107.318 27.4961C107.318 27.6101 107.226 27.7041 107.112 27.7041H100.252C100.138 27.7041 100.046 27.6121 100.046 27.5001C100.026 23.5629 99.3877 20.0896 95.4865 19.9396C95.3705 19.9356 95.2725 20.0276 95.2725 20.1456V27.5001C95.2725 27.6141 95.1806 27.7061 95.0666 27.7061H88.206C88.092 27.7061 88 27.6141 88 27.5001V8.75585C88 8.64187 88.092 8.54989 88.206 8.54989H95.0686C95.1826 8.54989 95.2745 8.64187 95.2745 8.75585V15.7764C95.2745 15.8804 95.3585 15.9644 95.4625 15.9644C95.5445 15.9644 95.6185 15.9104 95.6425 15.8324C97.4081 10.0416 100.709 8.58588 106.07 8.55189C106.184 8.55189 106.276 8.64387 106.276 8.75785V15.7604C106.276 15.8744 106.184 15.9664 106.07 15.9664H100.166C100.066 15.9664 99.9856 16.0464 99.9856 16.1464C99.9856 16.2304 100.048 16.3043 100.132 16.3203ZM118.918 20.7095V16.1704C118.918 16.0564 119.01 15.9644 119.124 15.9644H124.173C124.273 15.9644 124.353 15.8844 124.353 15.7844C124.353 15.6985 124.291 15.6245 124.207 15.6085C120.256 14.8246 118.432 12.5511 118.37 8.75585C118.368 8.64387 118.458 8.54989 118.572 8.54989H125.986C126.1 8.54989 126.192 8.64187 126.192 8.75585V11.9532C126.192 12.0672 126.284 12.1592 126.398 12.1592H130.649C130.763 12.1592 130.855 12.2511 130.855 12.3651V15.7624C130.855 15.8764 130.763 15.9684 130.649 15.9684H126.398C126.284 15.9684 126.192 16.0604 126.192 16.1744V19.8356C126.192 21.1294 126.986 21.5553 128.04 21.5553C129.692 21.5553 131.323 20.8114 131.977 20.4735C132.113 20.4035 132.277 20.5015 132.277 20.6555V26.3543C132.277 26.5063 132.193 26.6463 132.059 26.7183C131.413 27.0582 129.418 28 127.136 28C122.435 27.996 118.918 26.0824 118.918 20.7095ZM109.266 27.4981V16.1704C109.266 16.0564 109.358 15.9644 109.472 15.9644H116.334C116.448 15.9644 116.54 16.0564 116.54 16.1704V27.4981C116.54 27.6121 116.448 27.7041 116.334 27.7041H109.472C109.358 27.7021 109.266 27.6101 109.266 27.4981ZM108.876 11.4913C108.876 13.4189 110.238 14.9826 112.853 14.9826C115.469 14.9826 116.83 13.4189 116.83 11.4913C116.83 9.56369 115.471 8 112.853 8C110.238 8 108.876 9.56369 108.876 11.4913Z' fill='%231E1E1E'/%3E%3C/svg%3E");}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit:hover,.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit:focus{background-color:#ffffff;-webkit-transform:scale(1.025) perspective(1px);-ms-transform:scale(1.025) perspective(1px);transform:scale(1.025) perspective(1px);opacity:1;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit[data-variant="dark"],.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit[data-variant="light"]{background-color:transparent;border-color:transparent;width:133px;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit[data-variant="light"]{color:#ffffff;background-image:url("data:image/svg+xml;charset=utf8,%3Csvg width='133' height='36' viewBox='0 0 133 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.861 25.5C0.735 25.5 0.651 25.416 0.651 25.29V10.548C0.651 10.422 0.735 10.338 0.861 10.338H6.279C9.072 10.338 10.668 11.451 10.668 13.824C10.668 15.819 9.219 16.932 8.001 17.226C7.707 17.268 7.707 17.625 8.022 17.688C9.912 18.108 11.088 19.116 11.088 21.321C11.088 23.715 9.429 25.5 6.426 25.5H0.861ZM5.397 23.085C6.825 23.085 7.518 22.224 7.518 21.006C7.518 19.683 6.825 18.948 5.397 18.948H4.2V23.085H5.397ZM5.313 16.617C6.51 16.617 7.245 15.945 7.245 14.601C7.245 13.383 6.51 12.753 5.25 12.753H4.2V16.617H5.313ZM17.9758 23.883C17.9758 23.568 17.6608 23.505 17.5348 23.799C17.0308 24.954 16.1698 25.731 14.5528 25.731C12.8728 25.731 12.0958 24.471 12.0958 22.707V14.937C12.0958 14.811 12.1798 14.727 12.3058 14.727H15.2248C15.3508 14.727 15.4348 14.811 15.4348 14.937V21.657C15.4348 22.581 15.7708 23.022 16.4638 23.022C17.1778 23.022 17.6188 22.581 17.6188 21.657V14.937C17.6188 14.811 17.7028 14.727 17.8288 14.727H20.7478C20.8738 14.727 20.9578 14.811 20.9578 14.937V25.29C20.9578 25.416 20.8738 25.5 20.7478 25.5H18.1858C18.0598 25.5 17.9758 25.416 17.9758 25.29V23.883ZM25.6141 25.29C25.6141 25.416 25.5301 25.5 25.4041 25.5H22.4851C22.3591 25.5 22.2751 25.416 22.2751 25.29V14.937C22.2751 14.811 22.3591 14.727 22.4851 14.727H25.4041C25.5301 14.727 25.6141 14.811 25.6141 14.937V25.29ZM23.9131 13.74C22.8001 13.74 22.0441 12.942 22.0441 11.934C22.0441 10.926 22.8001 10.107 23.9131 10.107C25.0051 10.107 25.7611 10.926 25.7611 11.934C25.7611 12.942 25.0051 13.74 23.9131 13.74ZM26.7883 10.548C26.7883 10.422 26.8723 10.338 26.9983 10.338H29.9173C30.0433 10.338 30.1273 10.422 30.1273 10.548V22.056C30.1273 22.749 30.2533 23.085 30.8203 23.085C31.0093 23.085 31.1983 23.043 31.3663 23.001C31.5133 22.959 31.6183 22.959 31.6183 23.127V25.059C31.6183 25.164 31.5763 25.269 31.4923 25.311C30.9673 25.521 30.2953 25.71 29.5813 25.71C27.7123 25.71 26.7883 24.639 26.7883 22.476V10.548ZM32.4237 14.727C32.8227 14.727 32.9277 14.538 32.9697 14.055L33.1167 12.039C33.1167 11.913 33.2217 11.829 33.3477 11.829H35.8887C36.0147 11.829 36.0987 11.913 36.0987 12.039V14.517C36.0987 14.643 36.1827 14.727 36.3087 14.727H38.2827C38.4087 14.727 38.4927 14.811 38.4927 14.937V16.659C38.4927 16.785 38.4087 16.869 38.2827 16.869H36.0777V22.056C36.0777 22.875 36.5397 23.085 37.0647 23.085C37.4847 23.085 37.9467 22.938 38.3247 22.707C38.4717 22.623 38.5767 22.665 38.5767 22.833V24.828C38.5767 24.933 38.5347 25.017 38.4507 25.08C37.8417 25.458 36.9807 25.71 36.0357 25.71C34.2927 25.71 32.7387 24.912 32.7387 22.476V16.869H31.8567C31.7307 16.869 31.6467 16.785 31.6467 16.659V14.937C31.6467 14.811 31.7307 14.727 31.8567 14.727H32.4237ZM51.3808 14.727C51.5068 14.727 51.5908 14.79 51.6118 14.916L52.3888 19.851L52.5778 21.174C52.6198 21.468 52.9558 21.468 52.9768 21.174C53.0398 20.712 53.0818 20.271 53.1658 19.83L53.8798 14.916C53.9008 14.79 53.9848 14.727 54.1108 14.727H56.6728C56.8198 14.727 56.8828 14.811 56.8618 14.958L54.6778 25.311C54.6568 25.437 54.5728 25.5 54.4468 25.5H51.3178C51.1918 25.5 51.1078 25.437 51.0868 25.311L50.1208 20.082L49.8898 18.633C49.8688 18.444 49.6588 18.444 49.6378 18.633L49.4068 20.103L48.5458 25.311C48.5248 25.437 48.4408 25.5 48.3148 25.5H45.2068C45.0808 25.5 44.9968 25.437 44.9758 25.311L42.8128 14.958C42.7918 14.811 42.8548 14.727 43.0018 14.727H45.9628C46.0888 14.727 46.1728 14.79 46.1938 14.916L46.9288 19.83C47.0128 20.271 47.0758 20.754 47.1388 21.195C47.2018 21.51 47.4748 21.531 47.5378 21.195L47.7478 19.872L48.6088 14.916C48.6298 14.79 48.7138 14.727 48.8398 14.727H51.3808ZM61.1582 25.29C61.1582 25.416 61.0742 25.5 60.9482 25.5H58.0292C57.9032 25.5 57.8192 25.416 57.8192 25.29V14.937C57.8192 14.811 57.9032 14.727 58.0292 14.727H60.9482C61.0742 14.727 61.1582 14.811 61.1582 14.937V25.29ZM59.4572 13.74C58.3442 13.74 57.5882 12.942 57.5882 11.934C57.5882 10.926 58.3442 10.107 59.4572 10.107C60.5492 10.107 61.3052 10.926 61.3052 11.934C61.3052 12.942 60.5492 13.74 59.4572 13.74ZM62.8154 14.727C63.2144 14.727 63.3194 14.538 63.3614 14.055L63.5084 12.039C63.5084 11.913 63.6134 11.829 63.7394 11.829H66.2804C66.4064 11.829 66.4904 11.913 66.4904 12.039V14.517C66.4904 14.643 66.5744 14.727 66.7004 14.727H68.6744C68.8004 14.727 68.8844 14.811 68.8844 14.937V16.659C68.8844 16.785 68.8004 16.869 68.6744 16.869H66.4694V22.056C66.4694 22.875 66.9314 23.085 67.4564 23.085C67.8764 23.085 68.3384 22.938 68.7164 22.707C68.8634 22.623 68.9684 22.665 68.9684 22.833V24.828C68.9684 24.933 68.9264 25.017 68.8424 25.08C68.2334 25.458 67.3724 25.71 66.4274 25.71C64.6844 25.71 63.1304 24.912 63.1304 22.476V16.869H62.2484C62.1224 16.869 62.0384 16.785 62.0384 16.659V14.937C62.0384 14.811 62.1224 14.727 62.2484 14.727H62.8154ZM73.4298 16.323C73.4298 16.638 73.7868 16.68 73.9128 16.407C74.3748 15.315 75.1308 14.496 76.6008 14.496C78.2178 14.496 78.9528 15.609 78.9528 17.373V25.29C78.9528 25.416 78.8688 25.5 78.7428 25.5H75.8238C75.6978 25.5 75.6138 25.416 75.6138 25.29V18.633C75.6138 17.709 75.2778 17.268 74.5848 17.268C73.8708 17.268 73.4298 17.709 73.4298 18.633V25.29C73.4298 25.416 73.3458 25.5 73.2198 25.5H70.3008C70.1748 25.5 70.0908 25.416 70.0908 25.29V10.548C70.0908 10.422 70.1748 10.338 70.3008 10.338H73.2198C73.3458 10.338 73.4298 10.422 73.4298 10.548V16.323Z' fill='white'/%3E%3Cpath d='M100.132 16.3203C105.58 17.3761 107.272 22.4211 107.318 27.4961C107.318 27.6101 107.226 27.7041 107.112 27.7041H100.252C100.138 27.7041 100.046 27.6121 100.046 27.5001C100.026 23.5629 99.3877 20.0896 95.4865 19.9396C95.3705 19.9356 95.2725 20.0276 95.2725 20.1456V27.5001C95.2725 27.6141 95.1806 27.7061 95.0666 27.7061H88.206C88.092 27.7061 88 27.6141 88 27.5001V8.75585C88 8.64187 88.092 8.54989 88.206 8.54989H95.0686C95.1826 8.54989 95.2745 8.64187 95.2745 8.75585V15.7764C95.2745 15.8804 95.3585 15.9644 95.4625 15.9644C95.5445 15.9644 95.6185 15.9104 95.6425 15.8324C97.4081 10.0416 100.709 8.58588 106.07 8.55189C106.184 8.55189 106.276 8.64387 106.276 8.75785V15.7604C106.276 15.8744 106.184 15.9664 106.07 15.9664H100.166C100.066 15.9664 99.9856 16.0464 99.9856 16.1464C99.9856 16.2304 100.048 16.3043 100.132 16.3203ZM118.918 20.7095V16.1704C118.918 16.0564 119.01 15.9644 119.124 15.9644H124.173C124.273 15.9644 124.353 15.8844 124.353 15.7844C124.353 15.6985 124.291 15.6245 124.207 15.6085C120.256 14.8246 118.432 12.5511 118.37 8.75585C118.368 8.64387 118.458 8.54989 118.572 8.54989H125.986C126.1 8.54989 126.192 8.64187 126.192 8.75585V11.9532C126.192 12.0672 126.284 12.1592 126.398 12.1592H130.649C130.763 12.1592 130.855 12.2511 130.855 12.3651V15.7624C130.855 15.8764 130.763 15.9684 130.649 15.9684H126.398C126.284 15.9684 126.192 16.0604 126.192 16.1744V19.8356C126.192 21.1294 126.986 21.5553 128.04 21.5553C129.692 21.5553 131.323 20.8114 131.977 20.4735C132.113 20.4035 132.277 20.5015 132.277 20.6555V26.3543C132.277 26.5063 132.193 26.6463 132.059 26.7183C131.413 27.0582 129.418 28 127.136 28C122.435 27.996 118.918 26.0824 118.918 20.7095ZM109.266 27.4981V16.1704C109.266 16.0564 109.358 15.9644 109.472 15.9644H116.334C116.448 15.9644 116.54 16.0564 116.54 16.1704V27.4981C116.54 27.6121 116.448 27.7041 116.334 27.7041H109.472C109.358 27.7021 109.266 27.6101 109.266 27.4981ZM108.876 11.4913C108.876 13.4189 110.238 14.9826 112.853 14.9826C115.469 14.9826 116.83 13.4189 116.83 11.4913C116.83 9.56369 115.471 8 112.853 8C110.238 8 108.876 9.56369 108.876 11.4913Z' fill='white'/%3E%3C/svg%3E");}@-webkit-keyframes formkit-bouncedelay-formkit-form-data-uid-3c9defa9e3-{0%,80%,100%{-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0);}40%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}}@keyframes formkit-bouncedelay-formkit-form-data-uid-3c9defa9e3-{0%,80%,100%{-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0);}40%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}}.formkit-form[data-uid="3c9defa9e3"] blockquote{padding:10px 20px;margin:0 0 20px;border-left:5px solid #e1e1e1;}.formkit-form[data-uid="3c9defa9e3"] .seva-custom-content{padding:15px;font-size:16px;color:#fff;mix-blend-mode:difference;}.formkit-form[data-uid="3c9defa9e3"] .formkit-modal.guard{max-width:420px;width:100%;} .formkit-form[data-uid="3c9defa9e3"]{max-width:700px;}.formkit-form[data-uid="3c9defa9e3"] [data-style="clean"]{width:100%;}.formkit-form[data-uid="3c9defa9e3"] .formkit-fields{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;margin:0 auto;}.formkit-form[data-uid="3c9defa9e3"] .formkit-field,.formkit-form[data-uid="3c9defa9e3"] .formkit-submit{margin:0 0 15px 0;-webkit-flex:1 0 100%;-ms-flex:1 0 100%;flex:1 0 100%;}.formkit-form[data-uid="3c9defa9e3"] .formkit-powered-by-convertkit-container{margin:0;}.formkit-form[data-uid="3c9defa9e3"] .formkit-submit{position:static;}.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] [data-style="clean"],.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] [data-style="clean"]{padding:10px;padding-top:56px;}.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] .formkit-fields[data-stacked="false"],.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] .formkit-fields[data-stacked="false"]{margin-left:-5px;margin-right:-5px;}.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] .formkit-fields[data-stacked="false"] .formkit-field,.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] .formkit-fields[data-stacked="false"] .formkit-field,.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] .formkit-fields[data-stacked="false"] .formkit-submit,.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] .formkit-fields[data-stacked="false"] .formkit-submit{margin:0 5px 15px 5px;}.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] .formkit-fields[data-stacked="false"] .formkit-field,.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] .formkit-fields[data-stacked="false"] .formkit-field{-webkit-flex:100 1 auto;-ms-flex:100 1 auto;flex:100 1 auto;}.formkit-form[data-uid="3c9defa9e3"][min-width~="700"] .formkit-fields[data-stacked="false"] .formkit-submit,.formkit-form[data-uid="3c9defa9e3"][min-width~="800"] .formkit-fields[data-stacked="false"] .formkit-submit{-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;} </style><style>.formkit-email-suggestion {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-sizing: border-box !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  color: #000 !important;
+  background: #f9f7f4 !important;
+  border-radius: 6px !important;
+  padding: 6px 28px 6px 10px !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+  text-align: left !important;
+}
+
+.formkit-email-suggestion a {
+  color: #000 !important;
+  font-weight: 600 !important;
+  text-decoration: underline;
+  cursor: pointer;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.formkit-email-suggestion a:hover {
+  opacity: 0.8;
+}
+
+.formkit-email-suggestion-dismiss {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 13px !important;
+  opacity: 0.7;
+  text-decoration: none !important;
+}
+
+.formkit-email-suggestion-dismiss:hover {
+  opacity: 1;
+}
+</style></form></div>
+    </div>
+
+    <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)" style="display: none;">
+      <div class="posts-modal-card" onclick="event.stopPropagation()">
+        <span class="posts-modal-close" onclick="closePostsModal()">×</span>
+        <div id="posts-modal-content"></div>
+      </div>
+    </div>
+  </div>
     </section>
     <script src="posts.js"></script>
 
     <!-- Calendar Section -->
     <section class="glass-card">
-      <div id="pos-calendar"></div>
+      <div id="pos-calendar">
+    <div class="cal-toolbar-top">
+      <div class="cal-filters" id="cal-filters"><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
+      <span style="color:#38bdf8">●</span> café des langues
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
+      <span style="color:#fbbf24">●</span> rennes english choir
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
+      <span style="color:#e74c3c">●</span> événement spécial
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
+      <span style="color:#a855f7">●</span> atelier / cours
+    </label></div>
+      <div class="cal-admin-tools">
+        <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
+        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
+      </div>
+    </div>
+
+    <div class="cal-header">
+      <div class="cal-nav-group">
+        <button class="cal-btn" onclick="navCal(-1)">‹</button>
+        <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
+        <button class="cal-btn" onclick="navCal(1)">›</button>
+      </div>
+      <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
+      <div class="cal-view-group">
+        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
+        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
+      </div>
+    </div>
+
+    <div id="cal-month-view">
+      <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
+      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+        <span class="event-pill-time">⏰ 19:00</span>
+        <span class="event-pill-title">☕ café des langues 70</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+        <span class="event-pill-time">⏰ 19:00</span>
+        <span class="event-pill-title">☕ café des langues 71</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
+    </div>
+
+    <div id="cal-list-view" hidden=""></div>
+
+    <div class="upcoming-section">
+      <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
+      <div id="cal-upcoming-list"><div class="event-row">
+      <div class="event-color-bar" style="background:#38bdf8"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">04</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">☕ café des langues 70</div>
+        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#fbbf24"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">08</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">🎤 répétition rennes english choir 1</div>
+        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#fbbf24"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">15</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">🎤 répétition rennes english choir 2</div>
+        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#38bdf8"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">18</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">☕ café des langues 71</div>
+        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+      </div>
+    </div></div>
+    </div>
+
+    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
+      <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
+        <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
+        <div id="cal-shadowbox-content"></div>
+      </div>
+    </div>
+  </div>
     </section>
     <script src="calendar.js"></script>
 
@@ -254,13 +676,27 @@
         <button class="edit-pencil" onclick="openIndexRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="index-rules-container">
-        <!-- Dynamic Rules Rendered Here -->
-      </div>
+      <div id="index-rules-container"><details class="rule-dropdown">
+          <summary>1. <span>cadre et objectifs</span></summary>
+          <div class="rule-body">toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association.</div>
+        </details><details class="rule-dropdown">
+          <summary>2. <span>respect des lieux et partenaires</span></summary>
+          <div class="rule-body">nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictement interdit.</div>
+        </details><details class="rule-dropdown">
+          <summary>3. <span>environnement sûr et inclusif</span></summary>
+          <div class="rule-body">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées.</div>
+        </details><details class="rule-dropdown">
+          <summary>4. <span>vie privée et communications</span></summary>
+          <div class="rule-body">respect de la vie privée : il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein des canaux de groupe officiels.</div>
+        </details><details class="rule-dropdown">
+          <summary>5. <span>activités commerciales et publicité</span></summary>
+          <div class="rule-body">l'association est à but non lucratif. aucune publicité, démarchage ou vente de services commerciaux (cours privés, offres professionnelles) n'est autorisée au sein de nos événements ou groupes de discussion.</div>
+        </details><details class="rule-dropdown">
+          <summary>6. <span>sanctions et modération</span></summary>
+          <div class="rule-body">le respect de ce règlement est indispensable pour maintenir l'esprit communautaire. l'association se réserve le droit d'exclure toute personne d'un événement ou du groupe en cas de comportement nuisible. contact et signalements : rennescafedeslangues@gmail.com.</div>
+        </details></div>
 
-      <p id="rules-closing">
-        💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !
-      </p>
+      <p id="rules-closing">💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !</p>
     </section>
 
     <!-- Footer -->
@@ -270,14 +706,14 @@
         <a href="https://www.instagram.com/rennescafedeslangues/" class="social-btn" target="_blank">IG</a>
         <a href="https://www.instagram.com/rennes.englishchoir/" class="social-btn" target="_blank">🎤</a>
       </div>
-    </footer>
+    <div id="pos-ai-disclaimer">🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association.</div></footer>
 
   </div>
 
   <!-- General Modal -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()" style="display: none;">
     <div class="modal-content" onclick="event.stopPropagation()">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <span class="close-btn" onclick="closeModal()">×</span>
       <div id="modal-body-container"></div>
     </div>
   </div>
@@ -691,5 +1127,6 @@
       renderIndexRules();
     };
   </script>
-</body>
-</html>
+
+
+<script src="https://f.convertkit.com/ckjs/ck.5.js" async="true" crossorigin="anonymous"></script></body></html>
