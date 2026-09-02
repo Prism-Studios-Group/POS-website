@@ -607,27 +607,49 @@
     }
 
     function downloadUpdatedHTML() {
-      if (typeof closeModal === 'function') closeModal();
-      if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
-      if (typeof closePostsModal === 'function') closePostsModal();
+  if (typeof closeModal === 'function') closeModal();
+  if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
+  if (typeof closePostsModal === 'function') closePostsModal();
 
-      const wasUnlocked = document.body.classList.contains('body-unlocked');
-      document.body.classList.remove('body-unlocked');
-
-      const cleanHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-
-      if (wasUnlocked) document.body.classList.add('body-unlocked');
-
-      const blob = new Blob([cleanHTML], { type: "text/html;charset=utf-8" });
-      const link = document.createElement("a");
-      let fileName = window.location.pathname.split("/").pop() || "cdl-code.html";
-      
-      link.href = URL.createObjectURL(blob);
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  // Embed active Calendar Events into HTML
+  if (typeof calendarEvents !== 'undefined') {
+    let calScript = document.getElementById('pos-embedded-cal-data');
+    if (!calScript) {
+      calScript = document.createElement('script');
+      calScript.id = 'pos-embedded-cal-data';
+      document.head.appendChild(calScript);
     }
+    calScript.textContent = `window.POS_EMBEDDED_CALENDAR_EVENTS = ${JSON.stringify(calendarEvents, null, 2)};`;
+  }
+
+  // Embed active CDL Rules into HTML
+  if (typeof rulesData !== 'undefined') {
+    let rulesScript = document.getElementById('pos-embedded-cdl-rules-data');
+    if (!rulesScript) {
+      rulesScript = document.createElement('script');
+      rulesScript.id = 'pos-embedded-cdl-rules-data';
+      document.head.appendChild(rulesScript);
+    }
+    rulesScript.textContent = `window.POS_EMBEDDED_CDL_RULES = ${JSON.stringify(rulesData, null, 2)};`;
+  }
+
+  const wasUnlocked = document.body.classList.contains('body-unlocked');
+  document.body.classList.remove('body-unlocked');
+
+  const cleanHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+  if (wasUnlocked) document.body.classList.add('body-unlocked');
+
+  const blob = new Blob([cleanHTML], { type: "text/html;charset=utf-8" });
+  const link = document.createElement("a");
+  let fileName = window.location.pathname.split("/").pop() || "cdl-code.html";
+  
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
     const defaultEvents = [
       { id: "cdl", image: "hermine-futuristic.png", tag: "échanges linguistiques", title: "rennes café des langues", desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.", details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.", url: "cdl-code.html" },
@@ -703,8 +725,8 @@
       }
     ];
 
-    let rulesData = JSON.parse(localStorage.getItem('pos_cdl_rules')) || defaultRulesData;
-
+    let rulesData = JSON.parse(localStorage.getItem('pos_cdl_rules')) || window.POS_EMBEDDED_CDL_RULES || defaultRulesData;
+    
     const cdlClosingText = {
       fr: "💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !",
       en: "💫 we are thrilled to have you with us! see you soon at café des langues!"
