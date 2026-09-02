@@ -2,9 +2,6 @@
    Prism Outreach Studio — Centralized News & Posts System
    ========================================================= */
 
-// Kit Form Endpoint linked to your UID: 3c9defa9e3
-const KIT_FORM_ENDPOINT = "https://app.kit.com/forms/3c9defa9e3/subscriptions";
-
 const defaultPostsData = [
   {
     id: 12,
@@ -31,21 +28,11 @@ let postsState = {
 const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
-    addEdition: "➕ ajouter une édition",
-    newsCtaTitle: "💌 Envie de ne rien manquer ?",
-    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !",
-    newsPlaceholder: "exemple@email.com",
-    newsBtnText: "S'abonner",
-    newsSuccess: "🎉 Merci pour ton inscription ! Vérifie ta boîte mail pour confirmer."
+    addEdition: "➕ ajouter une édition"
   },
   en: {
     titleHeading: "newsletter archives",
-    addEdition: "➕ add edition",
-    newsCtaTitle: "💌 Want to stay in the loop?",
-    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free!",
-    newsPlaceholder: "example@email.com",
-    newsBtnText: "Subscribe",
-    newsSuccess: "🎉 Thanks for subscribing! Check your inbox to confirm."
+    addEdition: "➕ add edition"
   }
 };
 
@@ -93,92 +80,17 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Integrated Kit Newsletter Sign-up Card */
+    /* Container du Formulaire Officiel Kit */
     .posts-newsletter-card {
       margin-top: 30px;
       padding-top: 25px;
       border-top: 1px dashed rgba(255, 255, 255, 0.15);
     }
-    .posts-newsletter-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
-      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
-      border-radius: 14px;
-      padding: 22px;
-    }
-    .posts-newsletter-text h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--neon-cyan, #38bdf8);
-      margin-bottom: 4px;
-    }
-    .posts-newsletter-text p {
-      font-size: 13.5px;
-      color: var(--text-muted, #cbd5e1);
-      max-width: 480px;
-      line-height: 1.5;
-    }
-    .posts-newsletter-form {
-      display: flex;
-      gap: 10px;
-      flex-grow: 1;
-      max-width: 420px;
-    }
-    .posts-newsletter-input {
-      flex: 1;
-      background: #0f172a;
-      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 25px;
-      font-family: inherit;
-      font-size: 13.5px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .posts-newsletter-input:focus {
-      border-color: var(--neon-cyan, #38bdf8);
-    }
-    .posts-newsletter-btn {
-      background: var(--neon-amber, #f59e0b);
-      color: #000;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .posts-newsletter-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
-    }
-    .posts-success-msg {
-      font-weight: 700;
-      color: #86efac;
-      font-size: 14px;
-      background: rgba(34, 197, 94, 0.15);
-      padding: 12px 18px;
-      border-radius: 20px;
-      border: 1px solid #22c55e;
-      width: 100%;
-      text-align: center;
-    }
-    @media (max-width: 768px) {
-      .posts-newsletter-content { flex-direction: column; align-items: stretch; }
-      .posts-newsletter-form { max-width: 100%; flex-direction: column; }
-    }
   `;
   document.head.appendChild(style);
 }
 
-/* --- Mounting Markup --- */
+/* --- Mounting Markup & Kit Script Injection --- */
 function mountPostsHTML() {
   const target = document.getElementById('pos-posts');
   if (!target) return;
@@ -193,18 +105,9 @@ function mountPostsHTML() {
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- Integrated Kit Newsletter Sign-up Box -->
+    <!-- Emplacement officiel du formulaire Kit -->
     <div class="posts-newsletter-card">
-      <div class="posts-newsletter-content" id="posts-newsletter-box">
-        <div class="posts-newsletter-text">
-          <h3 id="posts-news-title">💌 Envie de ne rien manquer ?</h3>
-          <p id="posts-news-sub">Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !</p>
-        </div>
-        <form onsubmit="handleKitFormSubmit(event)" class="posts-newsletter-form" id="kit-subscription-form">
-          <input type="email" id="kit-email-input" class="posts-newsletter-input" placeholder="exemple@email.com" required />
-          <button type="submit" class="posts-newsletter-btn" id="kit-submit-btn"><span id="posts-news-btn">S'abonner</span> 🚀</button>
-        </form>
-      </div>
+      <div id="kit-embed-container"></div>
     </div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
@@ -214,40 +117,16 @@ function mountPostsHTML() {
       </div>
     </div>
   `;
-}
 
-/* --- Silent In-Page Kit Submission Handler --- */
-async function handleKitFormSubmit(e) {
-  e.preventDefault();
-  const emailInput = document.getElementById('kit-email-input');
-  const email = emailInput.value;
-  const submitBtn = document.getElementById('kit-submit-btn');
-  const lang = postsState.language;
-  const t = postsI18n[lang];
-
-  submitBtn.disabled = true;
-  submitBtn.innerText = "⌛...";
-
-  const formData = new FormData();
-  formData.append("email_address", email);
-
-  try {
-    await fetch(KIT_FORM_ENDPOINT, {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
-    });
-
-    const formBox = document.getElementById('posts-newsletter-box');
-    formBox.innerHTML = `
-      <div class="posts-success-msg">
-        ${t.newsSuccess}
-      </div>
-    `;
-  } catch (err) {
-    alert("Une erreur s'est produite lors de l'inscription. Réessaye plus tard.");
-    submitBtn.disabled = false;
-    submitBtn.innerText = t.newsBtnText;
+  // Injection dynamique du script Kit avec ton UID
+  const kitContainer = document.getElementById('kit-embed-container');
+  if (kitContainer && !document.getElementById('kit-embed-script')) {
+    const kitScript = document.createElement('script');
+    kitScript.id = 'kit-embed-script';
+    kitScript.async = true;
+    kitScript.setAttribute('data-uid', '3c9defa9e3');
+    kitScript.src = 'https://rennes-cafe-des-langues.kit.com/3c9defa9e3/index.js';
+    kitContainer.appendChild(kitScript);
   }
 }
 
@@ -433,18 +312,6 @@ window.syncPostsLanguage = function(lang) {
 
   const addBtn = document.getElementById('posts-add-btn');
   if (addBtn) addBtn.innerText = t.addEdition;
-
-  const newsTitle = document.getElementById('posts-news-title');
-  if (newsTitle) newsTitle.innerText = t.newsCtaTitle;
-
-  const newsSub = document.getElementById('posts-news-sub');
-  if (newsSub) newsSub.innerText = t.newsCtaSub;
-
-  const newsInput = document.getElementById('posts-news-input');
-  if (newsInput) newsInput.placeholder = t.newsPlaceholder;
-
-  const newsBtn = document.getElementById('posts-news-btn');
-  if (newsBtn) newsBtn.innerText = t.newsBtnText;
 };
 
 /* --- Initialization & Global Language Listener --- */
