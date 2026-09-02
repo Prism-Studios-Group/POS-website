@@ -133,7 +133,7 @@ const defaultCalendarEvents = [
     location: "10 Canal Saint-Martin, 35700 Rennes"
   }
 ];
-let calendarEvents = JSON.parse(localStorage.getItem('pos_calendar_events')) || defaultCalendarEvents;
+let calendarEvents = JSON.parse(localStorage.getItem('pos_calendar_events')) || window.POS_EMBEDDED_CALENDAR_EVENTS || defaultCalendarEvents;
 
 let calState = {
   currentView: "month",
