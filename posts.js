@@ -29,24 +29,22 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsletterBadge: "⚡ POS VIP NEWSLETTER",
-    newsletterTitle: "Reste au cœur de l'action",
-    newsletterSub: "Rejoins notre réseau privé pour recevoir nos actualités hebdomadaires, événements exclusifs et coulisses directement dans ta boîte mail.",
-    placeholder: "ton.email@exemple.com",
-    btnText: "S'ABONNER 🚀"
+    newsCtaTitle: "⚡ Envie de ne rien manquer ?",
+    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !",
+    newsPlaceholder: "exemple@email.com",
+    newsBtnText: "M'abonner"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsletterBadge: "⚡ POS VIP NEWSLETTER",
-    newsletterTitle: "Stay in the Loop",
-    newsletterSub: "Subscribe to get our weekly recaps, exclusive event invites, and behind-the-scenes news delivered straight to your inbox.",
-    placeholder: "your.email@example.com",
-    btnText: "SUBSCRIBE 🚀"
+    newsCtaTitle: "⚡ Want to stay in the loop?",
+    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free!",
+    newsPlaceholder: "example@email.com",
+    newsBtnText: "Subscribe"
   }
 };
 
-/* --- Futuristic Glassmorphic Neon CSS --- */
+/* --- Futuristic Glassmorphic CSS Injection --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -91,113 +89,95 @@ function injectPostsStyles() {
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
     /* HIGH-TECH FUTURISTIC NEWSLETTER CARD */
-    .pos-futuristic-newsletter {
+    .posts-newsletter-card {
       margin-top: 35px;
-      padding: 32px 30px;
-      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
-                  radial-gradient(circle at 90% 90%, rgba(217, 70, 239, 0.18) 0%, transparent 45%),
-                  rgba(11, 15, 25, 0.9);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 20px;
+      padding-top: 25px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+    .posts-newsletter-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                  rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.35));
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.08);
       position: relative;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(56, 189, 248, 0.08);
       overflow: hidden;
     }
-    .pos-futuristic-newsletter::before {
+    .posts-newsletter-content::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #38bdf8, #a855f7, #d946ef, #f59e0b);
+      background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
     }
-    
-    .pos-newsletter-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
+    .posts-newsletter-text h3 {
+      font-size: 20px;
       font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-    }
-    .pos-newsletter-title {
-      font-size: 24px;
-      font-weight: 900;
-      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
+      color: #ffffff;
+      margin-bottom: 6px;
       letter-spacing: -0.01em;
     }
-    .pos-newsletter-sub {
-      font-size: 14px;
-      color: #94a3b8;
-      margin-bottom: 24px;
+    .posts-newsletter-text p {
+      font-size: 13.5px;
+      color: var(--text-muted, #cbd5e1);
+      max-width: 480px;
       line-height: 1.6;
-      max-width: 680px;
     }
-    
-    .pos-newsletter-form {
+    .posts-newsletter-form {
       display: flex;
       gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      max-width: 620px;
+      flex-grow: 1;
+      max-width: 440px;
     }
-    
-    .pos-newsletter-input {
-      flex: 1 1 280px !important;
-      width: auto !important;
-      background: rgba(15, 23, 42, 0.95) !important;
-      border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
-      color: #ffffff !important;
-      padding: 14px 22px !important;
-      border-radius: 40px !important;
-      font-family: inherit !important;
-      font-size: 14.5px !important;
-      outline: none !important;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    .posts-newsletter-input {
+      flex: 1;
+      background: #0b0f19;
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 13.5px;
+      outline: none;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s ease;
     }
-    .pos-newsletter-input::placeholder {
-      color: #64748b !important;
-      font-style: normal;
+    .posts-newsletter-input::placeholder {
+      color: #64748b;
     }
-    .pos-newsletter-input:focus {
-      border-color: #f59e0b !important;
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.45), inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
-      background: rgba(15, 23, 42, 1) !important;
+    .posts-newsletter-input:focus {
+      border-color: var(--neon-amber, #f59e0b);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
     }
-
-    .pos-newsletter-submit {
-      flex: 0 0 auto !important;
-      width: auto !important;
-      background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #d946ef 100%) !important;
-      color: #000000 !important;
-      font-weight: 900 !important;
-      font-size: 13.5px !important;
-      letter-spacing: 0.06em !important;
-      text-transform: uppercase !important;
-      padding: 14px 30px !important;
-      border-radius: 40px !important;
-      border: none !important;
-      cursor: pointer !important;
-      white-space: nowrap !important;
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.5) !important;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    .posts-newsletter-btn {
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316);
+      color: #000000;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.03em;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      transition: all 0.25s ease;
     }
-    .pos-newsletter-submit:hover {
-      transform: translateY(-2px) scale(1.04) !important;
-      box-shadow: 0 0 28px rgba(245, 158, 11, 0.85), 0 0 12px rgba(217, 70, 239, 0.5) !important;
-      color: #000000 !important;
+    .posts-newsletter-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.75);
+    }
+    @media (max-width: 768px) {
+      .posts-newsletter-content { flex-direction: column; align-items: stretch; }
+      .posts-newsletter-form { max-width: 100%; flex-direction: column; }
     }
   ;
   document.head.appendChild(style);
@@ -220,16 +200,18 @@ function mountPostsHTML() {
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- POS Futuristic Glassmorphic Newsletter Section -->
-    <div class="pos-futuristic-newsletter">
-      <span class="pos-newsletter-badge" id="posts-news-badge">${t.newsletterBadge}</span>
-      <h3 class="pos-newsletter-title" id="posts-news-title">${t.newsletterTitle}</h3>
-      <p class="pos-newsletter-sub" id="posts-news-sub">${t.newsletterSub}</p>
-      
-      <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="pos-newsletter-form">
-        <input type="email" name="email_address" id="posts-news-input" class="pos-newsletter-input" placeholder="${t.placeholder}" required>
-        <button type="submit" id="posts-news-btn" class="pos-newsletter-submit">${t.btnText}</button>
-      </form>
+    <!-- Integrated Custom Newsletter Sign-up Box (Submitting to Kit) -->
+    <div class="posts-newsletter-card">
+      <div class="posts-newsletter-content">
+        <div class="posts-newsletter-text">
+          <h3 id="posts-news-title">${t.newsCtaTitle}</h3>
+          <p id="posts-news-sub">${t.newsCtaSub}</p>
+        </div>
+        <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
+          <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="${t.newsPlaceholder}" required />
+          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">${t.newsBtnText}</span> 🚀</button>
+        </form>
+      </div>
     </div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
@@ -258,7 +240,7 @@ function renderPostsGallery() {
     card.onclick = () => openPostModal(index);
 
     let coverHtml = item.cover.startsWith('http') 
-      ? `<img src="${item.cover}" alt="Cover">` 
+      ? <img src="${item.cover}" alt="Cover"> 
       : item.cover;
 
     card.innerHTML = 
@@ -281,11 +263,11 @@ function openPostModal(index) {
     openEditPostModal(index);
   } else {
     const content = document.getElementById('posts-modal-content');
-    content.innerHTML = `
+    content.innerHTML = 
       <h2 style="color:var(--neon-cyan, #38bdf8); margin-bottom:6px;">${item.title}</h2>
       <p style="font-size:12px; color:var(--neon-amber, #f59e0b); font-weight:700; margin-bottom:18px;">📅 ${item.date}</p>
       <div style="font-size:14.5px; line-height:1.7; color:var(--text-main, #fff);">${item.content}</div>
-    `;
+    ;
     document.getElementById('posts-modal-overlay').style.display = 'flex';
   }
 }
@@ -425,20 +407,17 @@ window.syncPostsLanguage = function(lang) {
   const addBtn = document.getElementById('posts-add-btn');
   if (addBtn) addBtn.innerText = t.addEdition;
 
-  const newsBadge = document.getElementById('posts-news-badge');
-  if (newsBadge) newsBadge.innerText = t.newsletterBadge;
-
   const newsTitle = document.getElementById('posts-news-title');
-  if (newsTitle) newsTitle.innerText = t.newsletterTitle;
+  if (newsTitle) newsTitle.innerText = t.newsCtaTitle;
 
   const newsSub = document.getElementById('posts-news-sub');
-  if (newsSub) newsSub.innerText = t.newsletterSub;
+  if (newsSub) newsSub.innerText = t.newsCtaSub;
 
   const newsInput = document.getElementById('posts-news-input');
-  if (newsInput) newsInput.placeholder = t.placeholder;
+  if (newsInput) newsInput.placeholder = t.newsPlaceholder;
 
   const newsBtn = document.getElementById('posts-news-btn');
-  if (newsBtn) newsBtn.innerText = t.btnText;
+  if (newsBtn) newsBtn.innerText = t.newsBtnText;
 };
 
 /* --- Initialization & Global Language Listener --- */
@@ -448,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPostsGallery();
   window.syncPostsLanguage(postsState.language);
 
+  // Instant global listener on language buttons
   document.addEventListener('click', (e) => {
     const langBtn = e.target.closest('.lang-btn');
     if (langBtn) {
@@ -456,6 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Escape Key Listener
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closePostsModal();
   });
