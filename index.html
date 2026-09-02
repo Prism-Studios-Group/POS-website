@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prism Outreach Studio — Événements & Initiatives</title>
   
+  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -112,7 +113,7 @@
     .lang-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .lang-btn.active { background: var(--cdl-cyan); color: #000; }
 
-    /* Pencil Buttons */
+    /* Pencil Edit Buttons */
     .edit-pencil {
       display: none; background: var(--neon-amber); color: #000; border: none;
       border-radius: 50%; width: 26px; height: 26px; font-size: 12px; font-weight: 700;
@@ -132,10 +133,11 @@
     }
 
     .hero-header { display: flex; align-items: center; gap: 22px; }
+    .logo-container-relative { position: relative; display: inline-block; flex-shrink: 0; }
     .hub-logo-img {
       width: 90px; height: 90px; border-radius: 50%; object-fit: contain;
       background: #ffffff; padding: 10px; border: 3px solid var(--pos-coral);
-      box-shadow: 0 0 25px rgba(249, 115, 22, 0.45); flex-shrink: 0;
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.45);
     }
 
     .title-area h1 {
@@ -166,6 +168,7 @@
     .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .card-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
 
+    /* Rules Dropdowns */
     .rule-dropdown { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
     .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--cdl-cyan); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
@@ -184,6 +187,7 @@
     .form-control { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 14px; }
 
     .btn-primary { background: var(--cdl-cyan); color: #000; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-sec { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
     .btn-danger { background: #ef4444; color: #fff; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-left: 10px; }
 
     .action-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
@@ -204,7 +208,7 @@
       </a>
       
       <div class="nav-menu" id="dynamic-nav-container">
-        <!-- Rendered Dynamically (Tabs or Dropdown if >3 Initiatives) -->
+        <!-- Rendered Dynamically -->
       </div>
 
       <div class="right-controls">
@@ -230,7 +234,10 @@
 
     <!-- Hero Header -->
     <header class="glass-card hero-header">
-      <img src="P-OS.png" alt="POS Logo" class="hub-logo-img">
+      <div class="logo-container-relative">
+        <img src="P-OS.png" id="hub-logo-img" alt="POS Logo" class="hub-logo-img">
+        <button class="edit-pencil" onclick="editHeroHeader()" style="position:absolute; bottom:0; right:-5px;">✏️</button>
+      </div>
       <div class="title-area">
         <h1><span id="hero-title">prism outreach studio</span> <button class="edit-pencil" onclick="editHeroHeader()">✏️</button></h1>
         <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">
@@ -242,7 +249,7 @@
     <!-- Initiatives Section -->
     <section class="glass-card">
       <div class="section-title">
-        <span>✨ <span id="title-events">nos initiatives</span> <button class="edit-pencil" onclick="editInitiativesSectionTitle()">✏️</button></span>
+        <span>✨ <span id="title-events">nos initiatives</span></span>
         <div>
           <button class="action-btn" onclick="addNewInitiative()">➕ ajouter une initiative</button>
           <button class="action-btn" onclick="exportJSON()">📥 exporter JSON</button>
@@ -260,54 +267,23 @@
     </section>
     <script src="calendar.js"></script>
 
-<!-- Centralized News & Posts Gallery -->
-<section class="glass-card">
-  <div id="pos-posts"></div>
-</section>
-<script src="posts.js"></script>
-    
     <!-- Community Rules Section -->
     <section class="glass-card">
       <div class="section-title">
         <span>📜 <span id="title-rules">règlement intérieur général (pos)</span></span>
-        <button class="edit-pencil" onclick="editIndexRulesTitle()">✏️</button>
+        <button class="edit-pencil" onclick="openIndexRulesManagerModal()">✏️</button>
       </div>
       
-      <details class="rule-dropdown">
-        <summary>1. <span id="r1-t">cadre et objectifs</span></summary>
-        <div class="rule-body" id="r1-b">toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>2. <span id="r2-t">respect des lieux et partenaires</span></summary>
-        <div class="rule-body" id="r2-b">nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictement interdit.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>3. <span id="r3-t">environnement sûr et inclusif</span></summary>
-        <div class="rule-body" id="r3-b">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées. toute discrimination (racisme, sexisme, homophobie, etc.) est formellement interdite.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>4. <span id="r4-t">vie privée et communications</span></summary>
-        <div class="rule-body" id="r4-b">respect de la vie privée : il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein des canaux de groupe officiels.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>5. <span id="r5-t">activités commerciales et publicité</span></summary>
-        <div class="rule-body" id="r5-b">l'association est à but non lucratif. aucune publicité, démarchage ou vente de services commerciaux (cours privés, offres professionnelles) n'est autorisée au sein de nos événements ou groupes de discussion.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>6. <span id="r6-t">sanctions et modération</span></summary>
-        <div class="rule-body" id="r6-b">le respect de ce règlement est indispensable pour maintenir l'esprit communautaire. l'association se réserve le droit d'exclure toute personne d'un événement ou du groupe en cas de comportement nuisible. contact et signalements : rennescafedeslangues@gmail.com.</div>
-      </details>
+      <div id="index-rules-container">
+        <!-- Dynamic Rules Rendered Here -->
+      </div>
 
       <p id="rules-closing">
         💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !
       </p>
     </section>
 
+    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/profile.php?id=100090407626653" class="social-btn" target="_blank">FB</a>
@@ -357,13 +333,19 @@
         eventsData = lastAction.previousData;
         localStorage.setItem('pos_events_data', JSON.stringify(eventsData));
         renderEvents();
-        renderDynamicNav();
-      } else if (lastAction.type === 'heroTitle') {
-        document.getElementById('hero-title').innerText = lastAction.previousVal;
-        localStorage.setItem('pos_hero_title', lastAction.previousVal);
-      } else if (lastAction.type === 'heroSubtitle') {
-        document.getElementById('hub-subtitle').innerText = lastAction.previousVal;
-        localStorage.setItem('pos_hero_subtitle', lastAction.previousVal);
+      } else if (lastAction.type === 'heroHeader') {
+        document.getElementById('hub-logo-img').src = lastAction.previousImg;
+        document.getElementById('hero-title').innerText = lastAction.previousTitle;
+        document.getElementById('hub-subtitle').innerText = lastAction.previousSub;
+        localStorage.setItem('pos_hero_logo', lastAction.previousImg);
+        localStorage.setItem('pos_hero_title', lastAction.previousTitle);
+        localStorage.setItem('pos_hero_subtitle', lastAction.previousSub);
+      } else if (lastAction.type === 'rules') {
+        indexRulesData = lastAction.previousRules;
+        indexRulesClosing = lastAction.previousClosing;
+        localStorage.setItem('pos_index_rules', JSON.stringify(indexRulesData));
+        localStorage.setItem('pos_index_rules_closing', indexRulesClosing);
+        renderIndexRules();
       }
 
       updateUndoButtonVisibility();
@@ -381,6 +363,7 @@
         document.getElementById('lock-text').innerText = "verrouillé";
       }
       updateUndoButtonVisibility();
+      renderEvents();
     }
 
     async function toggleLock() {
@@ -406,7 +389,7 @@
 
     let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
 
-    /* Dynamic Nav Menu Renderer: Shows Dropdown if >3 Initiatives */
+    /* Dynamic Nav Renderer */
     function renderDynamicNav() {
       const navContainer = document.getElementById('dynamic-nav-container');
       if (!navContainer) return;
@@ -445,7 +428,6 @@
         card.onclick = () => openEventModal(index);
 
         card.innerHTML = `
-          <div class="edit-badge">✏️ modifier</div>
           <div class="card-cover">
             <img src="${item.image}" alt="${item.title}" class="card-cover-img" onerror="this.style.display='none'">
           </div>
@@ -469,7 +451,7 @@
         container.innerHTML = `
           <h2 style="color: var(--neon-amber); margin-bottom: 20px;">✏️ modifier l'initiative</h2>
           <div class="form-group">
-            <label>Fichier Image (ex: hermine-futuristic.png) :</label>
+            <label>Fichier Image Cover (ex: hermine-futuristic.png) :</label>
             <input type="text" id="edit-image" class="form-control" value="${item.image || ''}">
           </div>
           <div class="form-group">
@@ -489,7 +471,7 @@
             <textarea id="edit-details" class="form-control" rows="4">${item.details}</textarea>
           </div>
           <div class="form-group">
-            <label>Lien de la page / Formulaire :</label>
+            <label>Page URL (ex: cdl-code.html ou nouvelle-page.html) :</label>
             <input type="text" id="edit-url" class="form-control" value="${item.url}">
           </div>
           <div style="margin-top: 20px;">
@@ -505,7 +487,7 @@
           <span style="display:inline-block; font-weight:700; font-size:12px; color:var(--cdl-cyan); margin-bottom:10px;">${item.tag}</span>
           <h2 style="color: var(--cdl-cyan); margin-bottom: 15px;">${item.title}</h2>
           <p style="line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">${item.details}</p>
-          <a href="${item.url}" class="btn-primary" style="display:inline-block; text-decoration:none; text-align:center;">voir la page ↗</a>
+          <a href="${item.url}" class="btn-primary" style="display:inline-block; text-decoration:none; text-align:center;">voir la page de l'initiative ↗</a>
         `;
       }
 
@@ -530,14 +512,15 @@
     function addNewInitiative() {
       pushUndoAction({ type: 'initiatives', previousData: JSON.parse(JSON.stringify(eventsData)) });
 
+      const newId = "initiative-" + Date.now();
       eventsData.push({
-        id: "initiative-" + Date.now(),
+        id: newId,
         image: "P-OS.png",
         tag: "nouvelle initiative",
-        title: "nouvelle initiative",
+        title: "titre de la nouvelle initiative",
         desc: "description courte...",
         details: "description détaillée...",
-        url: "index.html"
+        url: "rec-code.html"
       });
 
       localStorage.setItem('pos_events_data', JSON.stringify(eventsData));
@@ -556,14 +539,19 @@
     }
 
     function editHeroHeader() {
+      const currentImg = document.getElementById('hub-logo-img').getAttribute('src');
       const currentTitle = document.getElementById('hero-title').innerText;
       const currentSub = document.getElementById('hub-subtitle').innerText;
 
       const container = document.getElementById('modal-body-container');
       container.innerHTML = `
-        <h3 style="color:var(--cdl-cyan); margin-bottom:15px;">✏️ modifier le titre principal</h3>
+        <h3 style="color:var(--cdl-cyan); margin-bottom:15px;">✏️ modifier l'en-tête & logo POS</h3>
         <div class="form-group">
-          <label>Titre :</label>
+          <label>Fichier Logo / Image (ex: P-OS.png) :</label>
+          <input type="text" id="edit-hero-img-in" class="form-control" value="${currentImg}">
+        </div>
+        <div class="form-group">
+          <label>Titre principal :</label>
           <input type="text" id="edit-hero-title-in" class="form-control" value="${currentTitle}">
         </div>
         <div class="form-group">
@@ -576,16 +564,117 @@
     }
 
     function saveHeroHeader() {
+      const img = document.getElementById('edit-hero-img-in').value;
       const t = document.getElementById('edit-hero-title-in').value;
       const s = document.getElementById('edit-hero-sub-in').value;
 
-      pushUndoAction({ type: 'heroTitle', previousVal: document.getElementById('hero-title').innerText });
+      pushUndoAction({
+        type: 'heroHeader',
+        previousImg: document.getElementById('hub-logo-img').getAttribute('src'),
+        previousTitle: document.getElementById('hero-title').innerText,
+        previousSub: document.getElementById('hub-subtitle').innerText
+      });
 
+      document.getElementById('hub-logo-img').src = img;
       document.getElementById('hero-title').innerText = t;
       document.getElementById('hub-subtitle').innerText = s;
 
+      localStorage.setItem('pos_hero_logo', img);
       localStorage.setItem('pos_hero_title', t);
       localStorage.setItem('pos_hero_subtitle', s);
+      closeModal();
+    }
+
+    /* --- Dynamic Index Rules System --- */
+    const defaultIndexRules = [
+      { title: "cadre et objectifs", body: "toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association." },
+      { title: "respect des lieux et partenaires", body: "nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictly interdit." },
+      { title: "environnement sûr et inclusif", body: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées." },
+      { title: "vie privée et communications", body: "respect de la vie privée : il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein des canaux de groupe officiels." },
+      { title: "activités commerciales et publicité", body: "l'association est à but non lucratif. aucune publicité, démarchage ou vente de services commerciaux (cours privés, offres professionnelles) n'est autorisée au sein de nos événements ou groupes de discussion." },
+      { title: "sanctions et modération", body: "le respect de ce règlement est indispensable pour maintenir l'esprit communautaire. l'association se réserve le droit d'exclure toute personne d'un événement ou du groupe en cas de comportement nuisible. contact et signalements : rennescafedeslangues@gmail.com." }
+    ];
+
+    let indexRulesData = JSON.parse(localStorage.getItem('pos_index_rules')) || defaultIndexRules;
+    let indexRulesClosing = localStorage.getItem('pos_index_rules_closing') || "💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !";
+
+    function renderIndexRules() {
+      const container = document.getElementById('index-rules-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      indexRulesData.forEach((rule, idx) => {
+        const details = document.createElement('details');
+        details.className = 'rule-dropdown';
+        details.innerHTML = `
+          <summary>${idx + 1}. <span>${rule.title}</span></summary>
+          <div class="rule-body">${rule.body}</div>
+        `;
+        container.appendChild(details);
+      });
+
+      document.getElementById('rules-closing').innerText = indexRulesClosing;
+    }
+
+    function openIndexRulesManagerModal() {
+      const container = document.getElementById('modal-body-container');
+      container.innerHTML = `
+        <h3 style="color:var(--cdl-cyan); margin-bottom:15px;">✏️ gérer le règlement intérieur (pos)</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifiez, ajoutez ou supprimez les règles générales de l'association :</p>
+        <div id="rules-form-list">
+          ${indexRulesData.map((r, i) => `
+            <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="color:var(--cdl-cyan);">Règle #${i + 1}</strong>
+                <button onclick="removeIndexRuleFromForm(${i})" class="btn-danger" style="padding:2px 8px; font-size:11px;">🗑️ supprimer</button>
+              </div>
+              <input type="text" id="index-rule-title-${i}" class="form-control" value="${r.title}" style="margin-bottom:6px;">
+              <textarea id="index-rule-body-${i}" class="form-control" rows="2">${r.body}</textarea>
+            </div>
+          `).join('')}
+        </div>
+        <button onclick="addIndexRuleToForm()" class="btn-sec" style="width:100%; margin-bottom:15px;">➕ ajouter une règle</button>
+        <div class="form-group">
+          <label>Texte de conclusion ("On est ravis...") :</label>
+          <input type="text" id="index-rule-closing-input" class="form-control" value="${indexRulesClosing}">
+        </div>
+        <button onclick="saveAllIndexRules()" class="btn-primary" style="width:100%; margin-top:10px;">💾 enregistrer le règlement</button>
+      `;
+      document.getElementById('modal-overlay').style.display = 'flex';
+    }
+
+    function addIndexRuleToForm() {
+      indexRulesData.push({ title: "nouvelle règle", body: "description de la règle..." });
+      openIndexRulesManagerModal();
+    }
+
+    function removeIndexRuleFromForm(i) {
+      indexRulesData.splice(i, 1);
+      openIndexRulesManagerModal();
+    }
+
+    function saveAllIndexRules() {
+      pushUndoAction({
+        type: 'rules',
+        previousRules: JSON.parse(JSON.stringify(indexRulesData)),
+        previousClosing: indexRulesClosing
+      });
+
+      indexRulesData.forEach((r, i) => {
+        const tEl = document.getElementById(`index-rule-title-${i}`);
+        const bEl = document.getElementById(`index-rule-body-${i}`);
+        if (tEl && bEl) {
+          r.title = tEl.value;
+          r.body = bEl.value;
+        }
+      });
+
+      const closingInput = document.getElementById('index-rule-closing-input');
+      if (closingInput) indexRulesClosing = closingInput.value;
+
+      localStorage.setItem('pos_index_rules', JSON.stringify(indexRulesData));
+      localStorage.setItem('pos_index_rules_closing', indexRulesClosing);
+      renderIndexRules();
       closeModal();
     }
 
@@ -608,27 +697,13 @@
         navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "rejoins-nous !",
         hubSubtitle: "plateforme des activités, échanges linguistiques et projets artistiques à rennes",
-        titleEvents: "nos initiatives", rulesTitle: "règlement intérieur général (pos)",
-        r1t: "cadre et objectifs", r1b: "toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà.",
-        r2t: "respect des lieux et partenaires", r2b: "nos activités se déroulent dans divers établissements partenaires. la consommation sur place est vivement encouragée.",
-        r3t: "environnement sûr et inclusif", r3b: "zéro harcèlement, zéro discrimination. nos événements sont des espaces d'apprentissage et de partage.",
-        r4t: "vie privée et communications", r4b: "pas de dm sans permission préalable. les échanges doivent rester publics.",
-        r5t: "activités commerciales et publicité", r5b: "l'association est à but non lucratif. aucune publicité commerciale n'est autorisée.",
-        r6t: "sanctions et modération", r6b: "droit d'exclusion en cas de comportement nuisible. contact : rennescafedeslangues@gmail.com.",
-        closing: "💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !"
+        titleEvents: "nos initiatives", rulesTitle: "règlement intérieur général (pos)"
       },
       en: {
         navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
         navJoin: "join us!",
         hubSubtitle: "community hub for language exchanges, vocal music, and cultural projects in rennes",
-        titleEvents: "our initiatives", rulesTitle: "general community guidelines (pos)",
-        r1t: "framework & goals", r1b: "all initiatives under prism outreach studio (pos) aim to create a welcoming, supportive, and inclusive environment in rennes and beyond.",
-        r2t: "venue & partner respect", r2b: "our activities take place in partner venues. supporting hosts by purchasing food/drinks is strongly encouraged.",
-        r3t: "safe & inclusive space", r3b: "zero harassment, zero discrimination. learning and community space.",
-        r4t: "privacy & messaging", r4b: "do not direct message (dm) members without prior consent.",
-        r5t: "non-commercial rule", r5b: "non-profit initiative. advertising or commercial service sales are forbidden.",
-        r6t: "moderation & contact", r6b: "removal rights reserved for rule violations. contact: rennescafedeslangues@gmail.com.",
-        closing: "💫 we are thrilled to have you with us! see you soon at our events!"
+        titleEvents: "our initiatives", rulesTitle: "general community guidelines (pos)"
       }
     };
 
@@ -646,14 +721,6 @@
       document.getElementById('hub-subtitle').innerText = dict.hubSubtitle;
       document.getElementById('title-events').innerText = dict.titleEvents;
       document.getElementById('title-rules').innerText = dict.rulesTitle;
-      
-      document.getElementById('r1-t').innerText = dict.r1t; document.getElementById('r1-b').innerText = dict.r1b;
-      document.getElementById('r2-t').innerText = dict.r2t; document.getElementById('r2-b').innerText = dict.r2b;
-      document.getElementById('r3-t').innerText = dict.r3t; document.getElementById('r3-b').innerText = dict.r3b;
-      document.getElementById('r4-t').innerText = dict.r4t; document.getElementById('r4-b').innerText = dict.r4b;
-      document.getElementById('r5-t').innerText = dict.r5t; document.getElementById('r5-b').innerText = dict.r5b;
-      document.getElementById('r6-t').innerText = dict.r6t; document.getElementById('r6-b').innerText = dict.r6b;
-      document.getElementById('rules-closing').innerText = dict.closing;
 
       if (typeof window.syncCalendarLanguage === "function") {
         window.syncCalendarLanguage(lang);
@@ -661,6 +728,9 @@
     }
 
     window.onload = function() {
+      const savedLogo = localStorage.getItem('pos_hero_logo');
+      if (savedLogo) document.getElementById('hub-logo-img').src = savedLogo;
+
       const savedTitle = localStorage.getItem('pos_hero_title');
       if (savedTitle) document.getElementById('hero-title').innerText = savedTitle;
 
@@ -668,6 +738,7 @@
       if (savedSub) document.getElementById('hub-subtitle').innerText = savedSub;
 
       renderEvents();
+      renderIndexRules();
     };
   </script>
 </body>
