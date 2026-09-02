@@ -30,17 +30,17 @@ const postsI18n = {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
     newsletterTitle: "💌 ne manque aucune édition !",
-    newsletterSub: "reçois nos dernières actualités et invitations directement dans ta boîte mail. 100 % gratuit !"
+    newsletterSub: "reçois nos dernières actualités, exclusivités et invitations directement dans ta boîte mail. 100 % gratuit !"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
     newsletterTitle: "💌 stay in the loop!",
-    newsletterSub: "get our latest news and event invitations delivered straight to your inbox. 100% free!"
+    newsletterSub: "get our latest news, behind-the-scenes updates, and event invitations delivered straight to your inbox. 100% free!"
   }
 };
 
-/* --- CSS Injection & Kit Direct Overrides --- */
+/* --- CSS Injection with High-Specificity Kit Overrides --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -84,30 +84,46 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Custom Wrapper for the Kit Newsletter Box */
+    /* Futuristic Glassmorphism Wrapper for Newsletter Signup */
     .posts-newsletter-wrapper {
-      margin-top: 30px;
-      padding: 22px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08));
-      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
-      border-radius: 16px;
+      margin-top: 35px;
+      padding: 28px 26px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.35));
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .posts-newsletter-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
     }
     .posts-newsletter-header {
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
     .posts-newsletter-header h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--neon-cyan, #38bdf8);
-      margin-bottom: 4px;
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-cyan, #38bdf8), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .posts-newsletter-header p {
-      font-size: 13.5px;
+      font-size: 14px;
       color: var(--text-muted, #cbd5e1);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* FORCE OVERRIDES FOR KIT EMBED FORM */
+    /* DIRECT HIGH-SPECIFICITY OVERRIDES FOR KIT EMBEDDED FORM */
     #kit-embed-container form.formkit-form,
     #kit-embed-container .seva-form {
       background: transparent !important;
@@ -121,53 +137,63 @@ function injectPostsStyles() {
     #kit-embed-container .formkit-fields,
     #kit-embed-container .seva-fields {
       display: flex !important;
-      gap: 10px !important;
+      gap: 12px !important;
       flex-wrap: wrap !important;
       align-items: center !important;
     }
 
     #kit-embed-container .formkit-field {
-      flex: 1 1 240px !important;
+      flex: 1 1 280px !important;
       margin: 0 !important;
     }
 
     #kit-embed-container .formkit-input {
-      background: #0f172a !important;
-      border: 1px solid rgba(56, 189, 248, 0.35) !important;
+      background: #0b0f19 !important;
+      border: 1px solid var(--neon-cyan, #38bdf8) !important;
       color: #ffffff !important;
-      border-radius: 25px !important;
-      padding: 10px 18px !important;
+      border-radius: 30px !important;
+      padding: 12px 20px !important;
       font-size: 14px !important;
       font-family: inherit !important;
       outline: none !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+      transition: all 0.25s ease !important;
     }
     #kit-embed-container .formkit-input::placeholder {
       color: #94a3b8 !important;
     }
+    #kit-embed-container .formkit-input:focus {
+      border-color: var(--neon-amber, #f59e0b) !important;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important;
+    }
 
     #kit-embed-container .formkit-submit,
     #kit-embed-container button.formkit-submit {
-      background: var(--neon-amber, #f59e0b) !important;
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316) !important;
       color: #000000 !important;
-      font-weight: 700 !important;
-      border-radius: 25px !important;
-      padding: 10px 24px !important;
+      font-weight: 800 !important;
+      font-size: 14px !important;
+      letter-spacing: 0.03em !important;
+      border-radius: 30px !important;
+      padding: 12px 28px !important;
       border: none !important;
       margin: 0 !important;
       cursor: pointer !important;
       flex: 0 0 auto !important;
-      transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important;
+      transition: all 0.25s ease !important;
     }
 
     #kit-embed-container .formkit-submit:hover {
-      transform: scale(1.04) !important;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.75) !important;
+      color: #000000 !important;
     }
 
     #kit-embed-container .formkit-powered-by-convertkit-container {
-      margin-top: 10px !important;
+      margin-top: 12px !important;
       justify-content: flex-start !important;
-      opacity: 0.5 !important;
+      opacity: 0.4 !important;
       filter: invert(1);
     }
   `;
