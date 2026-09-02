@@ -260,20 +260,6 @@
       </div>
     </section>
 
-    <!-- Interactive Newsletter Archives Gallery -->
-    <section class="glass-card">
-      <div class="section-title">
-        <span>📰 <span id="title-news">archive des actualités</span></span>
-        <div>
-          <button class="action-btn" onclick="openAddNewsModal()">➕ ajouter une édition</button>
-          <button class="edit-pencil" onclick="openNewsManagerModal()">✏️</button>
-        </div>
-      </div>
-      <div class="notion-gallery" id="cdl-archives-container">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
-
     <!-- Interactive Calendar Container -->
     <section class="glass-card">
       <div id="pos-calendar"></div>
@@ -341,7 +327,6 @@
             document.body.classList.add('body-unlocked');
             document.getElementById('lock-btn').classList.add('unlocked');
             document.getElementById('lock-text').innerText = "déverrouillé";
-            renderNewsArchives();
             renderRules();
           } else {
             alert("Code PIN incorrect.");
@@ -352,65 +337,7 @@
         document.body.classList.remove('body-unlocked');
         document.getElementById('lock-btn').classList.remove('unlocked');
         document.getElementById('lock-text').innerText = "verrouillé";
-        renderNewsArchives();
         renderRules();
-      }
-    }
-
-    /* --- Default Newsletters / Archives Data --- */
-    const defaultNewsData = [
-      {
-        id: 12,
-        title: "The POS Weekly Scoop #12",
-        date: "Septembre 2026",
-        cover: "🗣️",
-        content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes chaque mercredi !"
-      },
-      {
-        id: 11,
-        title: "The POS Weekly Scoop #11",
-        date: "Août 2026",
-        cover: "🌍",
-        content: "Retour sur notre grand Speed Dating international avec plus de 50 personnes! Un immense merci à notre bar partenaire pour l'accueil chaleureux."
-      }
-    ];
-
-    let newsData = JSON.parse(localStorage.getItem('pos_cdl_news')) || defaultNewsData;
-
-    function renderNewsArchives() {
-      const container = document.getElementById('cdl-archives-container');
-      if (!container) return;
-      container.innerHTML = '';
-
-      newsData.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'notion-card';
-        card.onclick = () => openNewsPostModal(index);
-
-        let coverHtml = item.cover.startsWith('http') 
-          ? `<img src="${item.cover}" alt="Cover">` 
-          : item.cover;
-
-        card.innerHTML = `
-          <div class="notion-card-cover">${coverHtml}</div>
-          <div class="notion-card-body">
-            <div style="font-weight:700;">${item.title}</div>
-            <div style="font-size:12px; color:var(--text-muted);">${item.date}</div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function openNewsPostModal(index) {
-      const item = newsData[index];
-      if (isUnlocked) {
-        openEditNewsModal(index);
-      } else {
-        openModal(item.title, `
-          <p style="font-size:12px; color:var(--neon-amber); margin-bottom:12px; font-weight:700;">📅 ${item.date}</p>
-          <div style="font-size:14.5px; line-height:1.7;">${item.content}</div>
-        `);
       }
     }
 
@@ -478,102 +405,6 @@
       if (url) insertTag(textareaId, `<img src="${url}" style="width:100%; border-radius:8px; margin:10px 0;">`);
     }
 
-    /* --- News Editors --- */
-    function openAddNewsModal() {
-      openModal("➕ ajouter une actualité", `
-        <div class="form-group">
-          <label>Titre de l'édition :</label>
-          <input type="text" id="add-news-title" class="form-control" value="The POS Weekly Scoop #13">
-        </div>
-        <div class="form-group">
-          <label>Mois / Date :</label>
-          <input type="text" id="add-news-date" class="form-control" value="Octobre 2026">
-        </div>
-        <div class="form-group">
-          <label>Icône / Emoji ou URL Image Cover :</label>
-          <input type="text" id="add-news-cover" class="form-control" value="🗞️">
-        </div>
-        <div class="form-group">
-          <label>Contenu de l'actualité :</label>
-          <div class="editor-toolbar">
-            <button class="tool-btn" onclick="insertTag('add-news-content', '<b>', '</b>')"><b>B</b></button>
-            <button class="tool-btn" onclick="insertTag('add-news-content', '<i>', '</i>')"><i>I</i></button>
-            <button class="tool-btn" onclick="insertTag('add-news-content', '<u>', '</u>')"><u>U</u></button>
-            <button class="tool-btn" onclick="insertTag('add-news-content', '<mark>', '</mark>')">Highlight</button>
-            <button class="tool-btn" onclick="insertTag('add-news-content', '<s>', '</s>')"><s>S</s></button>
-            <button class="tool-btn" onclick="insertImageUrl('add-news-content')">📷 Image</button>
-          </div>
-          <textarea id="add-news-content" class="form-control" rows="5">Rédigez votre texte ici...</textarea>
-        </div>
-        <button onclick="saveNewNewsPost()" class="btn-primary" style="width:100%; margin-top:10px;">💾 créer l'actualité</button>
-      `);
-    }
-
-    function saveNewNewsPost() {
-      const title = document.getElementById('add-news-title').value;
-      const date = document.getElementById('add-news-date').value;
-      const cover = document.getElementById('add-news-cover').value;
-      const content = document.getElementById('add-news-content').value;
-
-      newsData.unshift({ id: Date.now(), title, date, cover, content });
-      localStorage.setItem('pos_cdl_news', JSON.stringify(newsData));
-      renderNewsArchives();
-      closeModal();
-    }
-
-    function openEditNewsModal(index) {
-      const item = newsData[index];
-      openModal("✏️ modifier l'actualité", `
-        <div class="form-group">
-          <label>Titre :</label>
-          <input type="text" id="edit-news-title" class="form-control" value="${item.title}">
-        </div>
-        <div class="form-group">
-          <label>Mois / Date :</label>
-          <input type="text" id="edit-news-date" class="form-control" value="${item.date}">
-        </div>
-        <div class="form-group">
-          <label>Cover (Emoji ou Image URL) :</label>
-          <input type="text" id="edit-news-cover" class="form-control" value="${item.cover}">
-        </div>
-        <div class="form-group">
-          <label>Contenu :</label>
-          <div class="editor-toolbar">
-            <button class="tool-btn" onclick="insertTag('edit-news-content', '<b>', '</b>')"><b>B</b></button>
-            <button class="tool-btn" onclick="insertTag('edit-news-content', '<i>', '</i>')"><i>I</i></button>
-            <button class="tool-btn" onclick="insertTag('edit-news-content', '<u>', '</u>')"><u>U</u></button>
-            <button class="tool-btn" onclick="insertTag('edit-news-content', '<mark>', '</mark>')">Highlight</button>
-            <button class="tool-btn" onclick="insertTag('edit-news-content', '<s>', '</s>')"><s>S</s></button>
-            <button class="tool-btn" onclick="insertImageUrl('edit-news-content')">📷 Image</button>
-          </div>
-          <textarea id="edit-news-content" class="form-control" rows="6">${item.content}</textarea>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-top:15px;">
-          <button onclick="saveEditNewsPost(${index})" class="btn-primary">💾 enregistrer</button>
-          <button onclick="deleteNewsPost(${index})" class="btn-danger">🗑️ supprimer</button>
-        </div>
-      `);
-    }
-
-    function saveEditNewsPost(index) {
-      newsData[index].title = document.getElementById('edit-news-title').value;
-      newsData[index].date = document.getElementById('edit-news-date').value;
-      newsData[index].cover = document.getElementById('edit-news-cover').value;
-      newsData[index].content = document.getElementById('edit-news-content').value;
-
-      localStorage.setItem('pos_cdl_news', JSON.stringify(newsData));
-      renderNewsArchives();
-      closeModal();
-    }
-
-    function deleteNewsPost(index) {
-      if (confirm("Supprimer cette édition d'actualité ?")) {
-        newsData.splice(index, 1);
-        localStorage.setItem('pos_cdl_news', JSON.stringify(newsData));
-        renderNewsArchives();
-        closeModal();
-      }
-    }
 
     /* --- Rules Manager Modal --- */
     function openRulesManagerModal() {
@@ -851,7 +682,6 @@
       const savedL3 = localStorage.getItem('pos_cdl_l3'); if (savedL3) document.getElementById('label-3').innerText = savedL3;
       const savedL4 = localStorage.getItem('pos_cdl_l4'); if (savedL4) document.getElementById('label-4').innerText = savedL4;
 
-      renderNewsArchives();
       renderRules();
       animateCounters();
     };
