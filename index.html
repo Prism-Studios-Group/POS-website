@@ -200,10 +200,9 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
- <!-- Centralized Navigation Bar -->
-<nav id="pos-nav"></nav>
-<script src="nav.js"></script>
+  <!-- Centralized Navigation Bar -->
+  <nav id="pos-nav"></nav>
+  <script src="nav.js"></script>
 
   <div class="container">
 
@@ -235,6 +234,12 @@
         <!-- Rendered dynamically -->
       </div>
     </section>
+
+    <!-- Centralized Posts / Newsletter Archives Section -->
+    <section class="glass-card">
+      <div id="pos-posts"></div>
+    </section>
+    <script src="posts.js"></script>
 
     <!-- Calendar Section -->
     <section class="glass-card">
@@ -364,34 +369,6 @@
 
     let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
 
-    /* Dynamic Nav Renderer */
-    function renderDynamicNav() {
-      const navContainer = document.getElementById('dynamic-nav-container');
-      if (!navContainer) return;
-      navContainer.innerHTML = '';
-
-      if (eventsData.length > 3) {
-        let dropdownItems = eventsData.map(item => `
-          <a href="${item.url}" class="nav-dropdown-item">${item.title}</a>
-        `).join('');
-
-        navContainer.innerHTML = `
-          <div class="nav-dropdown">
-            <a href="index.html" class="nav-tab active">tous les événements ▼</a>
-            <div class="nav-dropdown-content">
-              ${dropdownItems}
-            </div>
-          </div>
-        `;
-      } else {
-        let navTabs = `<a href="index.html" class="nav-tab active" id="nav-hub">tous les événements</a>`;
-        eventsData.forEach(item => {
-          navTabs += `<a href="${item.url}" class="nav-tab">${item.title}</a>`;
-        });
-        navContainer.innerHTML = navTabs;
-      }
-    }
-
     function renderEvents() {
       const container = document.getElementById('events-container');
       if (!container) return;
@@ -414,8 +391,6 @@
         `;
         container.appendChild(card);
       });
-
-      renderDynamicNav();
     }
 
     function openEventModal(index) {
@@ -563,7 +538,7 @@
     /* --- Dynamic Index Rules System --- */
     const defaultIndexRules = [
       { title: "cadre et objectifs", body: "toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association." },
-      { title: "respect des lieux et partenaires", body: "nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictly interdit." },
+      { title: "respect des lieux et partenaires", body: "nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictement interdit." },
       { title: "environnement sûr et inclusif", body: "conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées." },
       { title: "vie privée et communications", body: "respect de la vie privée : il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein des canaux de groupe officiels." },
       { title: "activités commerciales et publicité", body: "l'association est à but non lucratif. aucune publicité, démarchage ou vente de services commerciaux (cours privés, offres professionnelles) n'est autorisée au sein de nos événements ou groupes de discussion." },
