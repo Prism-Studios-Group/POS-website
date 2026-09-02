@@ -29,18 +29,20 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsCtaTitle: "⚡ Envie de ne rien manquer ?",
+    newsCtaBadge: "⚡ POS NEWSLETTER",
+    newsCtaTitle: "Envie de ne rien manquer ?",
     newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !",
     newsPlaceholder: "exemple@email.com",
-    newsBtnText: "M'abonner"
+    newsBtnText: "S'ABONNER 🚀"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsCtaTitle: "⚡ Want to stay in the loop?",
+    newsCtaBadge: "⚡ POS NEWSLETTER",
+    newsCtaTitle: "Want to stay in the loop?",
     newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free!",
     newsPlaceholder: "example@email.com",
-    newsBtnText: "Subscribe"
+    newsBtnText: "SUBSCRIBE 🚀"
   }
 };
 
@@ -49,7 +51,7 @@ function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
   style.id = 'pos-posts-styles';
-  style.textContent = 
+  style.textContent = `
     .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .posts-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
     .posts-card {
@@ -88,27 +90,25 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* HIGH-TECH FUTURISTIC NEWSLETTER CARD */
+    /* HIGH-TECH FUTURISTIC GLASSMOPHIC NEWSLETTER CARD */
     .posts-newsletter-card {
       margin-top: 35px;
-      padding-top: 25px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
     }
     .posts-newsletter-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 22px;
       flex-wrap: wrap;
-      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-                  rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.16) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 90%, rgba(217, 70, 239, 0.16) 0%, transparent 50%),
+                  rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border, rgba(56, 189, 248, 0.35));
-      border-radius: 18px;
-      padding: 26px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.08);
+      border-radius: 20px;
+      padding: 28px 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55), inset 0 0 20px rgba(56, 189, 248, 0.08);
       position: relative;
       overflow: hidden;
     }
@@ -116,10 +116,26 @@ function injectPostsStyles() {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
+      background: linear-gradient(90deg, #38bdf8, #a855f7, #d946ef, #f59e0b);
+    }
+    .posts-newsletter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
     }
     .posts-newsletter-text h3 {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 800;
       color: #ffffff;
       margin-bottom: 6px;
@@ -128,24 +144,24 @@ function injectPostsStyles() {
     .posts-newsletter-text p {
       font-size: 13.5px;
       color: var(--text-muted, #cbd5e1);
-      max-width: 480px;
+      max-width: 500px;
       line-height: 1.6;
     }
     .posts-newsletter-form {
       display: flex;
       gap: 12px;
       flex-grow: 1;
-      max-width: 440px;
+      max-width: 450px;
     }
     .posts-newsletter-input {
       flex: 1;
       background: #0b0f19;
       border: 1.5px solid rgba(56, 189, 248, 0.4);
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 13px 22px;
       border-radius: 30px;
       font-family: inherit;
-      font-size: 13.5px;
+      font-size: 14px;
       outline: none;
       box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
       transition: all 0.25s ease;
@@ -155,31 +171,32 @@ function injectPostsStyles() {
     }
     .posts-newsletter-input:focus {
       border-color: var(--neon-amber, #f59e0b);
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+      background: rgba(15, 23, 42, 1);
     }
     .posts-newsletter-btn {
-      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316);
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b) 0%, #f97316 50%, #d946ef 100%);
       color: #000000;
       font-weight: 800;
       font-size: 13.5px;
-      letter-spacing: 0.03em;
-      padding: 12px 26px;
+      letter-spacing: 0.04em;
+      padding: 13px 26px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
       white-space: nowrap;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
       transition: all 0.25s ease;
     }
     .posts-newsletter-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.75);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), 0 0 12px rgba(217, 70, 239, 0.5);
     }
     @media (max-width: 768px) {
       .posts-newsletter-content { flex-direction: column; align-items: stretch; }
       .posts-newsletter-form { max-width: 100%; flex-direction: column; }
     }
-  ;
+  `;
   document.head.appendChild(style);
 }
 
@@ -190,7 +207,7 @@ function mountPostsHTML() {
 
   const t = postsI18n[postsState.language] || postsI18n.fr;
 
-  target.innerHTML = 
+  target.innerHTML = `
     <div class="posts-header-bar">
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
         📰 <span id="title-news-heading">${t.titleHeading}</span>
@@ -204,12 +221,13 @@ function mountPostsHTML() {
     <div class="posts-newsletter-card">
       <div class="posts-newsletter-content">
         <div class="posts-newsletter-text">
+          <span class="posts-newsletter-badge" id="posts-news-badge">${t.newsCtaBadge}</span>
           <h3 id="posts-news-title">${t.newsCtaTitle}</h3>
           <p id="posts-news-sub">${t.newsCtaSub}</p>
         </div>
         <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
           <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="${t.newsPlaceholder}" required />
-          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">${t.newsBtnText}</span> 🚀</button>
+          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">${t.newsBtnText}</span></button>
         </form>
       </div>
     </div>
@@ -220,7 +238,7 @@ function mountPostsHTML() {
         <div id="posts-modal-content"></div>
       </div>
     </div>
-  ;
+  `;
 }
 
 /* --- Save & Render --- */
@@ -240,16 +258,16 @@ function renderPostsGallery() {
     card.onclick = () => openPostModal(index);
 
     let coverHtml = item.cover.startsWith('http') 
-      ? <img src="${item.cover}" alt="Cover"> 
+      ? `<img src="${item.cover}" alt="Cover">` 
       : item.cover;
 
-    card.innerHTML = 
+    card.innerHTML = `
       <div class="posts-card-cover">${coverHtml}</div>
       <div class="posts-card-body">
         <div class="posts-card-title">${item.title}</div>
         <div class="posts-card-date">${item.date}</div>
       </div>
-    ;
+    `;
     container.appendChild(card);
   });
 }
@@ -263,18 +281,18 @@ function openPostModal(index) {
     openEditPostModal(index);
   } else {
     const content = document.getElementById('posts-modal-content');
-    content.innerHTML = 
+    content.innerHTML = `
       <h2 style="color:var(--neon-cyan, #38bdf8); margin-bottom:6px;">${item.title}</h2>
       <p style="font-size:12px; color:var(--neon-amber, #f59e0b); font-weight:700; margin-bottom:18px;">📅 ${item.date}</p>
       <div style="font-size:14.5px; line-height:1.7; color:var(--text-main, #fff);">${item.content}</div>
-    ;
+    `;
     document.getElementById('posts-modal-overlay').style.display = 'flex';
   }
 }
 
 function openAddPostModal() {
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = 
+  content.innerHTML = `
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">➕ ajouter une actualité</h3>
     <div class="posts-form-group">
       <label>Titre de l'édition :</label>
@@ -301,7 +319,7 @@ function openAddPostModal() {
       <textarea id="add-post-content" class="posts-form-input" rows="5">Rédigez votre texte ici...</textarea>
     </div>
     <button onclick="saveNewPost()" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; width:100%; font-weight:700; padding:10px; border-radius:8px; border:none; cursor:pointer;">💾 créer l'actualité</button>
-  ;
+  `;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
@@ -319,7 +337,7 @@ function saveNewPost() {
 function openEditPostModal(index) {
   const item = postsData[index];
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = 
+  content.innerHTML = `
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">✏️ modifier l'actualité</h3>
     <div class="posts-form-group">
       <label>Titre :</label>
@@ -349,7 +367,7 @@ function openEditPostModal(index) {
       <button onclick="saveEditPost(${index})" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">💾 enregistrer</button>
       <button onclick="deletePost(${index})" class="cal-btn-sec" style="background:#ef4444; color:#fff; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">🗑️ supprimer</button>
     </div>
-  ;
+  `;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
@@ -406,6 +424,9 @@ window.syncPostsLanguage = function(lang) {
 
   const addBtn = document.getElementById('posts-add-btn');
   if (addBtn) addBtn.innerText = t.addEdition;
+
+  const newsBadge = document.getElementById('posts-news-badge');
+  if (newsBadge) newsBadge.innerText = t.newsCtaBadge;
 
   const newsTitle = document.getElementById('posts-news-title');
   if (newsTitle) newsTitle.innerText = t.newsCtaTitle;
