@@ -103,13 +103,13 @@
     .yt-listen-btn { display: inline-flex; align-items: center; gap: 6px; background: #ff0000; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: transform 0.2s ease; flex-shrink: 0; }
     .yt-listen-btn:hover { transform: scale(1.05); background: #cc0000; }
 
-    /* Rules Dropdowns (Right Justified) */
-    .rule-dropdown { background: rgba(15, 12, 28, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: right; }
-    .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; direction: rtl; }
+    /* Rules Dropdowns (Left Aligned) */
+    .rule-dropdown { background: rgba(15, 12, 28, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
+    .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
-    .rule-dropdown summary::after { content: "▼"; font-size: 12px; transition: transform 0.2s ease; margin-right: 10px; }
+    .rule-dropdown summary::after { content: "▼"; font-size: 12px; transition: transform 0.2s ease; margin-left: 10px; }
     .rule-dropdown[open] summary::after { transform: rotate(180deg); color: var(--stage-magenta); }
-    .rule-body { padding: 0 18px 16px 18px; color: var(--text-muted); font-size: 14.5px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; text-align: right; }
+    .rule-body { padding: 0 18px 16px 18px; color: var(--text-muted); font-size: 14.5px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; text-align: left; }
 
     #rules-closing { margin-top: 35px; padding-top: 15px; text-align: center; font-weight: 700; color: var(--stage-gold); border-top: 1px dashed rgba(255, 255, 255, 0.1); }
 
@@ -209,7 +209,7 @@
     </section>
     <script src="calendar.js"></script>
 
-    <!-- Modular Rules Section (Right-Justified) -->
+    <!-- Modular Rules Section (Left-Aligned) -->
     <section class="glass-card">
       <div class="section-title">
         <span>📜 <span id="title-rules">règlement de la chorale</span></span>
