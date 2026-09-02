@@ -130,7 +130,7 @@
     .social-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
     .social-btn:hover { background: var(--stage-gold); color: #000; }
   </style>
-<style id="pos-nav-styles">
+  <style id="pos-nav-styles">
     .global-nav {
       position: sticky; top: 0; z-index: 9999;
       background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -202,7 +202,8 @@
     .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); flex-shrink: 0; }
     .lang-btn { background: transparent; border: none; color: var(--text-muted, #cbd5e1); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .lang-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
-  </style><style id="pos-cal-styles">
+  </style>
+  <style id="pos-cal-styles">
     .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
     .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
     .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
@@ -289,7 +290,7 @@
   </style></head>
 <body class="">
 
-  <!-- Embedded Navigation Bar -->
+  <!-- Navigation Bar -->
   <nav class="global-nav">
     <div class="nav-inner">
       <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
@@ -558,25 +559,9 @@
         <button class="edit-pencil" onclick="openChoirRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="choir-rules-container"><details class="rule-dropdown">
-          <summary>1. <span>cadre et objectifs</span></summary>
-          <div class="rule-body">le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau.</div>
-        </details><details class="rule-dropdown">
-          <summary>2. <span>assiduité et répétitions</span></summary>
-          <div class="rule-body">la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.</div>
-        </details><details class="rule-dropdown">
-          <summary>3. <span>environnement sûr et bienveillant</span></summary>
-          <div class="rule-body">notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.</div>
-        </details><details class="rule-dropdown">
-          <summary>4. <span>engagement caritatif et concerts</span></summary>
-          <div class="rule-body">chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.</div>
-        </details><details class="rule-dropdown">
-          <summary>5. <span>vie privée et communications</span></summary>
-          <div class="rule-body">les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.</div>
-        </details><details class="rule-dropdown">
-          <summary>6. <span>modération et contact</span></summary>
-          <div class="rule-body">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
-        </details></div>
+      <div id="choir-rules-container">
+        <!-- Rendered dynamically with bilingual support -->
+      </div>
 
       <p id="rules-closing">💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !</p>
     </section>
@@ -587,7 +572,8 @@
         <a href="https://www.facebook.com/groups/1087173560509402" class="social-btn" target="_blank" title="Facebook Group">FB</a>
         <a href="https://www.instagram.com/rennes.englishchoir/" class="social-btn" target="_blank" title="Instagram">IG</a>
       </div>
-    <div id="pos-ai-disclaimer">🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association.</div></footer>
+      <div id="pos-ai-disclaimer">🌱 <strong>note sur la création du site :</strong> ce site a été conçu avec l'aide d'outils d'intelligence artificielle (~15 requêtes, impact environnemental estimé à environ 0,03 kg CO₂e). il est aujourd'hui géré et maintenu exclusivement sans IA par l'équipe de Prism Outreach Studio. tous les événements et contenus sont créés directement par l'association.</div>
+    </footer>
 
   </div>
 
@@ -1046,18 +1032,48 @@
       closeModal();
     }
 
-    /* --- Default Choir Rules Structure --- */
+    /* Helper function to dynamically extract active language text */
+    function getRuleText(rule, lang) {
+      if (rule[lang]) return rule[lang];
+      if (lang === 'fr' && rule.fr) return rule.fr;
+      if (lang === 'en' && rule.en) return rule.en;
+      return { title: rule.title || "", body: rule.body || "" };
+    }
+
+    /* Dynamic Bilingual Choir Rules System */
     const defaultChoirRules = [
-      { title: "cadre et objectifs", body: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau." },
-      { title: "assiduité et répétitions", body: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux." },
-      { title: "environnement sûr et bienveillant", body: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur." },
-      { title: "engagement caritatif et concerts", body: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets." },
-      { title: "vie privée et communications", body: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe." },
-      { title: "modération et contact", body: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com." }
+      {
+        fr: { title: "cadre et objectifs", body: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau." },
+        en: { title: "framework and goals", body: "the rennes english choir is an initiative of the prism outreach studio (pos) association. our goal is to offer a friendly and stimulating space to sing in english, improve your pronunciation, and share warm musical moments without judgment." }
+      },
+      {
+        fr: { title: "assiduité et répétitions", body: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux." },
+        en: { title: "rehearsals and attendance", body: "concert preparation requires regular collective work. attending rehearsals is strongly encouraged to ensure group cohesion and the success of musical projects." }
+      },
+      {
+        fr: { title: "environnement sûr et bienveillant", body: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur." },
+        en: { title: "safe and welcoming environment", body: "our ensemble is built on respect and inclusivity. no harassment, discrimination, or inappropriate behavior is tolerated. we sing to learn together in high spirits." }
+      },
+      {
+        fr: { title: "engagement caritatif et concerts", body: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets." },
+        en: { title: "charity commitment and concerts", body: "each cycle partners with a social cause. by taking part in concerts, each singer directly contributes to supporting partner associations through 50% of ticket sales." }
+      },
+      {
+        fr: { title: "vie privée et communications", body: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe." },
+        en: { title: "privacy and communications", body: "interactions between members must remain respectful. unsolicited sales outreach or direct messages (DMs) are forbidden. official communications take place via group channels." }
+      },
+      {
+        fr: { title: "modération et contact", body: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com." },
+        en: { title: "moderation and contact", body: "the association reserves the right to exclude any member whose behavior harms the group or breaks guidelines. for any questions: rennescafedeslangues@gmail.com." }
+      }
     ];
 
     let choirRulesData = JSON.parse(localStorage.getItem('pos_choir_rules')) || defaultChoirRules;
-    let choirRulesClosing = localStorage.getItem('pos_choir_rules_closing') || "💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !";
+
+    const choirClosingText = {
+      fr: "💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !",
+      en: "💫 we can't wait to sing with you! see you soon at rehearsals!"
+    };
 
     function renderChoirRules() {
       const container = document.getElementById('choir-rules-container');
@@ -1065,46 +1081,52 @@
       container.innerHTML = '';
 
       choirRulesData.forEach((rule, idx) => {
+        const text = getRuleText(rule, currentLanguage);
         const details = document.createElement('details');
         details.className = 'rule-dropdown';
         details.innerHTML = `
-          <summary>${idx + 1}. <span>${rule.title}</span></summary>
-          <div class="rule-body">${rule.body}</div>
+          <summary>${idx + 1}. <span>${text.title}</span></summary>
+          <div class="rule-body">${text.body}</div>
         `;
         container.appendChild(details);
       });
 
-      document.getElementById('rules-closing').innerText = choirRulesClosing;
+      const closingEl = document.getElementById('rules-closing');
+      if (closingEl) closingEl.innerText = choirClosingText[currentLanguage] || choirClosingText.fr;
     }
 
     function openChoirRulesManagerModal() {
       const container = document.getElementById('modal-body');
       container.innerHTML = `
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie, ajoute ou supprime les règles de la chorale :</p>
+        <h3 style="color:var(--stage-gold); margin-bottom:15px;">✏️ gérer le règlement de la chorale [${currentLanguage.toUpperCase()}]</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie les règles de la langue actuelle (${currentLanguage.toUpperCase()}) :</p>
         <div id="rules-form-list">
-          ${choirRulesData.map((r, i) => `
-            <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <strong style="color:var(--stage-gold);">Règle #${i + 1}</strong>
-                <button onclick="removeChoirRuleFromForm(${i})" class="btn-danger">🗑️ supprimer</button>
+          ${choirRulesData.map((r, i) => {
+            const text = getRuleText(r, currentLanguage);
+            return `
+              <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <strong style="color:var(--stage-gold);">Règle #${i + 1}</strong>
+                  <button onclick="removeChoirRuleFromForm(${i})" class="btn-danger">🗑️ supprimer</button>
+                </div>
+                <input type="text" id="choir-rule-title-${i}" class="form-control" value="${text.title}" style="margin-bottom:6px;">
+                <textarea id="choir-rule-body-${i}" class="form-control" rows="2">${text.body}</textarea>
               </div>
-              <input type="text" id="choir-rule-title-${i}" class="form-control" value="${r.title}" style="margin-bottom:6px;">
-              <textarea id="choir-rule-body-${i}" class="form-control" rows="2">${r.body}</textarea>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
         <button onclick="addChoirRuleToForm()" class="btn-sec" style="width:100%; margin-bottom:15px;">➕ ajouter une règle</button>
-        <div class="form-group">
-          <label>Texte de conclusion ("On a hâte...") :</label>
-          <input type="text" id="choir-rule-closing-input" class="form-control" value="${choirRulesClosing}">
-        </div>
         <button onclick="saveAllChoirRules()" class="btn-primary" style="width:100%; margin-top:10px;">💾 enregistrer le règlement</button>
       `;
       openModal("✏️ gérer le règlement de la chorale", container.innerHTML);
     }
 
     function addChoirRuleToForm() {
-      choirRulesData.push({ title: "nouvelle règle", body: "description..." });
+      const newRule = {
+        fr: { title: "nouvelle règle", body: "description..." },
+        en: { title: "new rule", body: "description..." }
+      };
+      choirRulesData.push(newRule);
       openChoirRulesManagerModal();
     }
 
@@ -1118,16 +1140,13 @@
         const tEl = document.getElementById(`choir-rule-title-${i}`);
         const bEl = document.getElementById(`choir-rule-body-${i}`);
         if (tEl && bEl) {
-          r.title = tEl.value;
-          r.body = bEl.value;
+          if (!r[currentLanguage]) r[currentLanguage] = {};
+          r[currentLanguage].title = tEl.value;
+          r[currentLanguage].body = bEl.value;
         }
       });
 
-      const closingInput = document.getElementById('choir-rule-closing-input');
-      if (closingInput) choirRulesClosing = closingInput.value;
-
       localStorage.setItem('pos_choir_rules', JSON.stringify(choirRulesData));
-      localStorage.setItem('pos_choir_rules_closing', choirRulesClosing);
       renderChoirRules();
       closeModal();
     }
@@ -1254,8 +1273,7 @@
         titleCycle: "thème du cycle de concert",
         cycleBadge: "thème actuel",
         titleProgram: "programme du concert & extraits",
-        titleRules: "règlement de la chorale",
-        rulesClosing: "💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !"
+        titleRules: "règlement de la chorale"
       },
       en: {
         navJoin: "join us!",
@@ -1268,8 +1286,7 @@
         titleCycle: "concert cycle theme",
         cycleBadge: "current theme",
         titleProgram: "concert lineup & excerpts",
-        titleRules: "choir guidelines",
-        rulesClosing: "💫 we can't wait to sing with you! see you soon at rehearsals!"
+        titleRules: "choir guidelines"
       }
     };
 
@@ -1298,8 +1315,7 @@
       if (document.getElementById('title-cycle')) document.getElementById('title-cycle').innerText = dict.titleCycle;
       if (document.getElementById('cycle-badge')) document.getElementById('cycle-badge').innerText = dict.cycleBadge;
       if (document.getElementById('title-program')) document.getElementById('title-program').innerText = dict.titleProgram;
-      if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.titleRules;
-      if (document.getElementById('rules-closing')) document.getElementById('rules-closing').innerText = dict.rulesClosing;
+      if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.rulesTitle;
 
       const lockText = document.getElementById('lock-text');
       if (lockText) {
@@ -1307,6 +1323,7 @@
       }
 
       renderNavTabs();
+      renderChoirRules();
 
       if (typeof window.syncCalendarLanguage === "function") {
         window.syncCalendarLanguage(lang);
