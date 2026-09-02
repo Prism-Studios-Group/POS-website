@@ -29,29 +29,29 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsletterBadge: "⚡ POS NEWSLETTER",
-    newsletterTitle: "Reste connecté à la communauté",
-    newsletterSub: "Abonne-toi pour recevoir nos récapitulatifs hebdomadaires, invitations exclusives et coulisses directement par mail. 100 % gratuit !",
+    newsletterBadge: "⚡ POS VIP NEWSLETTER",
+    newsletterTitle: "Reste au cœur de l'action",
+    newsletterSub: "Rejoins notre réseau privé pour recevoir nos actualités hebdomadaires, événements exclusifs et coulisses directement dans ta boîte mail.",
     placeholder: "ton.email@exemple.com",
-    btnText: "S'ABONNER ➔"
+    btnText: "S'ABONNER 🚀"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsletterBadge: "⚡ POS NEWSLETTER",
+    newsletterBadge: "⚡ POS VIP NEWSLETTER",
     newsletterTitle: "Stay in the Loop",
-    newsletterSub: "Subscribe to get our weekly recaps, exclusive event invites, and behind-the-scenes news delivered straight to your inbox. 100% free!",
+    newsletterSub: "Subscribe to get our weekly recaps, exclusive event invites, and behind-the-scenes news delivered straight to your inbox.",
     placeholder: "your.email@example.com",
-    btnText: "SUBSCRIBE ➔"
+    btnText: "SUBSCRIBE 🚀"
   }
 };
 
-/* --- Futuristic Neon Glassmorphism CSS --- */
+/* --- Futuristic Glassmorphic Neon CSS --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
   style.id = 'pos-posts-styles';
-  style.textContent = `
+  style.textContent = 
     .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .posts-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
     .posts-card {
@@ -90,99 +90,116 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Futuristic Glassmorphic Newsletter Box */
+    /* HIGH-TECH FUTURISTIC NEWSLETTER CARD */
     .pos-futuristic-newsletter {
       margin-top: 35px;
-      padding: 30px;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 50%),
-                  radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.12), transparent 50%),
-                  rgba(15, 23, 42, 0.85);
+      padding: 32px 30px;
+      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
+                  radial-gradient(circle at 90% 90%, rgba(217, 70, 239, 0.18) 0%, transparent 45%),
+                  rgba(11, 15, 25, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(56, 189, 248, 0.35);
       border-radius: 20px;
       position: relative;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.1);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(56, 189, 248, 0.08);
       overflow: hidden;
     }
     .pos-futuristic-newsletter::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
+      background: linear-gradient(90deg, #38bdf8, #a855f7, #d946ef, #f59e0b);
     }
+    
     .pos-newsletter-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.1em;
-      color: var(--neon-cyan, #38bdf8);
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 4px 14px;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 5px 14px;
       border-radius: 20px;
       margin-bottom: 12px;
       text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
     }
     .pos-newsletter-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 6px;
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
       letter-spacing: -0.01em;
     }
     .pos-newsletter-sub {
       font-size: 14px;
-      color: var(--text-muted, #cbd5e1);
-      margin-bottom: 22px;
+      color: #94a3b8;
+      margin-bottom: 24px;
       line-height: 1.6;
       max-width: 680px;
     }
+    
     .pos-newsletter-form {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      align-items: center;
       max-width: 620px;
     }
+    
     .pos-newsletter-input {
-      flex: 1 1 280px;
-      background: #0b0f19;
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #ffffff;
-      padding: 13px 22px;
-      border-radius: 30px;
-      font-family: inherit;
-      font-size: 14px;
-      outline: none;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
-      transition: all 0.25s ease;
+      flex: 1 1 280px !important;
+      width: auto !important;
+      background: rgba(15, 23, 42, 0.95) !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+      color: #ffffff !important;
+      padding: 14px 22px !important;
+      border-radius: 40px !important;
+      font-family: inherit !important;
+      font-size: 14.5px !important;
+      outline: none !important;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .pos-newsletter-input::placeholder {
-      color: #64748b;
+      color: #64748b !important;
+      font-style: normal;
     }
     .pos-newsletter-input:focus {
-      border-color: var(--neon-amber, #f59e0b);
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.4);
+      border-color: #f59e0b !important;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.45), inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+      background: rgba(15, 23, 42, 1) !important;
     }
+
     .pos-newsletter-submit {
-      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316);
-      color: #000000;
-      font-weight: 800;
-      font-size: 13.5px;
-      letter-spacing: 0.05em;
-      padding: 13px 30px;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
-      transition: all 0.25s ease;
+      flex: 0 0 auto !important;
+      width: auto !important;
+      background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #d946ef 100%) !important;
+      color: #000000 !important;
+      font-weight: 900 !important;
+      font-size: 13.5px !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      padding: 14px 30px !important;
+      border-radius: 40px !important;
+      border: none !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.5) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .pos-newsletter-submit:hover {
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 0 25px rgba(245, 158, 11, 0.75);
+      transform: translateY(-2px) scale(1.04) !important;
+      box-shadow: 0 0 28px rgba(245, 158, 11, 0.85), 0 0 12px rgba(217, 70, 239, 0.5) !important;
+      color: #000000 !important;
     }
-  `;
+  ;
   document.head.appendChild(style);
 }
 
@@ -193,7 +210,7 @@ function mountPostsHTML() {
 
   const t = postsI18n[postsState.language] || postsI18n.fr;
 
-  target.innerHTML = `
+  target.innerHTML = 
     <div class="posts-header-bar">
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
         📰 <span id="title-news-heading">${t.titleHeading}</span>
@@ -203,7 +220,7 @@ function mountPostsHTML() {
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- Futuristic Custom Newsletter Section Submitting Directly to Kit -->
+    <!-- POS Futuristic Glassmorphic Newsletter Section -->
     <div class="pos-futuristic-newsletter">
       <span class="pos-newsletter-badge" id="posts-news-badge">${t.newsletterBadge}</span>
       <h3 class="pos-newsletter-title" id="posts-news-title">${t.newsletterTitle}</h3>
@@ -221,7 +238,7 @@ function mountPostsHTML() {
         <div id="posts-modal-content"></div>
       </div>
     </div>
-  `;
+  ;
 }
 
 /* --- Save & Render --- */
@@ -244,13 +261,13 @@ function renderPostsGallery() {
       ? `<img src="${item.cover}" alt="Cover">` 
       : item.cover;
 
-    card.innerHTML = `
+    card.innerHTML = 
       <div class="posts-card-cover">${coverHtml}</div>
       <div class="posts-card-body">
         <div class="posts-card-title">${item.title}</div>
         <div class="posts-card-date">${item.date}</div>
       </div>
-    `;
+    ;
     container.appendChild(card);
   });
 }
@@ -275,7 +292,7 @@ function openPostModal(index) {
 
 function openAddPostModal() {
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = `
+  content.innerHTML = 
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">➕ ajouter une actualité</h3>
     <div class="posts-form-group">
       <label>Titre de l'édition :</label>
@@ -302,7 +319,7 @@ function openAddPostModal() {
       <textarea id="add-post-content" class="posts-form-input" rows="5">Rédigez votre texte ici...</textarea>
     </div>
     <button onclick="saveNewPost()" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; width:100%; font-weight:700; padding:10px; border-radius:8px; border:none; cursor:pointer;">💾 créer l'actualité</button>
-  `;
+  ;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
@@ -320,7 +337,7 @@ function saveNewPost() {
 function openEditPostModal(index) {
   const item = postsData[index];
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = `
+  content.innerHTML = 
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">✏️ modifier l'actualité</h3>
     <div class="posts-form-group">
       <label>Titre :</label>
@@ -350,7 +367,7 @@ function openEditPostModal(index) {
       <button onclick="saveEditPost(${index})" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">💾 enregistrer</button>
       <button onclick="deletePost(${index})" class="cal-btn-sec" style="background:#ef4444; color:#fff; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">🗑️ supprimer</button>
     </div>
-  `;
+  ;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
