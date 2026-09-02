@@ -86,9 +86,9 @@ const defaultCalendarEvents = [
     id: 1,
     title_fr: "café des langues 70",
     title_en: "café des langues 70",
-    description_fr: "rencontre hebdomadaire au bar pour pratiquer plus de 53 langues dans une ambiance conviviale.",
-    description_en: "weekly bar gathering to practice over 53 languages in a friendly environment.",
-    extra_details_fr: "pensez à commander une boisson sur place pour remercier le bar d'accueil.",
+    description_fr: "pratique linguistique un vendredi sur deux chew Hostel Rennes pour pratiquer des langues étrangères dans une ambiance conviviale.",
+    description_en: "bi-weekly meetup at Hostel Rennes to practice multiple foreign languages in a friendly environment.",
+    extra_details_fr: "pensez à commander une boisson sur place pour remercier l'auberge d'accueil.",
     extra_details_en: "remember to order a drink to support our host venue.",
     event_type: "cdl",
     event_date: "2026-09-04",
@@ -100,8 +100,8 @@ const defaultCalendarEvents = [
     id: 2,
     title_fr: "répétition rennes english choir 1",
     title_en: "rennes english choir rehearsal 1",
-    description_fr: "répétition de la chorale anglophone dirigée par un chef natif.",
-    description_en: "rehearsal for the english choir directed by a native speaker.",
+    description_fr: "répétition de la chorale anglophone : travail sur Moved",
+    description_en: "rehearsal for the english choir: work on Moved",
     event_type: "choir",
     event_date: "2026-09-08",
     start_time: "20:00",
@@ -112,8 +112,8 @@ const defaultCalendarEvents = [
     id: 3,
     title_fr: "répétition rennes english choir 2",
     title_en: "rennes english choir rehearsal 2",
-    description_fr: "répétition de la chorale anglophone dirigée par un chef natif.",
-    description_en: "rehearsal for the english choir directed by a native speaker.",
+    description_fr: "répétition de la chorale anglophone : travail sur Kaval sviri and Time",
+    description_en: "rehearsal for the english choir: work on Kaval Sviri and Time",
     event_type: "choir",
     event_date: "2026-09-15",
     start_time: "20:00",
@@ -124,15 +124,29 @@ const defaultCalendarEvents = [
     id: 4,
     title_fr: "café des langues 71",
     title_en: "café des langues 71",
-    description_fr: "rencontre hebdomadaire au bar pour pratiquer plus de 53 langues.",
-    description_en: "weekly bar gathering to practice over 53 languages.",
+    description_fr: "pratique linguistique un vendredi sur deux chew Hostel Rennes pour pratiquer des langues étrangères dans une ambiance conviviale.",
+    description_en: "bi-weekly meetup at Hostel Rennes to practice multiple foreign languages in a friendly environment.",
+    extra_details_fr: "pensez à commander une boisson sur place pour remercier l'auberge d'accueil.",
     event_type: "cdl",
     event_date: "2026-09-18",
     start_time: "19:00",
     end_time: "22:00",
     location: "10 Canal Saint-Martin, 35700 Rennes"
+  },
+    {
+    id: 5,
+    title_fr: "répétition rennes english choir 3",
+    title_en: "rennes english choir rehearsal 3",
+    description_fr: "répétition de la chorale anglophone : work on Kaval Sviri and Time",
+    description_en: "rehearsal for the english choir: work on Kaval Sviri and Time",
+    event_type: "choir",
+    event_date: "2026-09-15",
+    start_time: "20:00",
+    end_time: "21:30",
+    location: "à venir !"
   }
 ];
+
 let calendarEvents = JSON.parse(localStorage.getItem('pos_calendar_events')) || window.POS_EMBEDDED_CALENDAR_EVENTS || defaultCalendarEvents;
 
 let calState = {
