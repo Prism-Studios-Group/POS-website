@@ -29,16 +29,16 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsletterBadge: "NEWSLETTER POS",
-    newsletterTitle: "Reste au cœur de l'action",
-    newsletterSub: "Abonne-toi pour recevoir nos actualités hebdomadaires, événements exclusifs et coulisses directement dans ta boîte mail. 100 % gratuit !",
+    newsletterBadge: "⚡ POS NEWSLETTER",
+    newsletterTitle: "Reste connecté à la communauté",
+    newsletterSub: "Abonne-toi pour recevoir nos récapitulatifs hebdomadaires, invitations exclusives et coulisses directement par mail. 100 % gratuit !",
     placeholder: "ton.email@exemple.com",
     btnText: "S'ABONNER ➔"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsletterBadge: "POS NEWSLETTER",
+    newsletterBadge: "⚡ POS NEWSLETTER",
     newsletterTitle: "Stay in the Loop",
     newsletterSub: "Subscribe to get our weekly recaps, exclusive event invites, and behind-the-scenes news delivered straight to your inbox. 100% free!",
     placeholder: "your.email@example.com",
@@ -46,7 +46,7 @@ const postsI18n = {
   }
 };
 
-/* --- CSS Injection: Futuristic Glassmorphism Styling --- */
+/* --- Futuristic Neon Glassmorphism CSS --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -90,52 +90,55 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Futuristic Glassmorphism Newsletter Card */
-    .posts-newsletter-wrapper {
+    /* Futuristic Glassmorphic Newsletter Box */
+    .pos-futuristic-newsletter {
       margin-top: 35px;
-      padding: 28px;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.3));
-      border-radius: 18px;
+      padding: 30px;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 50%),
+                  radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.12), transparent 50%),
+                  rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 20px;
       position: relative;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.1);
       overflow: hidden;
     }
-    .posts-newsletter-wrapper::before {
+    .pos-futuristic-newsletter::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--neon-cyan, #38bdf8), var(--neon-purple, #a855f7), var(--neon-amber, #f59e0b));
     }
-    .newsletter-badge {
+    .pos-newsletter-badge {
       display: inline-block;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--neon-cyan, #38bdf8);
-      background: rgba(56, 189, 248, 0.12);
+      background: rgba(56, 189, 248, 0.15);
       border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 3px 12px;
+      padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
     }
-    .newsletter-title {
+    .pos-newsletter-title {
       font-size: 22px;
       font-weight: 800;
-      color: var(--text-main, #ffffff);
+      color: #ffffff;
       margin-bottom: 6px;
+      letter-spacing: -0.01em;
     }
-    .newsletter-sub {
+    .pos-newsletter-sub {
       font-size: 14px;
       color: var(--text-muted, #cbd5e1);
-      margin-bottom: 20px;
-      max-width: 650px;
+      margin-bottom: 22px;
       line-height: 1.6;
+      max-width: 680px;
     }
-    .pos-custom-form {
+    .pos-newsletter-form {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
@@ -143,40 +146,41 @@ function injectPostsStyles() {
     }
     .pos-newsletter-input {
       flex: 1 1 280px;
-      background: rgba(11, 15, 25, 0.9);
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: #0b0f19;
+      border: 1px solid rgba(56, 189, 248, 0.4);
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 13px 22px;
       border-radius: 30px;
       font-family: inherit;
       font-size: 14px;
       outline: none;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
       transition: all 0.25s ease;
     }
     .pos-newsletter-input::placeholder {
-      color: #94a3b8;
+      color: #64748b;
     }
     .pos-newsletter-input:focus {
       border-color: var(--neon-amber, #f59e0b);
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.35);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.4);
     }
-    .pos-newsletter-btn {
+    .pos-newsletter-submit {
       background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316);
       color: #000000;
       font-weight: 800;
       font-size: 13.5px;
-      letter-spacing: 0.04em;
-      padding: 12px 28px;
+      letter-spacing: 0.05em;
+      padding: 13px 30px;
       border-radius: 30px;
       border: none;
       cursor: pointer;
       white-space: nowrap;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
       transition: all 0.25s ease;
     }
-    .pos-newsletter-btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.7);
+    .pos-newsletter-submit:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.75);
     }
   `;
   document.head.appendChild(style);
@@ -199,15 +203,15 @@ function mountPostsHTML() {
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- POS Glassmorphic Newsletter Section Posting Directly to Kit Endpoint -->
-    <div class="posts-newsletter-wrapper">
-      <span class="newsletter-badge" id="posts-news-badge">${t.newsletterBadge}</span>
-      <h3 class="newsletter-title" id="posts-news-title">${t.newsletterTitle}</h3>
-      <p class="newsletter-sub" id="posts-news-sub">${t.newsletterSub}</p>
+    <!-- Futuristic Custom Newsletter Section Submitting Directly to Kit -->
+    <div class="pos-futuristic-newsletter">
+      <span class="pos-newsletter-badge" id="posts-news-badge">${t.newsletterBadge}</span>
+      <h3 class="pos-newsletter-title" id="posts-news-title">${t.newsletterTitle}</h3>
+      <p class="pos-newsletter-sub" id="posts-news-sub">${t.newsletterSub}</p>
       
-      <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="pos-custom-form">
+      <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="pos-newsletter-form">
         <input type="email" name="email_address" id="posts-news-input" class="pos-newsletter-input" placeholder="${t.placeholder}" required>
-        <button type="submit" id="posts-news-btn" class="pos-newsletter-btn">${t.btnText}</button>
+        <button type="submit" id="posts-news-btn" class="pos-newsletter-submit">${t.btnText}</button>
       </form>
     </div>
 
