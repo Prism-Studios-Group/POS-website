@@ -21,6 +21,29 @@ const defaultPostsData = [
 
 let postsData = JSON.parse(localStorage.getItem('pos_posts_data')) || defaultPostsData;
 
+let postsState = {
+  language: "fr"
+};
+
+const postsI18n = {
+  fr: {
+    titleHeading: "archive des actualités",
+    addEdition: "➕ ajouter une édition",
+    newsCtaTitle: "💌 Envie de ne rien manquer ?",
+    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !",
+    newsPlaceholder: "exemple@email.com",
+    newsBtnText: "S'abonner"
+  },
+  en: {
+    titleHeading: "newsletter archives",
+    addEdition: "➕ add edition",
+    newsCtaTitle: "💌 Want to stay in the loop?",
+    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free!",
+    newsPlaceholder: "example@email.com",
+    newsBtnText: "Subscribe"
+  }
+};
+
 /* --- CSS Injection --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
@@ -40,7 +63,7 @@ function injectPostsStyles() {
     .posts-card-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text-main, #fff); }
     .posts-card-date { font-size: 12px; color: var(--text-muted, #cbd5e1); }
 
-    /* Post Modal Inner Overlay */
+    /* Modal Overlay */
     .posts-modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -51,19 +74,90 @@ function injectPostsStyles() {
       max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
       position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); text-align: left; margin: auto;
     }
-    .posts-modal-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; }
+    .posts-modal-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted, #cbd5e1); cursor: pointer; }
     .posts-modal-close:hover { color: #ef4444; }
 
     .posts-form-group { margin-bottom: 14px; }
     .posts-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--neon-cyan, #38bdf8); margin-bottom: 5px; }
-    .posts-form-input { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .posts-form-input { width: 100%; background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
 
     .posts-editor-toolbar { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px; }
-    .posts-tool-btn { background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .posts-tool-btn { background: #1e293b; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; }
     .posts-tool-btn:hover { background: var(--neon-cyan, #38bdf8); color: #000; }
 
-    .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
+    .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
+
+    /* Integrated Kit Newsletter Signup Card */
+    .posts-newsletter-card {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+    .posts-newsletter-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .posts-newsletter-text h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--neon-cyan, #38bdf8);
+      margin-bottom: 4px;
+    }
+    .posts-newsletter-text p {
+      font-size: 13.5px;
+      color: var(--text-muted, #cbd5e1);
+      max-width: 480px;
+      line-height: 1.5;
+    }
+    .posts-newsletter-form {
+      display: flex;
+      gap: 10px;
+      flex-grow: 1;
+      max-width: 420px;
+    }
+    .posts-newsletter-input {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 25px;
+      font-family: inherit;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .posts-newsletter-input:focus {
+      border-color: var(--neon-cyan, #38bdf8);
+    }
+    .posts-newsletter-btn {
+      background: var(--neon-amber, #f59e0b);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .posts-newsletter-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+    }
+    @media (max-width: 768px) {
+      .posts-newsletter-content { flex-direction: column; align-items: stretch; }
+      .posts-newsletter-form { max-width: 100%; flex-direction: column; }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -78,10 +172,24 @@ function mountPostsHTML() {
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
         📰 <span id="title-news-heading">archive des actualités</span>
       </div>
-      <button class="posts-btn-add" onclick="openAddPostModal()">➕ ajouter une édition</button>
+      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">➕ ajouter une édition</button>
     </div>
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
+
+    <!-- Integrated Kit Newsletter Sign-up Box -->
+    <div class="posts-newsletter-card">
+      <div class="posts-newsletter-content">
+        <div class="posts-newsletter-text">
+          <h3 id="posts-news-title">💌 Envie de ne rien manquer ?</h3>
+          <p id="posts-news-sub">Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !</p>
+        </div>
+        <form action="https://rennes-cafe-des-langues.kit.com" method="post" target="_blank" class="posts-newsletter-form">
+          <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="exemple@email.com" required />
+          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">S'abonner</span> 🚀</button>
+        </form>
+      </div>
+    </div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
       <div class="posts-modal-card" onclick="event.stopPropagation()">
@@ -123,7 +231,7 @@ function renderPostsGallery() {
   });
 }
 
-/* --- Modal Displays & Rich Text Editors --- */
+/* --- Modals & Editors --- */
 function openPostModal(index) {
   const item = postsData[index];
   const isUnlocked = document.body.classList.contains('body-unlocked');
@@ -264,9 +372,47 @@ function closePostsModalOnOverlay(e) {
   if (e.target.id === 'posts-modal-overlay') closePostsModal();
 }
 
-/* --- Initialization --- */
+/* --- Language Sync Functions --- */
+window.syncPostsLanguage = function(lang) {
+  postsState.language = lang;
+  const t = postsI18n[lang];
+  
+  const heading = document.getElementById('title-news-heading');
+  if (heading) heading.innerText = t.titleHeading;
+
+  const addBtn = document.getElementById('posts-add-btn');
+  if (addBtn) addBtn.innerText = t.addEdition;
+
+  const newsTitle = document.getElementById('posts-news-title');
+  if (newsTitle) newsTitle.innerText = t.newsCtaTitle;
+
+  const newsSub = document.getElementById('posts-news-sub');
+  if (newsSub) newsSub.innerText = t.newsCtaSub;
+
+  const newsInput = document.getElementById('posts-news-input');
+  if (newsInput) newsInput.placeholder = t.newsPlaceholder;
+
+  const newsBtn = document.getElementById('posts-news-btn');
+  if (newsBtn) newsBtn.innerText = t.newsBtnText;
+};
+
+/* --- Initialization & Global Language Listener --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectPostsStyles();
   mountPostsHTML();
   renderPostsGallery();
+
+  // Instant global listener on language buttons
+  document.addEventListener('click', (e) => {
+    const langBtn = e.target.closest('.lang-btn');
+    if (langBtn) {
+      const lang = langBtn.id === 'btn-en' || langBtn.innerText.trim().toLowerCase() === 'en' ? 'en' : 'fr';
+      window.syncPostsLanguage(lang);
+    }
+  });
+
+  // Escape Key Listener
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePostsModal();
+  });
 });
