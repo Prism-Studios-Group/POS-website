@@ -453,8 +453,8 @@
       <span style="color:#a855f7">●</span> atelier / cours
     </label></div>
       <div class="cal-admin-tools">
-        <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
-        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
+        <button id="cal-lock-btn" class="cal-btn-sec unlocked" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">déverrouillé</span></button>
+        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()" style="display: inline-block;">➕ ajouter un événement</button>
       </div>
     </div>
 
@@ -473,22 +473,25 @@
 
     <div id="cal-month-view">
       <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
         <span class="event-pill-time">⏰ 19:00</span>
         <span class="event-pill-title">☕ café des langues 70</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
         <span class="event-pill-time">⏰ 20:00</span>
         <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
         <span class="event-pill-time">⏰ 20:00</span>
         <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
         <span class="event-pill-time">⏰ 19:00</span>
         <span class="event-pill-title">☕ café des langues 71</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
         <span class="event-pill-time">⏰ 20:00</span>
         <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
+      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
+        <span class="event-pill-time">⏰ 19:00</span>
+        <span class="event-pill-title">POS Volunteer training</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
     </div>
 
     <div id="cal-list-view" hidden=""></div>
@@ -541,7 +544,50 @@
     <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
       <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
         <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
-        <div id="cal-shadowbox-content"></div>
+        <div id="cal-shadowbox-content">
+      <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">✏️ modifier l'événement</h3>
+      
+      <div class="cal-form-group">
+        <label>Titre (FR) :</label>
+        <input type="text" id="edit-cal-title-fr" class="cal-form-input" value="Volunteer training">
+      </div>
+      <div class="cal-form-group">
+        <label>Titre (EN) :</label>
+        <input type="text" id="edit-cal-title-en" class="cal-form-input" value="Volunteer training">
+      </div>
+      <div class="cal-form-group">
+        <label>Date (YYYY-MM-DD) :</label>
+        <input type="text" id="edit-cal-date" class="cal-form-input" value="2026-09-25">
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="cal-form-group" style="flex:1;">
+          <label>Début :</label>
+          <input type="text" id="edit-cal-start" class="cal-form-input" value="19:00">
+        </div>
+        <div class="cal-form-group" style="flex:1;">
+          <label>Fin :</label>
+          <input type="text" id="edit-cal-end" class="cal-form-input" value="21:00">
+        </div>
+      </div>
+      <div class="cal-form-group">
+        <label>Adresse / Lieu (Lien GPS automatique) :</label>
+        <input type="text" id="edit-cal-loc" class="cal-form-input" value="rennes">
+      </div>
+      <div class="cal-form-group">
+        <label>Description :</label>
+        <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="2">description...</textarea>
+      </div>
+      <div class="cal-form-group">
+        <label>Détails complémentaires / Notes :</label>
+        <textarea id="edit-cal-extra-fr" class="cal-form-input" rows="2" placeholder="ex: boisson obligatoire, apporter son matériel..."></textarea>
+      </div>
+
+      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(1788393130607)">💾 enregistrer</button>
+        <button class="cal-btn" onclick="duplicateCalEvent(1788393130607)">📋 dupliquer</button>
+        <button class="cal-btn-sec" onclick="confirmDeleteCalEventModal(1788393130607)">🗑️ supprimer</button>
+      </div>
+    </div>
       </div>
     </div>
   </div>
@@ -804,60 +850,27 @@
     }
 
     function downloadUpdatedHTML() {
-  if (typeof closeModal === 'function') closeModal();
-  if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
-  if (typeof closePostsModal === 'function') closePostsModal();
+      if (typeof closeModal === 'function') closeModal();
+      if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
+      if (typeof closePostsModal === 'function') closePostsModal();
 
-  // Embed active Calendar Events into HTML
-  if (typeof calendarEvents !== 'undefined') {
-    let calScript = document.getElementById('pos-embedded-cal-data');
-    if (!calScript) {
-      calScript = document.createElement('script');
-      calScript.id = 'pos-embedded-cal-data';
-      document.head.appendChild(calScript);
+      const wasUnlocked = document.body.classList.contains('body-unlocked');
+      document.body.classList.remove('body-unlocked');
+
+      const cleanHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+      if (wasUnlocked) document.body.classList.add('body-unlocked');
+
+      const blob = new Blob([cleanHTML], { type: "text/html;charset=utf-8" });
+      const link = document.createElement("a");
+      let fileName = window.location.pathname.split("/").pop() || "rec-code.html";
+      
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
-    calScript.textContent = `window.POS_EMBEDDED_CALENDAR_EVENTS = ${JSON.stringify(calendarEvents, null, 2)};`;
-  }
-
-  // Embed active Choir Program Data into HTML
-  if (typeof programData !== 'undefined') {
-    let progScript = document.getElementById('pos-embedded-program-data');
-    if (!progScript) {
-      progScript = document.createElement('script');
-      progScript.id = 'pos-embedded-program-data';
-      document.head.appendChild(progScript);
-    }
-    progScript.textContent = `window.POS_EMBEDDED_CHOIR_PROGRAM = ${JSON.stringify(programData, null, 2)};`;
-  }
-
-  // Embed active Choir Rules into HTML
-  if (typeof choirRulesData !== 'undefined') {
-    let rulesScript = document.getElementById('pos-embedded-choir-rules-data');
-    if (!rulesScript) {
-      rulesScript = document.createElement('script');
-      rulesScript.id = 'pos-embedded-choir-rules-data';
-      document.head.appendChild(rulesScript);
-    }
-    rulesScript.textContent = `window.POS_EMBEDDED_CHOIR_RULES = ${JSON.stringify(choirRulesData, null, 2)};`;
-  }
-
-  const wasUnlocked = document.body.classList.contains('body-unlocked');
-  document.body.classList.remove('body-unlocked');
-
-  const cleanHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-
-  if (wasUnlocked) document.body.classList.add('body-unlocked');
-
-  const blob = new Blob([cleanHTML], { type: "text/html;charset=utf-8" });
-  const link = document.createElement("a");
-  let fileName = window.location.pathname.split("/").pop() || "rec-code.html";
-  
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 
     const defaultEvents = [
       { id: "cdl", image: "hermine-futuristic.png", tag: "échanges linguistiques", title: "rennes café des langues", desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.", details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.", url: "cdl-code.html" },
@@ -939,8 +952,7 @@
       }
     ];
 
-   let programData = JSON.parse(localStorage.getItem('pos_choir_program_full')) || window.POS_EMBEDDED_CHOIR_PROGRAM || defaultProgramData;
-   let choirRulesData = JSON.parse(localStorage.getItem('pos_choir_rules')) || window.POS_EMBEDDED_CHOIR_RULES || defaultChoirRules;
+    let programData = JSON.parse(localStorage.getItem('pos_choir_program_full')) || defaultProgramData;
 
     function renderProgramTimeline() {
       const container = document.getElementById('program-timeline-container');
