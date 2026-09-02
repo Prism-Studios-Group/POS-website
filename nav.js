@@ -12,7 +12,7 @@ const defaultNavInitiatives = [
 let navInitiatives = JSON.parse(localStorage.getItem('pos_events_data')) || defaultNavInitiatives;
 
 let navState = {
-  language: "fr",
+  language: localStorage.getItem('pos_lang') || "fr",
   isUnlocked: false
 };
 
@@ -78,7 +78,6 @@ function injectNavStyles() {
     .nav-tab:hover { color: var(--text-main, #fff); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
     .nav-tab.active { color: #000; background: var(--cdl-cyan, #38bdf8); box-shadow: 0 0 12px var(--cdl-cyan, #38bdf8); }
 
-    /* Reduced Dropdown Menu for >3 Initiatives */
     .nav-dropdown { position: relative; display: inline-block; }
     .nav-dropdown-content {
       display: none; position: absolute; top: 100%; left: 0;
@@ -151,7 +150,7 @@ function mountNavHTML() {
         </button>
 
         <div class="lang-toggle">
-          <button class="lang-btn active" id="nav-btn-fr" onclick="setNavLanguage('fr')">FR</button>
+          <button class="lang-btn" id="nav-btn-fr" onclick="setNavLanguage('fr')">FR</button>
           <button class="lang-btn" id="nav-btn-en" onclick="setNavLanguage('en')">EN</button>
         </div>
       </div>
@@ -159,12 +158,11 @@ function mountNavHTML() {
   `;
 }
 
-/* --- Render Nav Menu (Handles Reduced Dropdown for >3 Initiatives) --- */
+/* --- Render Nav Menu --- */
 function renderNavMenu() {
   const container = document.getElementById('nav-dynamic-tabs');
   if (!container) return;
   
-  // Refresh initiatives from localStorage
   navInitiatives = JSON.parse(localStorage.getItem('pos_events_data')) || defaultNavInitiatives;
   
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
@@ -173,7 +171,6 @@ function renderNavMenu() {
 
   container.innerHTML = '';
 
-  // Reduced version: If more than 3 initiatives, put them in a dropdown menu
   if (navInitiatives.length > 3) {
     let dropdownItems = navInitiatives.map(item => {
       const isActive = currentPath === item.url ? "active" : "";
@@ -189,7 +186,6 @@ function renderNavMenu() {
       </div>
     `;
   } else {
-    // Normal tabs version (3 or fewer initiatives)
     let tabsHtml = `<a href="index.html" class="nav-tab ${isHubPage ? 'active' : ''}">${t.hubTab}</a>`;
     navInitiatives.forEach(item => {
       const isActive = currentPath === item.url ? "active" : "";
@@ -233,9 +229,38 @@ function setNavUnlockState(state) {
     if (lockLabel) lockLabel.innerText = t.locked;
   }
 
-  // Trigger page re-renders if available
   if (typeof renderEvents === "function") renderEvents();
 }
+
+/* --- Language Handler & Global Broadcast --- */
+window.setNavLanguage = function(lang) {
+  navState.language = lang;
+  localStorage.setItem('pos_lang', lang);
+
+  const t = navI18n[lang];
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById(`nav-btn-${lang}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const joinText = document.getElementById('nav-join-text');
+  if (joinText) joinText.innerText = t.joinBtn;
+
+  const lockLabel = document.getElementById('nav-lock-label');
+  if (lockLabel) lockLabel.innerText = navState.isUnlocked ? t.unlocked : t.locked;
+
+  const downloadBtn = document.getElementById('nav-download-btn');
+  if (downloadBtn) downloadBtn.title = t.downloadTitle;
+
+  renderNavMenu();
+
+  // Broadcast language change to ALL page components
+  window.dispatchEvent(new CustomEvent('pos-language-change', { detail: { lang } }));
+
+  if (typeof window.syncCalendarLanguage === "function") window.syncCalendarLanguage(lang);
+  if (typeof window.syncPostsLanguage === "function") window.syncPostsLanguage(lang);
+  if (typeof setLanguage === "function") setLanguage(lang);
+};
 
 /* --- HTML Download Handler --- */
 window.downloadUpdatedHTML = function() {
@@ -261,35 +286,9 @@ window.downloadUpdatedHTML = function() {
   document.body.removeChild(link);
 };
 
-/* --- Language Handler --- */
-window.setNavLanguage = function(lang) {
-  navState.language = lang;
-  const t = navI18n[lang];
-
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  const activeBtn = document.getElementById(`nav-btn-${lang}`);
-  if (activeBtn) activeBtn.classList.add('active');
-
-  const joinText = document.getElementById('nav-join-text');
-  if (joinText) joinText.innerText = t.joinBtn;
-
-  const lockLabel = document.getElementById('nav-lock-label');
-  if (lockLabel) lockLabel.innerText = navState.isUnlocked ? t.unlocked : t.locked;
-
-  const downloadBtn = document.getElementById('nav-download-btn');
-  if (downloadBtn) downloadBtn.title = t.downloadTitle;
-
-  renderNavMenu();
-
-  // Sync other components
-  if (typeof window.syncCalendarLanguage === "function") window.syncCalendarLanguage(lang);
-  if (typeof window.syncPostsLanguage === "function") window.syncPostsLanguage(lang);
-  if (typeof setLanguage === "function") setLanguage(lang);
-};
-
 /* --- Initialization --- */
 document.addEventListener('DOMContentLoaded', () => {
   injectNavStyles();
   mountNavHTML();
-  renderNavMenu();
+  setNavLanguage(navState.language);
 });
