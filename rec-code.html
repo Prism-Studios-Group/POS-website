@@ -306,8 +306,8 @@
 
         <button class="download-icon-btn" onclick="downloadUpdatedHTML()" id="nav-download-btn" title="Télécharger le fichier HTML mis à jour">📥</button>
 
-        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
-          🔒 <span id="lock-text">verrouillé</span>
+        <button id="lock-btn" class="lock-btn unlocked" onclick="toggleLock()">
+          🔒 <span id="lock-text">déverrouillé</span>
         </button>
 
         <div class="lang-toggle">
@@ -360,12 +360,8 @@
       </div>
       <div class="charity-card">
         <span class="charity-badge" id="cycle-badge">thème actuel</span>
-        <h3 style="font-size: 18px; color: var(--stage-gold); margin-bottom: 8px;" id="cycle-name">
-          solidarité contre les féminicides et les violences
-        </h3>
-        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">
-          à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.
-        </p>
+        <h3 style="font-size: 18px; color: var(--stage-gold); margin-bottom: 8px;" id="cycle-name">solidarité contre les féminicides et les violences</h3>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.</p>
       </div>
     </section>
 
@@ -380,7 +376,7 @@
             <span class="program-tag">ouverture - secret 🤫</span>
             <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">Welcome to Rennes English Choir.</div>
           </div><div class="program-step">
-            <span class="program-tag">première partie : le problème</span>
+            <span class="program-tag">part 1: the struggle</span>
             <div class="song-list">
               <div class="song-item">
                 <span class="song-info">secret 🤫</span>
@@ -404,9 +400,9 @@
             </div>
           </div><div class="program-step">
             <span class="program-tag">entracte / intermission</span>
-            <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">pause</div>
+            <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">the breakaway</div>
           </div><div class="program-step">
-            <span class="program-tag">part 2: fighting back, together</span>
+            <span class="program-tag">part 2: stronger together</span>
             <div class="song-list">
               <div class="song-item">
                 <span class="song-info">hopedrunk everasking</span>
@@ -477,7 +473,7 @@
 
     <div id="cal-month-view">
       <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
         <span class="event-pill-time">⏰ 19:00</span>
         <span class="event-pill-title">☕ café des langues 70</span>
       </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
@@ -559,9 +555,25 @@
         <button class="edit-pencil" onclick="openChoirRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="choir-rules-container">
-        <!-- Rendered dynamically with bilingual support -->
-      </div>
+      <div id="choir-rules-container"><details class="rule-dropdown">
+          <summary>1. <span>cadre et objectifs</span></summary>
+          <div class="rule-body">le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau.</div>
+        </details><details class="rule-dropdown">
+          <summary>2. <span>assiduité et répétitions</span></summary>
+          <div class="rule-body">la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.</div>
+        </details><details class="rule-dropdown">
+          <summary>3. <span>environnement sûr et bienveillant</span></summary>
+          <div class="rule-body">notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.</div>
+        </details><details class="rule-dropdown">
+          <summary>4. <span>engagement caritatif et concerts</span></summary>
+          <div class="rule-body">chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.</div>
+        </details><details class="rule-dropdown">
+          <summary>5. <span>vie privée et communications</span></summary>
+          <div class="rule-body">les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.</div>
+        </details><details class="rule-dropdown">
+          <summary>6. <span>modération et contact</span></summary>
+          <div class="rule-body">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
+        </details></div>
 
       <p id="rules-closing">💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !</p>
     </section>
@@ -1358,5 +1370,6 @@
       renderChoirRules();
     };
   </script>
+
 
 </body></html>

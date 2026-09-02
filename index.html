@@ -506,7 +506,91 @@
     .social-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; }
     .social-btn:hover { background: var(--cdl-cyan); color: #000; }
   </style>
-</head>
+<style id="pos-cal-styles">
+    .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
+    .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
+    .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .cal-filter-checkbox { accent-color: var(--cdl-cyan, #38bdf8); width: 15px; height: 15px; cursor: pointer; }
+    .cal-admin-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
+    .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
+    .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
+    .cal-btn.active { background: var(--cdl-cyan, #38bdf8) !important; color: #000 !important; }
+    .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
+    
+    .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
+    .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.15); }
+    .day-cell.other-month { opacity: 0.3; background: rgba(15, 23, 42, 0.4); }
+    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
+    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
+    .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
+
+    .event-pill {
+      font-size: 11px; font-weight: 700; padding: 4px 6px; border-radius: 6px; color: #000;
+      cursor: pointer; line-height: 1.25; display: flex; flex-direction: column; gap: 2px;
+      user-select: none; word-break: break-word;
+    }
+    .event-pill-time {
+      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.15);
+      padding: 1px 4px; border-radius: 3px; align-self: flex-start;
+    }
+    .event-pill-title {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .event-pill[draggable="true"] { cursor: grab; }
+    .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
+
+    .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
+    .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
+    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
+    .event-row:hover { transform: translateX(4px); border-color: var(--cdl-cyan, #38bdf8); }
+    .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
+    .event-date-box { text-align: center; min-width: 40px; }
+    .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
+    .event-date-month { font-size: 11px; color: var(--text-muted); }
+    .event-name { font-weight: 700; font-size: 15px; }
+    .event-meta { font-size: 12.5px; color: var(--text-muted); }
+
+    .cal-shadowbox-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
+    }
+    .cal-shadowbox-card {
+      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
+      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
+      text-align: left; margin: auto;
+    }
+    .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+    .cal-shadowbox-close:hover { color: #ef4444; }
+    
+    .cal-modal-section { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .cal-modal-section-title { font-size: 14px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 8px; }
+    .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin-top: 10px; }
+    .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
+    .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
+    .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
+
+    .cal-form-group { margin-bottom: 14px; }
+    .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
+    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
+
+    .map-link { color: var(--cdl-cyan, #38bdf8); text-decoration: underline; font-weight: 700; transition: color 0.2s; }
+    .map-link:hover { color: var(--neon-amber, #f59e0b); }
+
+    #pos-ai-disclaimer {
+      margin-top: 25px; padding: 16px 20px; background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
+      font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
+    }
+  </style></head>
 <body class="">
 
   <!-- Navigation Bar -->
@@ -516,7 +600,7 @@
         <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
       </a>
       
-      <div class="nav-menu" id="nav-dynamic-tabs"><a href="index.html" class="nav-tab ">tous les événements</a><a href="cdl-code.html" class="nav-tab ">rennes café des langues</a><a href="rec-code.html" class="nav-tab active">rennes english choir</a></div>
+      <div class="nav-menu" id="nav-dynamic-tabs"><a href="index.html" class="nav-tab active">tous les événements</a><a href="cdl-code.html" class="nav-tab ">rennes café des langues</a><a href="rec-code.html" class="nav-tab ">rennes english choir</a></div>
 
       <div class="right-controls">
         <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
@@ -525,8 +609,8 @@
 
         <button class="download-icon-btn" onclick="downloadUpdatedHTML()" id="nav-download-btn" title="Télécharger le fichier HTML mis à jour">📥</button>
 
-        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
-          🔒 <span id="lock-text">verrouillé</span>
+        <button id="lock-btn" class="lock-btn unlocked" onclick="toggleLock()">
+          🔒 <span id="lock-text">déverrouillé</span>
         </button>
 
         <div class="lang-toggle">
@@ -547,7 +631,7 @@
       </div>
       <div class="title-area">
         <h1><span id="hero-title">prism outreach studio</span> <button class="edit-pencil" onclick="editHeroHeader()">✏️</button></h1>
-        <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">association 1901 des activités et échanges linguistiques et projets de confiance en soi à rennes</p>
+        <p style="font-size: 14px; color: var(--text-muted);" id="hub-subtitle">plateforme des activités, échanges linguistiques et projets artistiques à rennes</p>
       </div>
     </header>
 
@@ -584,7 +668,52 @@
 
     <!-- Centralized Posts / Newsletter Archives Section -->
     <section class="glass-card">
-      <div id="pos-posts"></div>
+      <div id="pos-posts">
+    <div class="posts-header-bar">
+      <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
+        📰 <span id="title-news-heading">archive des actualités</span>
+      </div>
+      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">➕ ajouter une édition</button>
+    </div>
+    
+    <div class="posts-gallery" id="posts-gallery-container"><div class="posts-card">
+      <div class="posts-card-cover">🗣️</div>
+      <div class="posts-card-body">
+        <div class="posts-card-title">The POS Monthly Scoop</div>
+        <div class="posts-card-date">Septembre 2026</div>
+      </div>
+    </div><div class="posts-card">
+      <div class="posts-card-cover">🌍</div>
+      <div class="posts-card-body">
+        <div class="posts-card-title">New at POS! 2026</div>
+        <div class="posts-card-date">Septembre 2026</div>
+      </div>
+    </div></div>
+
+    <div class="posts-newsletter-card">
+      <div class="posts-newsletter-content">
+        <div class="posts-newsletter-text">
+          <div class="posts-newsletter-badge">
+            <span class="live-dot"></span>
+            <span id="posts-news-badge">POS NEWSLETTER</span>
+          </div>
+          <h3 id="posts-news-title">Envie de ne rien manquer ?</h3>
+          <p id="posts-news-sub">Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.</p>
+        </div>
+        <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
+          <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="Ton adresse e-mail..." required="">
+          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">S'ABONNER 🚀</span></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)" style="display: none;">
+      <div class="posts-modal-card" onclick="event.stopPropagation()">
+        <span class="posts-modal-close" onclick="closePostsModal()">×</span>
+        <div id="posts-modal-content"></div>
+      </div>
+    </div>
+  </div>
     </section>
     <script src="posts.js"></script>
 
@@ -626,7 +755,7 @@
 
     <div id="cal-month-view">
       <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
         <span class="event-pill-time">⏰ 19:00</span>
         <span class="event-pill-title">☕ café des langues 70</span>
       </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
@@ -708,9 +837,25 @@
         <button class="edit-pencil" onclick="openIndexRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="index-rules-container">
-        <!-- Rendered dynamically with bilingual support -->
-      </div>
+      <div id="index-rules-container"><details class="rule-dropdown">
+          <summary>1. <span>cadre et objectifs</span></summary>
+          <div class="rule-body">toutes les initiatives du prism outreach studio (pos) visent à créer un environnement accueillant, solidaire et inclusif à rennes et au-delà. nos activités permettent de pratiquer des langues, partager des arts et renforcer la confiance en soi. ces règles s'appliquent à l'ensemble des événements organisés par l'association.</div>
+        </details><details class="rule-dropdown">
+          <summary>2. <span>respect des lieux et partenaires</span></summary>
+          <div class="rule-body">nos activités se déroulent dans divers établissements partenaires qui nous accueillent. afin de les remercier, le soutien local (consommation sur place) est vivement encouragé. tout état d'ivresse manifeste ou comportement irrespectueux envers les lieux et le personnel est strictement interdit.</div>
+        </details><details class="rule-dropdown">
+          <summary>3. <span>environnement sûr et inclusif</span></summary>
+          <div class="rule-body">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : nos événements sont des espaces d'apprentissage et de partage, pas des lieux de séduction. les avances romantiques ou sexuelles non sollicitées ne sont pas tolérées.</div>
+        </details><details class="rule-dropdown">
+          <summary>4. <span>vie privée et communications</span></summary>
+          <div class="rule-body">respect de la vie privée : il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein des canaux de groupe officiels.</div>
+        </details><details class="rule-dropdown">
+          <summary>5. <span>activités commerciales et publicité</span></summary>
+          <div class="rule-body">l'association est à but non lucratif. aucune publicité, démarchage ou vente de services commerciaux (cours privés, offres professionnelles) n'est autorisée au sein de nos événements ou groupes de discussion.</div>
+        </details><details class="rule-dropdown">
+          <summary>6. <span>sanctions et modération</span></summary>
+          <div class="rule-body">le respect de ce règlement est indispensable pour maintenir l'esprit communautaire. l'association se réserve le droit d'exclure toute personne d'un événement ou du groupe en cas de comportement nuisible. contact et signalements : rennescafedeslangues@gmail.com.</div>
+        </details></div>
 
       <p id="rules-closing">💫 on est ravis de vous compter parmi nous ! à très bientôt dans nos événements !</p>
     </section>
@@ -1295,5 +1440,6 @@
       renderIndexRules();
     };
   </script>
-</body>
-</html>
+
+
+</body></html>

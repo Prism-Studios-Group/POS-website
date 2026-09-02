@@ -322,8 +322,8 @@
 
         <button class="download-icon-btn" onclick="downloadUpdatedHTML()" id="nav-download-btn" title="Télécharger le fichier HTML mis à jour">📥</button>
 
-        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
-          🔒 <span id="lock-text">verrouillé</span>
+        <button id="lock-btn" class="lock-btn unlocked" onclick="toggleLock()">
+          🔒 <span id="lock-text">déverrouillé</span>
         </button>
 
         <div class="lang-toggle">
@@ -341,9 +341,7 @@
       <img src="hermine-futuristic.png" alt="L'hermine Mascot" class="mascot-img">
       <div class="title-area">
         <h1><span id="cdl-title">Rennes Café des Langues</span> <button class="edit-pencil" onclick="editCdlHeader()">✏️</button></h1>
-        <p style="font-size: 14px; color: var(--text-muted);" id="cdl-subtitle">
-          une communauté de "Cafe-goers" qui se réunissent pour discuter dans différentes langues. Pas d'enseignement, mais des interactions humaines.
-        </p>
+        <p style="font-size: 14px; color: var(--text-muted);" id="cdl-subtitle">une communauté de "Cafe-goers" qui se réunissent pour discuter dans différentes langues. Pas d'enseignement, mais des interactions humaines.</p>
         <div class="stars">★★★★★</div>
       </div>
     </header>
@@ -399,184 +397,113 @@
     <!-- Interactive Calendar Container -->
     <section class="glass-card">
       <div id="pos-calendar">
-        <div class="cal-toolbar-top">
-          <div class="cal-filters" id="cal-filters">
-            <label class="cal-filter-item">
-              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
-              <span style="color:#38bdf8">●</span> café des langues
-            </label>
-            <label class="cal-filter-item">
-              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
-              <span style="color:#fbbf24">●</span> rennes english choir
-            </label>
-            <label class="cal-filter-item">
-              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
-              <span style="color:#e74c3c">●</span> événement spécial
-            </label>
-            <label class="cal-filter-item">
-              <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
-              <span style="color:#a855f7">●</span> atelier / cours
-            </label>
-          </div>
-          <div class="cal-admin-tools">
-            <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
-            <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
-          </div>
-        </div>
-
-        <div class="cal-header">
-          <div class="cal-nav-group">
-            <button class="cal-btn" onclick="navCal(-1)">‹</button>
-            <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
-            <button class="cal-btn" onclick="navCal(1)">›</button>
-          </div>
-          <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
-          <div class="cal-view-group">
-            <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
-            <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
-          </div>
-        </div>
-
-        <div id="cal-month-view">
-          <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-          <div class="month-grid" id="cal-month-grid">
-            <div class="day-cell other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div>
-            <div class="day-cell other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div>
-            <div class="day-cell today" data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-04">
-              <div class="day-number">4</div>
-              <div class="day-events">
-                <div class="event-pill" style="background-color: rgb(56, 189, 248);">
-                  <span class="event-pill-time">⏰ 19:00</span>
-                  <span class="event-pill-title">☕ café des langues 70</span>
-                </div>
-              </div>
-            </div>
-            <div class="day-cell" data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-08">
-              <div class="day-number">8</div>
-              <div class="day-events">
-                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
-                  <span class="event-pill-time">⏰ 20:00</span>
-                  <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
-                </div>
-              </div>
-            </div>
-            <div class="day-cell" data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-15">
-              <div class="day-number">15</div>
-              <div class="day-events">
-                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
-                  <span class="event-pill-time">⏰ 20:00</span>
-                  <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
-                </div>
-              </div>
-            </div>
-            <div class="day-cell" data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-18">
-              <div class="day-number">18</div>
-              <div class="day-events">
-                <div class="event-pill" style="background-color: rgb(56, 189, 248);">
-                  <span class="event-pill-time">⏰ 19:00</span>
-                  <span class="event-pill-title">☕ café des langues 71</span>
-                </div>
-              </div>
-            </div>
-            <div class="day-cell" data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-22">
-              <div class="day-number">22</div>
-              <div class="day-events">
-                <div class="event-pill" style="background-color: rgb(251, 191, 36);">
-                  <span class="event-pill-time">⏰ 20:00</span>
-                  <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
-                </div>
-              </div>
-            </div>
-            <div class="day-cell" data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div>
-            <div class="day-cell" data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div>
-            <div class="day-cell other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div>
-            <div class="day-cell other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div>
-            <div class="day-cell other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div>
-          </div>
-        </div>
-
-        <div id="cal-list-view" hidden=""></div>
-
-        <div class="upcoming-section">
-          <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
-          <div id="cal-upcoming-list">
-            <div class="event-row">
-              <div class="event-color-bar" style="background:#38bdf8"></div>
-              <div class="event-date-box">
-                <div class="event-date-day">04</div>
-                <div class="event-date-month">09</div>
-              </div>
-              <div>
-                <div class="event-name">☕ café des langues 70</div>
-                <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-              </div>
-            </div>
-            <div class="event-row">
-              <div class="event-color-bar" style="background:#fbbf24"></div>
-              <div class="event-date-box">
-                <div class="event-date-day">08</div>
-                <div class="event-date-month">09</div>
-              </div>
-              <div>
-                <div class="event-name">🎤 répétition rennes english choir 1</div>
-                <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-              </div>
-            </div>
-            <div class="event-row">
-              <div class="event-color-bar" style="background:#fbbf24"></div>
-              <div class="event-date-box">
-                <div class="event-date-day">15</div>
-                <div class="event-date-month">09</div>
-              </div>
-              <div>
-                <div class="event-name">🎤 répétition rennes english choir 2</div>
-                <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-              </div>
-            </div>
-            <div class="event-row">
-              <div class="event-color-bar" style="background:#38bdf8"></div>
-              <div class="event-date-box">
-                <div class="event-date-day">18</div>
-                <div class="event-date-month">09</div>
-              </div>
-              <div>
-                <div class="event-name">☕ café des langues 71</div>
-                <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
-          <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
-            <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
-            <div id="cal-shadowbox-content"></div>
-          </div>
-        </div>
+    <div class="cal-toolbar-top">
+      <div class="cal-filters" id="cal-filters"><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
+      <span style="color:#38bdf8">●</span> café des langues
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
+      <span style="color:#fbbf24">●</span> rennes english choir
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
+      <span style="color:#e74c3c">●</span> événement spécial
+    </label><label class="cal-filter-item">
+      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
+      <span style="color:#a855f7">●</span> atelier / cours
+    </label></div>
+      <div class="cal-admin-tools">
+        <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
+        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
       </div>
+    </div>
+
+    <div class="cal-header">
+      <div class="cal-nav-group">
+        <button class="cal-btn" onclick="navCal(-1)">‹</button>
+        <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
+        <button class="cal-btn" onclick="navCal(1)">›</button>
+      </div>
+      <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
+      <div class="cal-view-group">
+        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
+        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
+      </div>
+    </div>
+
+    <div id="cal-month-view">
+      <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
+      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+        <span class="event-pill-time">⏰ 19:00</span>
+        <span class="event-pill-title">☕ café des langues 70</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" style="background-color: rgb(56, 189, 248);">
+        <span class="event-pill-time">⏰ 19:00</span>
+        <span class="event-pill-title">☕ café des langues 71</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" style="background-color: rgb(251, 191, 36);">
+        <span class="event-pill-time">⏰ 20:00</span>
+        <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
+      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
+    </div>
+
+    <div id="cal-list-view" hidden=""></div>
+
+    <div class="upcoming-section">
+      <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
+      <div id="cal-upcoming-list"><div class="event-row">
+      <div class="event-color-bar" style="background:#38bdf8"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">04</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">☕ café des langues 70</div>
+        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#fbbf24"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">08</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">🎤 répétition rennes english choir 1</div>
+        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#fbbf24"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">15</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">🎤 répétition rennes english choir 2</div>
+        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
+      </div>
+    </div><div class="event-row">
+      <div class="event-color-bar" style="background:#38bdf8"></div>
+      <div class="event-date-box">
+        <div class="event-date-day">18</div>
+        <div class="event-date-month">09</div>
+      </div>
+      <div>
+        <div class="event-name">☕ café des langues 71</div>
+        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
+      </div>
+    </div></div>
+    </div>
+
+    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
+      <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
+        <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
+        <div id="cal-shadowbox-content"></div>
+      </div>
+    </div>
+  </div>
     </section>
     <script src="calendar.js"></script>
 
@@ -587,13 +514,27 @@
         <button class="edit-pencil" onclick="openRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="rules-list-container">
-        <!-- Rendered dynamically with bilingual support -->
-      </div>
+      <div id="rules-list-container"><details class="rule-dropdown">
+          <summary>1. <span>cadre et objectifs</span></summary>
+          <div class="rule-body">le café des langues est une initiative de l'association prism outreach studio (pos). notre mission est de créer un environnement accueillant et solidaire à rennes et au-delà, où chacun peut pratiquer des langues et gagner en confiance.</div>
+        </details><details class="rule-dropdown">
+          <summary>2. <span>respect des lieux d'accueil</span></summary>
+          <div class="rule-body">nos rencontres se déroulent dans divers établissements partenaires (bars, auberges de jeunesse, etc.) qui nous accueillent gracieusement. la commande de boissons ou de nourriture sur place est vivement encouragée.</div>
+        </details><details class="rule-dropdown">
+          <summary>3. <span>environnement sûr et inclusif</span></summary>
+          <div class="rule-body">conformément à l'article 21 de nos statuts, nous promouvons l'inclusion et la diversité. zéro harcèlement : le café des langues est un espace d'apprentissage, pas un lieu de rencontre romantique.</div>
+        </details><details class="rule-dropdown">
+          <summary>4. <span>vie privée et communications</span></summary>
+          <div class="rule-body">il est interdit de contacter directement les membres (dm) sans leur permission préalable. les échanges doivent rester publics et respectueux au sein du groupe.</div>
+        </details><details class="rule-dropdown">
+          <summary>5. <span>activités commerciales et publicité</span></summary>
+          <div class="rule-body">l'association est à but non lucratif. aucune publicité ou vente de services (cours privés, services commerciaux) n'est autorisée.</div>
+        </details><details class="rule-dropdown">
+          <summary>6. <span>sanctions et modération</span></summary>
+          <div class="rule-body">le respect de ces règles est indispensable. contact et signalements : rennescafedeslangues@gmail.com.</div>
+        </details></div>
 
-      <p id="rules-closing">
-        💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !
-      </p>
+      <p id="rules-closing">💫 on est ravis de vous compter parmi nous ! à très bientôt aux cafés des langues !</p>
     </section>
 
     <!-- Footer -->
@@ -1097,5 +1038,6 @@
       animateCounters();
     };
   </script>
+
 
 </body></html>
