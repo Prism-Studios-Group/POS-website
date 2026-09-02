@@ -22,21 +22,25 @@ const defaultPostsData = [
 let postsData = JSON.parse(localStorage.getItem('pos_posts_data')) || defaultPostsData;
 
 let postsState = {
-  language: "fr"
+  language: localStorage.getItem('pos_lang') || "fr"
 };
 
 const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
-    addEdition: "➕ ajouter une édition"
+    addEdition: "➕ ajouter une édition",
+    newsletterTitle: "💌 ne manque aucune édition !",
+    newsletterSub: "reçois nos dernières actualités et invitations directement dans ta boîte mail. 100 % gratuit !"
   },
   en: {
     titleHeading: "newsletter archives",
-    addEdition: "➕ add edition"
+    addEdition: "➕ add edition",
+    newsletterTitle: "💌 stay in the loop!",
+    newsletterSub: "get our latest news and event invitations delivered straight to your inbox. 100% free!"
   }
 };
 
-/* --- CSS Injection --- */
+/* --- CSS Injection & Kit Style Overrides --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -80,11 +84,92 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* Container du Formulaire Officiel Kit */
-    .posts-newsletter-card {
+    /* Custom Wrapper for the Kit Newsletter Box */
+    .posts-newsletter-wrapper {
       margin-top: 30px;
-      padding-top: 25px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08));
+      border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      border-radius: 16px;
+    }
+    .posts-newsletter-header {
+      margin-bottom: 14px;
+    }
+    .posts-newsletter-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--neon-cyan, #38bdf8);
+      margin-bottom: 4px;
+    }
+    .posts-newsletter-header p {
+      font-size: 13.5px;
+      color: var(--text-muted, #cbd5e1);
+      line-height: 1.5;
+    }
+
+    /* OVERRIDES TO RESTYLE KIT EMBEDDED FORM DIRECTLY */
+    #kit-embed-container form.formkit-form {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      max-width: 100% !important;
+    }
+
+    #kit-embed-container .formkit-fields {
+      display: flex !important;
+      gap: 10px !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+    }
+
+    #kit-embed-container .formkit-field {
+      flex: 1 1 240px !important;
+      margin: 0 !important;
+    }
+
+    #kit-embed-container .formkit-input {
+      background: #0f172a !important;
+      border: 1px solid rgba(56, 189, 248, 0.35) !important;
+      color: #ffffff !important;
+      border-radius: 25px !important;
+      padding: 10px 18px !important;
+      font-size: 14px !important;
+      font-family: inherit !important;
+      outline: none !important;
+    }
+    #kit-embed-container .formkit-input::placeholder {
+      color: #94a3b8 !important;
+    }
+    #kit-embed-container .formkit-input:focus {
+      border-color: var(--neon-cyan, #38bdf8) !important;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
+    }
+
+    #kit-embed-container .formkit-submit {
+      background: var(--neon-amber, #f59e0b) !important;
+      color: #000000 !important;
+      font-weight: 700 !important;
+      border-radius: 25px !important;
+      padding: 10px 24px !important;
+      border: none !important;
+      margin: 0 !important;
+      cursor: pointer !important;
+      flex: 0 0 auto !important;
+      transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    #kit-embed-container .formkit-submit:hover {
+      transform: scale(1.04) !important;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5) !important;
+    }
+
+    #kit-embed-container .formkit-powered-by-convertkit-container {
+      margin-top: 10px !important;
+      justify-content: flex-start !important;
+      opacity: 0.5 !important;
+      filter: invert(1);
     }
   `;
   document.head.appendChild(style);
@@ -95,18 +180,24 @@ function mountPostsHTML() {
   const target = document.getElementById('pos-posts');
   if (!target) return;
 
+  const t = postsI18n[postsState.language] || postsI18n.fr;
+
   target.innerHTML = `
     <div class="posts-header-bar">
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
-        📰 <span id="title-news-heading">archive des actualités</span>
+        📰 <span id="title-news-heading">${t.titleHeading}</span>
       </div>
-      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">➕ ajouter une édition</button>
+      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">${t.addEdition}</button>
     </div>
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
-    <!-- Emplacement officiel du formulaire Kit -->
-    <div class="posts-newsletter-card">
+    <!-- Official Styled Kit Newsletter Wrapper -->
+    <div class="posts-newsletter-wrapper">
+      <div class="posts-newsletter-header">
+        <h3 id="posts-news-title">${t.newsletterTitle}</h3>
+        <p id="posts-news-sub">${t.newsletterSub}</p>
+      </div>
       <div id="kit-embed-container"></div>
     </div>
 
@@ -118,7 +209,7 @@ function mountPostsHTML() {
     </div>
   `;
 
-  // Injection dynamique du script Kit avec ton UID
+  // Dynamic Kit Script Injection
   const kitContainer = document.getElementById('kit-embed-container');
   if (kitContainer && !document.getElementById('kit-embed-script')) {
     const kitScript = document.createElement('script');
@@ -305,13 +396,20 @@ function closePostsModalOnOverlay(e) {
 /* --- Language Sync Functions --- */
 window.syncPostsLanguage = function(lang) {
   postsState.language = lang;
-  const t = postsI18n[lang];
+  localStorage.setItem('pos_lang', lang);
+  const t = postsI18n[lang] || postsI18n.fr;
   
   const heading = document.getElementById('title-news-heading');
   if (heading) heading.innerText = t.titleHeading;
 
   const addBtn = document.getElementById('posts-add-btn');
   if (addBtn) addBtn.innerText = t.addEdition;
+
+  const newsTitle = document.getElementById('posts-news-title');
+  if (newsTitle) newsTitle.innerText = t.newsletterTitle;
+
+  const newsSub = document.getElementById('posts-news-sub');
+  if (newsSub) newsSub.innerText = t.newsletterSub;
 };
 
 /* --- Initialization & Global Language Listener --- */
@@ -319,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
   injectPostsStyles();
   mountPostsHTML();
   renderPostsGallery();
+  window.syncPostsLanguage(postsState.language);
 
   document.addEventListener('click', (e) => {
     const langBtn = e.target.closest('.lang-btn');
