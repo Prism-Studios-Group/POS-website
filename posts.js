@@ -4,18 +4,24 @@
 
 const defaultPostsData = [
   {
-    id: 12,
-    title: "The POS Weekly Scoop #12",
+    id: 1,
+    title: "The POS Monthly Scoop",
     date: "Septembre 2026",
     cover: "🗣️",
-    content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes chaque mercredi !"
+    content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes un vendredi sur deux ! Avec un nouveau format : 
+       l'événement dure 3 heures, vous venez quand vous voulez. Entre 19h et 20h, des tables de conversation en langues étrangères vous attendent ; ensuite, entre 20h et 21h, un speed dating où chacun parle avec une ou deux personnes en langue(s) étrangère(s) pendant 15 minutes pour pratiquer plus profondément que "tu fais quoi dans la vie ?" ; enfin, à partir de 21h les tables de conversation reviennent jusqu'à la fin de la soirée." 
   },
   {
-    id: 11,
-    title: "The POS Weekly Scoop #11",
-    date: "Août 2026",
+    id: 2,
+    title: "New at POS! 2026",
+    date: "Septembre 2026",
     cover: "🌍",
-    content: "Retour sur notre grand Speed Dating international avec plus de 50 personnes ! Un immense merci à notre bar partenaire pour l'accueil chaleureux."
+    content: "We have the <br><br><b>immense pleasure</b> to announce the return of the Rennes Café des Langues for its fourth season - the longest the Café event has ever lasted in Rennes! We are extremely, grateful for the hosts, volunteers, and leadership team for their help in organizing and keeping this awesome event alive for our community members."
+       "In Rennes, we boast a large linguistic and cultural diversity that, when left malnourished, leaves opportunities for friendship, collective learning, and self-confidence in foreign languages to come to a halt."
+      "At Prism Outreach Studio (POS), we understand the value that a moment as simple as talking over a coffee can have on the community, especially in a foreign language. Our self-confidence in foreign languages can sometimes hold us back from enjoying the moment as much as we should. That's why this year, <br><br><b>we are ecstatic to introduce the <em>Rennes Social Clubs</em>, meant to boost self-confidence in expressing oneself in foreign languages while having fun and meeting new friends.</b>"
+      "In light of this, we introduce the <br><br><b>Rennes English Choir</b>, the first choir in Rennes led 100% in English and meant to support local marginalized or affected populations by <br><br><b>returning 50% of its concert sales to associations that help victims.</b>"
+      "Each concert is different with a different theme - check out the 'Rennes English Choir' tab at the top to find out more."
+      "Welcome to Rennes, welcome to Prism Outreach Studio. Your new stop for language confidence and making friends and networking."
   }
 ];
 
