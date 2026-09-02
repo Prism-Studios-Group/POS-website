@@ -94,35 +94,45 @@ const defaultCalendarEvents = [
     event_date: "2026-09-04",
     start_time: "19:00",
     end_time: "22:00",
-    location: "café des artistes, 12 rue saint-michel, rennes",
-    schedule: [
-      { time: "19h00 - 20h00", fr: "discussion libre aux tables de langues", en: "open discussion at language tables" },
-      { time: "20h00 - 21h00", fr: "speed dating par langue (changement toutes les 15 min)", en: "language speed dating (switch every 15 mins)" },
-      { time: "21h00 - 22h00", fr: "discussion libre aux tables de langues", en: "open discussion at language tables" }
-    ]
+    location: "10 Canal Saint-Martin, 35700 Rennes"
   },
   {
     id: 2,
-    title_fr: "répétition rennes english choir",
-    title_en: "rennes english choir rehearsal",
+    title_fr: "répétition rennes english choir 1",
+    title_en: "rennes english choir rehearsal 1",
     description_fr: "répétition de la chorale anglophone dirigée par un chef natif.",
     description_en: "rehearsal for the english choir directed by a native speaker.",
-    extra_details_fr: "apportez une bouteille d'eau et votre bonne humeur !",
-    extra_details_en: "bring a water bottle and your enthusiasm!",
     event_type: "choir",
     event_date: "2026-09-08",
-    start_time: "19:30",
+    start_time: "20:00",
     end_time: "21:30",
-    location: "maison de quartier, 10 rue de la marbaudais, rennes",
-    schedule: [
-      { time: "19h30 - 20h00", fr: "accueil & échauffement vocal", en: "welcome & vocal warmup" },
-      { time: "20h00 - 20h45", fr: "répétition partie 1 (travail du répertoire)", en: "rehearsal part 1 (repertoire work)" },
-      { time: "20h45 - 21h00", fr: "pause & échanges", en: "break & social time" },
-      { time: "21h00 - 21h30", fr: "répétition partie 2 & chant d'ensemble", en: "rehearsal part 2 & group singing" }
-    ]
+    location: "à venir !"
+  },
+  {
+    id: 3,
+    title_fr: "répétition rennes english choir 2",
+    title_en: "rennes english choir rehearsal 2",
+    description_fr: "répétition de la chorale anglophone dirigée par un chef natif.",
+    description_en: "rehearsal for the english choir directed by a native speaker.",
+    event_type: "choir",
+    event_date: "2026-09-15",
+    start_time: "20:00",
+    end_time: "21:30",
+    location: "à venir !"
+  },
+  {
+    id: 4,
+    title_fr: "café des langues 71",
+    title_en: "café des langues 71",
+    description_fr: "rencontre hebdomadaire au bar pour pratiquer plus de 53 langues.",
+    description_en: "weekly bar gathering to practice over 53 languages.",
+    event_type: "cdl",
+    event_date: "2026-09-18",
+    start_time: "19:00",
+    end_time: "22:00",
+    location: "10 Canal Saint-Martin, 35700 Rennes"
   }
 ];
-
 let calendarEvents = JSON.parse(localStorage.getItem('pos_calendar_events')) || defaultCalendarEvents;
 
 let calState = {
