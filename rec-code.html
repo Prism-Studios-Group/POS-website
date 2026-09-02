@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rennes English Choir — POS</title>
   
+  <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -36,56 +37,6 @@
       line-height: 1.7;
       letter-spacing: 0.02em;
     }
-
-    .global-nav {
-      position: sticky; top: 0; z-index: 999;
-      background: rgba(10, 8, 20, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border); padding: 12px 20px;
-    }
-
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-
-    .pos-logo-link {
-      display: flex; align-items: center; justify-content: center;
-      width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.95);
-      border: 2px solid var(--stage-gold); box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
-      overflow: hidden; transition: transform 0.3s ease; flex-shrink: 0;
-    }
-    .pos-logo-link:hover { transform: scale(1.08); }
-    .pos-logo-img { width: 32px; height: 32px; object-fit: contain; }
-
-    .nav-menu { display: flex; align-items: center; gap: 8px; }
-    .nav-tab {
-      color: var(--text-muted); text-decoration: none; font-weight: 700;
-      font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
-      white-space: nowrap; border: 1px solid transparent; transition: all 0.25s ease;
-    }
-    .nav-tab:hover { color: var(--text-main); border-color: rgba(251, 191, 36, 0.3); background: rgba(255, 255, 255, 0.04); }
-    .nav-tab.active { color: #0f172a; background: var(--stage-gold); box-shadow: 0 0 12px var(--stage-gold); }
-
-    .right-controls { display: flex; align-items: center; gap: 8px; }
-
-    .join-btn {
-      background: linear-gradient(135deg, var(--neon-amber), #f97316); color: #000000;
-      font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 20px;
-      text-decoration: none; white-space: nowrap; box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
-      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 5px;
-    }
-    .join-btn:hover { transform: scale(1.05); box-shadow: 0 0 18px rgba(245, 158, 11, 0.7); color: #000000; }
-
-    .lock-btn {
-      background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5;
-      padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px;
-      cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease;
-    }
-    .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
-
-    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border); flex-shrink: 0; }
-    .lang-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
-    .lang-btn.active { background: var(--stage-gold); color: #000; }
 
     /* Pencil Buttons */
     .edit-pencil {
@@ -124,7 +75,14 @@
     }
 
     .hero-header { display: flex; align-items: center; gap: 22px; }
-    .choir-img { width: 95px; height: 95px; border-radius: 50%; object-fit: cover; border: 3px solid var(--stage-gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); flex-shrink: 0; }
+    
+    .choir-img-wrapper { position: relative; flex-shrink: 0; display: inline-block; }
+    .choir-img {
+      width: 95px; height: 95px; border-radius: 50%; object-fit: cover;
+      object-position: center center;
+      border: 3px solid var(--stage-gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+    }
+
     .title-area h1 { font-size: 26px; font-weight: 700; background: linear-gradient(135deg, var(--stage-gold), var(--stage-magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
     .section-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--stage-gold); display: flex; align-items: center; justify-content: space-between; }
@@ -132,6 +90,7 @@
     .charity-card { background: linear-gradient(135deg, rgba(217, 70, 239, 0.15), rgba(251, 191, 36, 0.1)); border: 1px solid var(--stage-magenta); border-radius: 14px; padding: 20px; margin-top: 15px; }
     .charity-badge { display: inline-block; background: var(--stage-magenta); color: #fff; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
 
+    /* Timeline & Program Schedule */
     .program-timeline { position: relative; padding-left: 20px; border-left: 2px solid var(--stage-gold); }
     .program-step { position: relative; margin-bottom: 22px; padding-left: 20px; }
     .program-step::before { content: ''; position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--stage-gold); box-shadow: 0 0 10px var(--stage-gold); }
@@ -144,18 +103,27 @@
     .yt-listen-btn { display: inline-flex; align-items: center; gap: 6px; background: #ff0000; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: transform 0.2s ease; flex-shrink: 0; }
     .yt-listen-btn:hover { transform: scale(1.05); background: #cc0000; }
 
-    .rule-dropdown { background: rgba(15, 12, 28, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
-    .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    /* Rules Dropdowns (Right Justified) */
+    .rule-dropdown { background: rgba(15, 12, 28, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: right; }
+    .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; direction: rtl; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
-    .rule-dropdown summary::after { content: "▼"; font-size: 12px; transition: transform 0.2s ease; margin-left: 10px; }
+    .rule-dropdown summary::after { content: "▼"; font-size: 12px; transition: transform 0.2s ease; margin-right: 10px; }
     .rule-dropdown[open] summary::after { transform: rotate(180deg); color: var(--stage-magenta); }
-    .rule-body { padding: 0 18px 16px 18px; color: var(--text-muted); font-size: 14.5px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; }
+    .rule-body { padding: 0 18px 16px 18px; color: var(--text-muted); font-size: 14.5px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; text-align: right; }
 
     #rules-closing { margin-top: 35px; padding-top: 15px; text-align: center; font-weight: 700; color: var(--stage-gold); border-top: 1px dashed rgba(255, 255, 255, 0.1); }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; }
-    .modal-content { background: #0f172a; border: 1px solid var(--stage-gold); border-radius: 16px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); text-align: left; }
+    .modal-content { background: #0f172a; border: 1px solid var(--stage-gold); border-radius: 16px; max-width: 650px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); text-align: left; }
     .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--stage-gold); margin-bottom: 5px; }
+    .form-control { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+
+    .btn-primary { background: var(--stage-gold); color: #000; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-sec { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+    .btn-danger { background: #ef4444; color: #fff; font-weight: 700; padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; }
 
     .social-bar { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
     .social-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
@@ -164,29 +132,33 @@
 </head>
 <body>
 
-<!-- Centralized Navigation Bar -->
-<nav id="pos-nav"></nav>
-<script src="nav.js"></script>
+  <!-- Centralized Navigation Bar -->
+  <nav id="pos-nav"></nav>
+  <script src="nav.js"></script>
+
   <div class="container">
 
-    <!-- Sign-up Banner -->
+    <!-- Sign-up Banner (Tutoiement) -->
     <div class="signup-banner">
       <div class="signup-text">
-        <h2 id="signup-title">🎵 rejoignez la chorale ! <button class="edit-pencil" onclick="editChoirBanner()">✏️</button></h2>
+        <h2 id="signup-title">🎵 rejoins la chorale ! <button class="edit-pencil" onclick="editChoirBanner()">✏️</button></h2>
         <p id="signup-subtitle">inscriptions ouvertes à toutes et tous — aucun niveau requis</p>
       </div>
       <a href="https://forms.gle/ShLsiv7pqAgxkqXU9" target="_blank" class="signup-btn" id="signup-btn-text">
-        <span>s'inscrire au formulaire</span> ↗
+        <span>t'inscrire au formulaire</span> ↗
       </a>
     </div>
 
     <!-- Header Section -->
     <header class="glass-card hero-header">
-      <img src="choir.png" id="choir-poster-img" alt="Rennes English Choir Poster" class="choir-img">
+      <div class="choir-img-wrapper">
+        <img src="choir.png" id="choir-poster-img" alt="Rennes English Choir Poster" class="choir-img">
+        <button class="edit-pencil" onclick="editChoirHeader()" style="position:absolute; bottom:0; right:-5px;">✏️</button>
+      </div>
       <div class="title-area">
         <h1>Rennes English Choir <button class="edit-pencil" onclick="editChoirHeader()">✏️</button></h1>
         <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">
-          direction musicale par un chef natif (+15 ans d'expérience : chorale, symphonie, fanfares & show choir)
+          chorale anglophone pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.
         </p>
       </div>
     </header>
@@ -198,7 +170,7 @@
         <button class="edit-pencil" onclick="editChoirGoal()">✏️</button>
       </div>
       <p id="goal-text" style="line-height: 1.7;">
-        rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant sa prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.
+        rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.
       </p>
     </section>
 
@@ -219,15 +191,15 @@
       </div>
     </section>
 
-    <!-- Song Lineup Section -->
+    <!-- Fully Modular Program & Lineup Section -->
     <section class="glass-card">
       <div class="section-title">
         <span>🎶 <span id="title-program">programme du concert & extraits</span></span>
-        <button class="edit-pencil" onclick="editChoirSongs()">✏️</button>
+        <button class="edit-pencil" onclick="openProgramManagerModal()">✏️</button>
       </div>
       
-      <div class="program-timeline" id="songs-container">
-        <!-- Rendered dynamically -->
+      <div class="program-timeline" id="program-timeline-container">
+        <!-- Rendered Dynamically -->
       </div>
     </section>
 
@@ -237,45 +209,23 @@
     </section>
     <script src="calendar.js"></script>
 
-    <!-- Rules Section -->
+    <!-- Modular Rules Section (Right-Justified) -->
     <section class="glass-card">
-      <div class="section-title">📜 <span id="title-rules">règlement de la chorale</span></div>
+      <div class="section-title">
+        <span>📜 <span id="title-rules">règlement de la chorale</span></span>
+        <button class="edit-pencil" onclick="openChoirRulesManagerModal()">✏️</button>
+      </div>
       
-      <details class="rule-dropdown">
-        <summary>1. <span id="r1-t">cadre et objectifs</span></summary>
-        <div class="rule-body" id="r1-b">le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer sa prononciation et partager des moments musicaux chaleureux sans jugement de niveau.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>2. <span id="r2-t">assiduité et répétitions</span></summary>
-        <div class="rule-body" id="r2-b">la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>3. <span id="r3-t">environnement sûr et bienveillant</span></summary>
-        <div class="rule-body" id="r3-b">notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>4. <span id="r4-t">engagement caritatif et concerts</span></summary>
-        <div class="rule-body" id="r4-b">chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>5. <span id="r5-t">vie privée et communications</span></summary>
-        <div class="rule-body" id="r5-b">les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.</div>
-      </details>
-
-      <details class="rule-dropdown">
-        <summary>6. <span id="r6-t">modération et contact</span></summary>
-        <div class="rule-body" id="r6-b">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
-      </details>
+      <div id="choir-rules-container">
+        <!-- Rendered Dynamically -->
+      </div>
 
       <p id="rules-closing">
-        💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !
+        💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !
       </p>
     </section>
 
+    <!-- Footer -->
     <footer style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 30px;">
       <div class="social-bar">
         <a href="https://www.facebook.com/groups/1087173560509402" class="social-btn" target="_blank" title="Facebook Group">FB</a>
@@ -285,6 +235,7 @@
 
   </div>
 
+  <!-- General Modal Overlay -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -294,187 +245,271 @@
   </div>
 
   <script>
-    const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
-    let isUnlocked = false;
-
-    async function sha256(str) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(str);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    async function toggleLock() {
-      if (!isUnlocked) {
-        const pin = prompt("Entrez le code PIN formateur pour modifier :");
-        if (pin !== null) {
-          const inputHash = await sha256(pin);
-          if (inputHash === TRAINER_PIN_HASH) {
-            isUnlocked = true;
-            document.body.classList.add('body-unlocked');
-            document.getElementById('lock-btn').classList.add('unlocked');
-            document.getElementById('lock-text').innerText = "déverrouillé";
-          } else {
-            alert("Code PIN incorrect.");
-          }
-        }
-      } else {
-        isUnlocked = false;
-        document.body.classList.remove('body-unlocked');
-        document.getElementById('lock-btn').classList.remove('unlocked');
-        document.getElementById('lock-text').innerText = "verrouillé";
+    /* Default Full Program Structure */
+    const defaultProgramData = [
+      {
+        type: "text",
+        tag: "ouverture",
+        title: "accueil du public & présentation du thème"
+      },
+      {
+        type: "songs",
+        tag: "première partie : le problème",
+        songs: [
+          { title: "1. \"Chandelier\" — Sia", url: "https://www.youtube.com/results?search_query=Sia+Chandelier" },
+          { title: "2. \"Behind These Hazel Eyes\" — Kelly Clarkson", url: "https://www.youtube.com/results?search_query=Kelly+Clarkson+Behind+These+Hazel+Eyes" },
+          { title: "3. \"Cell Block Tango\" — Chicago Musical", url: "https://www.youtube.com/results?search_query=Cell+Block+Tango" },
+          { title: "4. \"Praying\" — Kesha", url: "https://www.youtube.com/results?search_query=Kesha+Praying" }
+        ]
+      },
+      {
+        type: "text",
+        tag: "entracte / intermission",
+        title: "pause & rafraîchissements"
+      },
+      {
+        type: "songs",
+        tag: "deuxième partie : se rassembler",
+        songs: [
+          { title: "5. \"Brave\" — Sara Bareilles", url: "https://www.youtube.com/results?search_query=Sara+Bareilles+Brave" },
+          { title: "6. \"You Will Be Found\" — Dear Evan Hansen", url: "https://www.youtube.com/results?search_query=Dear+Evan+Hansen+You+Will+Be+Found" },
+          { title: "7. \"Rise Up\" — Andra Day", url: "https://www.youtube.com/results?search_query=Andra+Day+Rise+Up" },
+          { title: "8. \"You're the Voice\" — Finale", url: "https://www.youtube.com/results?search_query=John+Farnham+You%27re+The+Voice" }
+        ]
       }
-    }
-
-    const defaultSongs = [
-      { id: 1, title: '1. "Chandelier" — Sia', url: 'https://www.youtube.com/results?search_query=Sia+Chandelier' },
-      { id: 2, title: '2. "Behind These Hazel Eyes" — Kelly Clarkson', url: 'https://www.youtube.com/results?search_query=Kelly+Clarkson+Behind+These+Hazel+Eyes' },
-      { id: 3, title: '3. "Cell Block Tango" — Chicago Musical', url: 'https://www.youtube.com/results?search_query=Cell+Block+Tango' },
-      { id: 4, title: '4. "Praying" — Kesha', url: 'https://www.youtube.com/results?search_query=Kesha+Praying' }
     ];
 
-    let songsData = JSON.parse(localStorage.getItem('pos_choir_songs')) || defaultSongs;
+    let programData = JSON.parse(localStorage.getItem('pos_choir_program_full')) || defaultProgramData;
 
-    function renderSongs() {
-      const container = document.getElementById('songs-container');
+    function renderProgramTimeline() {
+      const container = document.getElementById('program-timeline-container');
       if (!container) return;
+      container.innerHTML = '';
 
-      container.innerHTML = `
-        <div class="program-step">
-          <span class="program-tag" id="tag-welcome">ouverture</span>
-          <div style="font-weight: 700; margin-top: 4px;" id="text-welcome">accueil du public & présentation du thème</div>
-        </div>
+      programData.forEach(step => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'program-step';
 
-        <div class="program-step">
-          <span class="program-tag" id="tag-part1">première partie : le répertoire</span>
-          <div class="song-list">
-            ${songsData.map(song => `
-              <div class="song-item">
-                <span class="song-info">${song.title}</span>
-                <a href="${song.url}" target="_blank" class="yt-listen-btn">▶ youtube</a>
+        if (step.type === 'text') {
+          stepDiv.innerHTML = `
+            <span class="program-tag">${step.tag}</span>
+            <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">${step.title}</div>
+          `;
+        } else if (step.type === 'songs') {
+          const songsListHtml = step.songs.map(song => `
+            <div class="song-item">
+              <span class="song-info">${song.title}</span>
+              <a href="${song.url}" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+          `).join('');
+
+          stepDiv.innerHTML = `
+            <span class="program-tag">${step.tag}</span>
+            <div class="song-list">${songsListHtml}</div>
+          `;
+        }
+
+        container.appendChild(stepDiv);
+      });
+    }
+
+    /* Program Manager Modal */
+    function openProgramManagerModal() {
+      let contentHtml = `
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie ou ajoute des étapes (Textes, Entractes, Chansons) au programme :</p>
+        <div id="program-editor-list">
+          ${programData.map((step, sIdx) => `
+            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="program-tag" style="margin:0;">Étape #${sIdx + 1} (${step.type === 'text' ? 'Texte / Entracte' : 'Chansons'})</span>
+                <button onclick="deleteProgramStep(${sIdx})" class="btn-danger">🗑️ supprimer étape</button>
               </div>
-            `).join('')}
-          </div>
+
+              <div class="form-group">
+                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
+                <input type="text" id="step-tag-${sIdx}" class="form-control" value="${step.tag}">
+              </div>
+
+              ${step.type === 'text' ? `
+                <div class="form-group">
+                  <label>Description / Titre :</label>
+                  <input type="text" id="step-title-${sIdx}" class="form-control" value="${step.title}">
+                </div>
+              ` : `
+                <label style="display:block; font-size:12.5px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Chansons de cette partie :</label>
+                ${step.songs.map((song, sgIdx) => `
+                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
+                    <input type="text" id="song-title-${sIdx}-${sgIdx}" class="form-control" value="${song.title}" placeholder="Titre chanson" style="flex:2;">
+                    <input type="text" id="song-url-${sIdx}-${sgIdx}" class="form-control" value="${song.url}" placeholder="Lien YouTube" style="flex:2;">
+                    <button onclick="deleteSongFromStep(${sIdx}, ${sgIdx})" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
+                  </div>
+                `).join('')}
+                <button onclick="addSongToStep(${sIdx})" class="btn-sec" style="font-size:11px; padding:4px 10px; margin-top:4px;">➕ ajouter une chanson</button>
+              `}
+            </div>
+          `).join('')}
         </div>
+
+        <div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
+          <button onclick="addProgramStep('songs')" class="btn-sec">➕ ajouter partie chansons</button>
+          <button onclick="addProgramStep('text')" class="btn-sec">➕ ajouter entracte / texte</button>
+        </div>
+
+        <button onclick="saveFullProgram()" class="btn-primary" style="width:100%;">💾 enregistrer le programme</button>
       `;
+
+      openModal("✏️ gestionnaire du programme du concert", contentHtml);
     }
 
-    const i18n = {
-      fr: {
-        navHub: "tous les événements", navCdl: "café des langues", navChoir: "rennes english choir",
-        navJoin: "rejoins-nous !",
-        signupTitle: "🎵 rejoignez la chorale !",
-        signupSub: "inscriptions ouvertes à toutes et tous — aucun niveau requis",
-        signupBtn: "s'inscrire au formulaire",
-        directorSub: "direction musicale par un chef natif (+15 ans d'expérience : chorale, symphonie, fanfares & show choir)",
-        goalsTitle: "notre objectif",
-        goalText: "rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant sa prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.",
-        cycleTitle: "thème du cycle de concert",
-        cycleBadge: "thème actuel",
-        cycleName: "solidarité contre les féminicides et les violences",
-        cycleDesc: "à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.",
-        progTitle: "programme du concert & extraits",
-        tagWelcome: "ouverture", textWelcome: "accueil du public & présentation du thème",
-        tagPart1: "première partie : le répertoire",
-        rulesTitle: "règlement de la chorale",
-        r1t: "cadre et objectifs", r1b: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer sa prononciation et partager des moments musicaux chaleureux sans jugement de niveau.",
-        r2t: "assiduité et répétitions", r2b: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.",
-        r3t: "environnement sûr et bienveillant", r3b: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.",
-        r4t: "engagement caritatif et concerts", r4b: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.",
-        r5t: "vie privée et communications", r5b: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.",
-        r6t: "modération et contact", r6b: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.",
-        closing: "💫 on a hâte de chanter avec vous ! à très bientôt aux répétitions !"
-      },
-      en: {
-        navHub: "all events", navCdl: "café des langues", navChoir: "rennes english choir",
-        navJoin: "join us!",
-        signupTitle: "🎵 join the choir!",
-        signupSub: "sign-ups open to everyone — no prior experience needed",
-        signupBtn: "fill sign-up form",
-        directorSub: "musical direction by a native speaker (+15 years experience: choir, symphony, marching band & show choir)",
-        goalsTitle: "our goal",
-        goalText: "getting people together to sing fun and challenging music! the choir allows everyone to gather, speak english, and stretch their pronunciation—making english speech easier and more natural. above all, it's about having fun, laughing a lot, and enjoying time with a passionate native director.",
-        cycleTitle: "concert cycle theme",
-        cycleBadge: "current theme",
-        cycleName: "solidarity against feminicide and abuse",
-        cycleDesc: "every concert cycle features a distinct cause: 50% of ticket sales are donated directly to expert charities helping real people on the ground in those situations.",
-        progTitle: "concert lineup & audio previews",
-        tagWelcome: "opening", textWelcome: "welcome & theme presentation",
-        tagPart1: "first part: repertoire",
-        rulesTitle: "choir guidelines",
-        r1t: "framework & goals", r1b: "rennes english choir is an initiative by prism outreach studio (pos). our mission is to provide a warm and encouraging environment to sing in english, improve pronunciation, and share music without judgment.",
-        r2t: "attendance & rehearsals", r2b: "preparing for concerts requires collective effort. regular attendance at rehearsals is strongly encouraged to ensure group cohesion and concert readiness.",
-        r3t: "safe & supportive environment", r3b: "our choir is built on mutual respect and inclusivity. zero tolerance for harassment or discrimination. we learn and sing together with joy.",
-        r4t: "charity commitment", r4b: "each cycle connects with a social cause. by performing, every singer directly supports partner charities through 50% of ticket sale proceeds.",
-        r5t: "privacy & messaging", r5b: "member interactions must remain respectful. unsolicited direct messaging (dm) is forbidden. official updates take place in public group channels.",
-        r6t: "moderation & contact", r6b: "the association reserves the right to remove members whose behavior harms the community or violates guidelines. contact: rennescafedeslangues@gmail.com.",
-        closing: "💫 we can't wait to sing with you! see you soon at rehearsals!"
+    function addProgramStep(type) {
+      if (type === 'text') {
+        programData.push({ type: 'text', tag: 'nouvelle étape', title: 'description...' });
+      } else {
+        programData.push({ type: 'songs', tag: 'nouvelle partie', songs: [{ title: '1. Titre', url: 'https://youtube.com' }] });
       }
-    };
-
-    function setLanguage(lang) {
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`btn-${lang}`).classList.add('active');
-
-      const dict = i18n[lang];
-      document.getElementById('nav-hub').innerText = dict.navHub;
-      document.getElementById('nav-cdl').innerText = dict.navCdl;
-      document.getElementById('nav-choir').innerText = dict.navChoir;
-
-      if (document.getElementById('join-btn-text')) {
-        document.getElementById('join-btn-text').innerText = dict.navJoin;
-      }
-      
-      document.getElementById('signup-title').innerText = dict.signupTitle;
-      document.getElementById('signup-subtitle').innerText = dict.signupSub;
-      if (document.getElementById('signup-btn-text')) {
-        document.getElementById('signup-btn-text').querySelector('span').innerText = dict.signupBtn;
-      }
-
-      document.getElementById('director-subtitle').innerText = dict.directorSub;
-      document.getElementById('title-goals').innerText = dict.goalsTitle;
-      document.getElementById('goal-text').innerText = dict.goalText;
-
-      document.getElementById('title-cycle').innerText = dict.cycleTitle;
-      document.getElementById('cycle-badge').innerText = dict.cycleBadge;
-      document.getElementById('cycle-name').innerText = dict.cycleName;
-      document.getElementById('cycle-desc').innerText = dict.cycleDesc;
-
-      document.getElementById('title-program').innerText = dict.progTitle;
-      document.getElementById('tag-welcome').innerText = dict.tagWelcome;
-      document.getElementById('text-welcome').innerText = dict.textWelcome;
-      document.getElementById('tag-part1').innerText = dict.tagPart1;
-
-      document.getElementById('title-rules').innerText = dict.rulesTitle;
-      document.getElementById('r1-t').innerText = dict.r1t; document.getElementById('r1-b').innerText = dict.r1b;
-      document.getElementById('r2-t').innerText = dict.r2t; document.getElementById('r2-b').innerText = dict.r2b;
-      document.getElementById('r3-t').innerText = dict.r3t; document.getElementById('r3-b').innerText = dict.r3b;
-      document.getElementById('r4-t').innerText = dict.r4t; document.getElementById('r4-b').innerText = dict.r4b;
-      document.getElementById('r5-t').innerText = dict.r5t; document.getElementById('r5-b').innerText = dict.r5b;
-      document.getElementById('r6-t').innerText = dict.r6t; document.getElementById('r6-b').innerText = dict.r6b;
-      
-      document.getElementById('rules-closing').innerText = dict.closing;
-
-      if (typeof window.syncCalendarLanguage === "function") {
-        window.syncCalendarLanguage(lang);
-      }
+      openProgramManagerModal();
     }
 
-    /* Editing Functions */
+    function deleteProgramStep(sIdx) {
+      programData.splice(sIdx, 1);
+      openProgramManagerModal();
+    }
+
+    function addSongToStep(sIdx) {
+      programData[sIdx].songs.push({ title: "Nouveau morceau", url: "https://youtube.com" });
+      openProgramManagerModal();
+    }
+
+    function deleteSongFromStep(sIdx, sgIdx) {
+      programData[sIdx].songs.splice(sgIdx, 1);
+      openProgramManagerModal();
+    }
+
+    function saveFullProgram() {
+      programData.forEach((step, sIdx) => {
+        const tagEl = document.getElementById(`step-tag-${sIdx}`);
+        if (tagEl) step.tag = tagEl.value;
+
+        if (step.type === 'text') {
+          const titleEl = document.getElementById(`step-title-${sIdx}`);
+          if (titleEl) step.title = titleEl.value;
+        } else if (step.type === 'songs') {
+          step.songs.forEach((song, sgIdx) => {
+            const stEl = document.getElementById(`song-title-${sIdx}-${sgIdx}`);
+            const suEl = document.getElementById(`song-url-${sIdx}-${sgIdx}`);
+            if (stEl && suEl) {
+              song.title = stEl.value;
+              song.url = suEl.value;
+            }
+          });
+        }
+      });
+
+      localStorage.setItem('pos_choir_program_full', JSON.stringify(programData));
+      renderProgramTimeline();
+      closeModal();
+    }
+
+    /* --- Default Choir Rules Structure --- */
+    const defaultChoirRules = [
+      { title: "cadre et objectifs", body: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau." },
+      { title: "assiduité et répétitions", body: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux." },
+      { title: "environnement sûr et bienveillant", body: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur." },
+      { title: "engagement caritatif et concerts", body: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets." },
+      { title: "vie privée et communications", body: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe." },
+      { title: "modération et contact", body: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com." }
+    ];
+
+    let choirRulesData = JSON.parse(localStorage.getItem('pos_choir_rules')) || defaultChoirRules;
+    let choirRulesClosing = localStorage.getItem('pos_choir_rules_closing') || "💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !";
+
+    function renderChoirRules() {
+      const container = document.getElementById('choir-rules-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      choirRulesData.forEach((rule, idx) => {
+        const details = document.createElement('details');
+        details.className = 'rule-dropdown';
+        details.innerHTML = `
+          <summary>${idx + 1}. <span>${rule.title}</span></summary>
+          <div class="rule-body">${rule.body}</div>
+        `;
+        container.appendChild(details);
+      });
+
+      document.getElementById('rules-closing').innerText = choirRulesClosing;
+    }
+
+    function openChoirRulesManagerModal() {
+      const container = document.getElementById('modal-body');
+      container.innerHTML = `
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie, ajoute ou supprime les règles de la chorale :</p>
+        <div id="rules-form-list">
+          ${choirRulesData.map((r, i) => `
+            <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="color:var(--stage-gold);">Règle #${i + 1}</strong>
+                <button onclick="removeChoirRuleFromForm(${i})" class="btn-danger">🗑️ supprimer</button>
+              </div>
+              <input type="text" id="choir-rule-title-${i}" class="form-control" value="${r.title}" style="margin-bottom:6px;">
+              <textarea id="choir-rule-body-${i}" class="form-control" rows="2">${r.body}</textarea>
+            </div>
+          `).join('')}
+        </div>
+        <button onclick="addChoirRuleToForm()" class="btn-sec" style="width:100%; margin-bottom:15px;">➕ ajouter une règle</button>
+        <div class="form-group">
+          <label>Texte de conclusion ("On a hâte...") :</label>
+          <input type="text" id="choir-rule-closing-input" class="form-control" value="${choirRulesClosing}">
+        </div>
+        <button onclick="saveAllChoirRules()" class="btn-primary" style="width:100%; margin-top:10px;">💾 enregistrer le règlement</button>
+      `;
+      openModal("✏️ gérer le règlement de la chorale", container.innerHTML);
+    }
+
+    function addChoirRuleToForm() {
+      choirRulesData.push({ title: "nouvelle règle", body: "description..." });
+      openChoirRulesManagerModal();
+    }
+
+    function removeChoirRuleFromForm(i) {
+      choirRulesData.splice(i, 1);
+      openChoirRulesManagerModal();
+    }
+
+    function saveAllChoirRules() {
+      choirRulesData.forEach((r, i) => {
+        const tEl = document.getElementById(`choir-rule-title-${i}`);
+        const bEl = document.getElementById(`choir-rule-body-${i}`);
+        if (tEl && bEl) {
+          r.title = tEl.value;
+          r.body = bEl.value;
+        }
+      });
+
+      const closingInput = document.getElementById('choir-rule-closing-input');
+      if (closingInput) choirRulesClosing = closingInput.value;
+
+      localStorage.setItem('pos_choir_rules', JSON.stringify(choirRulesData));
+      localStorage.setItem('pos_choir_rules_closing', choirRulesClosing);
+      renderChoirRules();
+      closeModal();
+    }
+
+    /* --- Editors --- */
     function editChoirBanner() {
       const title = document.getElementById('signup-title').innerText;
       const sub = document.getElementById('signup-subtitle').innerText;
       openModal("✏️ modifier la bannière d'inscription", `
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Titre :</label>
-          <input type="text" id="edit-banner-title" value="${title}" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;">
+        <div class="form-group">
+          <label>Titre :</label>
+          <input type="text" id="edit-banner-title" class="form-control" value="${title}">
         </div>
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Sous-titre :</label>
-          <input type="text" id="edit-banner-sub" value="${sub}" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;">
+        <div class="form-group">
+          <label>Sous-titre :</label>
+          <input type="text" id="edit-banner-sub" class="form-control" value="${sub}">
         </div>
-        <button onclick="saveChoirBanner()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">💾 enregistrer</button>
+        <button onclick="saveChoirBanner()" class="btn-primary" style="width:100%;">💾 enregistrer</button>
       `);
     }
 
@@ -486,36 +521,49 @@
 
     function editChoirHeader() {
       const currentImg = document.getElementById('choir-poster-img').getAttribute('src');
+      const currentPos = localStorage.getItem('pos_choir_img_pos') || "center center";
       const currentSub = document.getElementById('director-subtitle').innerText;
-      openModal("✏️ modifier l'en-tête de la chorale", `
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Fichier Image Affiche :</label>
-          <input type="text" id="edit-choir-img-in" value="${currentImg}" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;">
+
+      openModal("✏️ modifier l'en-tête & photo", `
+        <div class="form-group">
+          <label>Fichier Image Affiche (ex: choir.png) :</label>
+          <input type="text" id="edit-choir-img-in" class="form-control" value="${currentImg}">
         </div>
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Sous-titre chef de chœur :</label>
-          <input type="text" id="edit-choir-sub-in" value="${currentSub}" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;">
+        <div class="form-group">
+          <label>Position / Cadrage photo dans le cercle (ex: center center, center top, 50% 20%) :</label>
+          <input type="text" id="edit-choir-pos-in" class="form-control" value="${currentPos}">
         </div>
-        <button onclick="saveChoirHeader()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">💾 enregistrer</button>
+        <div class="form-group">
+          <label>Description sous le titre :</label>
+          <textarea id="edit-choir-sub-in" class="form-control" rows="3">${currentSub}</textarea>
+        </div>
+        <button onclick="saveChoirHeader()" class="btn-primary" style="width:100%;">💾 enregistrer</button>
       `);
     }
 
     function saveChoirHeader() {
       const img = document.getElementById('edit-choir-img-in').value;
+      const pos = document.getElementById('edit-choir-pos-in').value;
       const sub = document.getElementById('edit-choir-sub-in').value;
+
       document.getElementById('choir-poster-img').setAttribute('src', img);
+      document.getElementById('choir-poster-img').style.objectPosition = pos;
       document.getElementById('director-subtitle').innerText = sub;
+
+      localStorage.setItem('pos_choir_img', img);
+      localStorage.setItem('pos_choir_img_pos', pos);
+      localStorage.setItem('pos_choir_sub', sub);
       closeModal();
     }
 
     function editChoirGoal() {
       const currentGoal = document.getElementById('goal-text').innerText;
       openModal("✏️ modifier l'objectif", `
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Description de l'objectif :</label>
-          <textarea id="edit-goal-input" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:10px; border-radius:8px; font-family:inherit;" rows="4">${currentGoal}</textarea>
+        <div class="form-group">
+          <label>Description de l'objectif :</label>
+          <textarea id="edit-goal-input" class="form-control" rows="4">${currentGoal}</textarea>
         </div>
-        <button onclick="saveChoirGoal()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">💾 enregistrer</button>
+        <button onclick="saveChoirGoal()" class="btn-primary" style="width:100%;">💾 enregistrer</button>
       `);
     }
 
@@ -530,50 +578,21 @@
       const name = document.getElementById('cycle-name').innerText;
       const desc = document.getElementById('cycle-desc').innerText;
       openModal("✏️ modifier le thème du cycle", `
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Nom du thème :</label>
-          <input type="text" id="edit-cycle-name" value="${name}" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;">
+        <div class="form-group">
+          <label>Nom du thème :</label>
+          <input type="text" id="edit-cycle-name" class="form-control" value="${name}">
         </div>
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:13px; font-weight:700; color:var(--stage-gold); margin-bottom:4px;">Description de la cause :</label>
-          <textarea id="edit-cycle-desc" style="width:100%; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:8px; border-radius:6px;" rows="3">${desc}</textarea>
+        <div class="form-group">
+          <label>Description de la cause :</label>
+          <textarea id="edit-cycle-desc" class="form-control" rows="3">${desc}</textarea>
         </div>
-        <button onclick="saveConcertCycle()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">💾 enregistrer</button>
+        <button onclick="saveConcertCycle()" class="btn-primary" style="width:100%;">💾 enregistrer</button>
       `);
     }
 
     function saveConcertCycle() {
       document.getElementById('cycle-name').innerText = document.getElementById('edit-cycle-name').value;
       document.getElementById('cycle-desc').innerText = document.getElementById('edit-cycle-desc').value;
-      closeModal();
-    }
-
-    function editChoirSongs() {
-      openModal("✏️ gestionnaire du répertoire musical", `
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Ajoutez ou modifiez les morceaux au programme :</p>
-        <div id="songs-edit-list">
-          ${songsData.map((s, idx) => `
-            <div style="display:flex; gap:8px; margin-bottom:8px;">
-              <input type="text" id="song-title-${idx}" value="${s.title}" style="flex:2; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:6px; border-radius:6px; font-size:12px;">
-              <input type="text" id="song-url-${idx}" value="${s.url}" style="flex:2; background:#1e293b; border:1px solid var(--card-border); color:#fff; padding:6px; border-radius:6px; font-size:12px;">
-            </div>
-          `).join('')}
-        </div>
-        <button onclick="saveChoirSongs()" style="background:var(--stage-gold); color:#000; font-weight:700; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; margin-top:10px;">💾 enregistrer</button>
-      `);
-    }
-
-    function saveChoirSongs() {
-      songsData.forEach((s, idx) => {
-        const titleEl = document.getElementById(`song-title-${idx}`);
-        const urlEl = document.getElementById(`song-url-${idx}`);
-        if (titleEl && urlEl) {
-          s.title = titleEl.value;
-          s.url = urlEl.value;
-        }
-      });
-      localStorage.setItem('pos_choir_songs', JSON.stringify(songsData));
-      renderSongs();
       closeModal();
     }
 
@@ -588,9 +607,20 @@
     }
 
     window.onload = function() {
+      const savedImg = localStorage.getItem('pos_choir_img');
+      if (savedImg) document.getElementById('choir-poster-img').setAttribute('src', savedImg);
+
+      const savedPos = localStorage.getItem('pos_choir_img_pos');
+      if (savedPos) document.getElementById('choir-poster-img').style.objectPosition = savedPos;
+
+      const savedSub = localStorage.getItem('pos_choir_sub');
+      if (savedSub) document.getElementById('director-subtitle').innerText = savedSub;
+
       const savedGoal = localStorage.getItem('pos_choir_goal');
       if (savedGoal) document.getElementById('goal-text').innerText = savedGoal;
-      renderSongs();
+
+      renderProgramTimeline();
+      renderChoirRules();
     };
   </script>
 </body>
