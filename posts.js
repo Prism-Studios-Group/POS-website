@@ -40,7 +40,7 @@ const postsI18n = {
   }
 };
 
-/* --- CSS Injection & Kit Style Overrides --- */
+/* --- CSS Injection & Kit Direct Overrides --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
@@ -107,8 +107,9 @@ function injectPostsStyles() {
       line-height: 1.5;
     }
 
-    /* OVERRIDES TO RESTYLE KIT EMBEDDED FORM DIRECTLY */
-    #kit-embed-container form.formkit-form {
+    /* FORCE OVERRIDES FOR KIT EMBED FORM */
+    #kit-embed-container form.formkit-form,
+    #kit-embed-container .seva-form {
       background: transparent !important;
       border: none !important;
       padding: 0 !important;
@@ -117,7 +118,8 @@ function injectPostsStyles() {
       max-width: 100% !important;
     }
 
-    #kit-embed-container .formkit-fields {
+    #kit-embed-container .formkit-fields,
+    #kit-embed-container .seva-fields {
       display: flex !important;
       gap: 10px !important;
       flex-wrap: wrap !important;
@@ -142,12 +144,9 @@ function injectPostsStyles() {
     #kit-embed-container .formkit-input::placeholder {
       color: #94a3b8 !important;
     }
-    #kit-embed-container .formkit-input:focus {
-      border-color: var(--neon-cyan, #38bdf8) !important;
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
-    }
 
-    #kit-embed-container .formkit-submit {
+    #kit-embed-container .formkit-submit,
+    #kit-embed-container button.formkit-submit {
       background: var(--neon-amber, #f59e0b) !important;
       color: #000000 !important;
       font-weight: 700 !important;
