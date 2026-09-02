@@ -201,34 +201,9 @@
 <body>
 
   <!-- Navigation Bar -->
-  <nav class="global-nav">
-    <div class="nav-inner">
-      <a href="index.html" class="pos-logo-link" title="Prism Outreach Studio — Accueil">
-        <img src="P-OS.png" alt="POS Logo" class="pos-logo-img">
-      </a>
-      
-      <div class="nav-menu" id="dynamic-nav-container">
-        <!-- Rendered Dynamically -->
-      </div>
-
-      <div class="right-controls">
-        <a href="https://docs.google.com/forms/d/1HkPBQMG96KqWkb5OtLcee74on1ApqwCj5j7nUym6J-Y/edit" target="_blank" class="join-btn">
-          <span>🙌</span> <span id="join-btn-text">rejoins-nous !</span>
-        </a>
-
-        <button id="undo-global-btn" class="undo-global-btn" onclick="executeGlobalUndo()">↩️ annuler</button>
-
-        <button id="lock-btn" class="lock-btn" onclick="toggleLock()">
-          🔒 <span id="lock-text">verrouillé</span>
-        </button>
-
-        <div class="lang-toggle">
-          <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
-          <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
-        </div>
-      </div>
-    </div>
-  </nav>
+ <!-- Centralized Navigation Bar -->
+<nav id="pos-nav"></nav>
+<script src="nav.js"></script>
 
   <div class="container">
 
