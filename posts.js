@@ -4,18 +4,18 @@
 
 const defaultPostsData = [
   {
-    id: 1,
-    title: "The POS Monthly Scoop",
+    id: 12,
+    title: "The POS Weekly Scoop #12",
     date: "Septembre 2026",
     cover: "🗣️",
-    content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes un vendredi sur deux ! Avec un nouveau format : l'événement dure 3 heures, vous venez quand vous voulez. Entre 19h et 20h, des tables de conversation en langues étrangères vous attendent ; ensuite, entre 20h et 21h, un speed dating où chacun parle avec une ou deux personnes en langue(s) étrangère(s) pendant 15 minutes pour pratiquer plus profondément que 'tu fais quoi dans la vie ?' ; enfin, à partir de 21h les tables de conversation reviennent jusqu'à la fin de la soirée." 
+    content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes chaque mercredi !"
   },
   {
-    id: 2,
-    title: "New at POS! 2026",
-    date: "Septembre 2026",
+    id: 11,
+    title: "The POS Weekly Scoop #11",
+    date: "Août 2026",
     cover: "🌍",
-    content: "We have the <br><br><b>immense pleasure</b> to announce the return of the Rennes Café des Langues for its fourth season - the longest the Café event has ever lasted in Rennes! We are extremely grateful for the hosts, volunteers, and leadership team for their help in organizing and keeping this awesome event alive for our community members.<br><br>In Rennes, we boast a large linguistic and cultural diversity that, when left malnourished, leaves opportunities for friendship, collective learning, and self-confidence in foreign languages to come to a halt.<br><br>At Prism Outreach Studio (POS), we understand the value that a moment as simple as talking over a coffee can have on the community, especially in a foreign language. Our self-confidence in foreign languages can sometimes hold us back from enjoying the moment as much as we should. That's why this year, <br><br><b>we are ecstatic to introduce the <em>Rennes Social Clubs</em>, meant to boost self-confidence in expressing oneself in foreign languages while having fun and meeting new friends.</b><br><br>In light of this, we introduce the <br><br><b>Rennes English Choir</b>, the first choir in Rennes led 100% in English and meant to support local marginalized or affected populations by <br><br><b>returning 50% of its concert sales to associations that help victims.</b><br><br>Each concert is different with a different theme - check out the 'Rennes English Choir' tab at the top to find out more.<br><br>Welcome to Rennes, welcome to Prism Outreach Studio. Your new stop for language confidence and making friends and networking."
+    content: "Retour sur notre grand Speed Dating international avec plus de 50 personnes ! Un immense merci à notre bar partenaire pour l'accueil chaleureux."
   }
 ];
 
@@ -31,7 +31,7 @@ const postsI18n = {
     addEdition: "➕ ajouter une édition",
     newsCtaBadge: "POS NEWSLETTER",
     newsCtaTitle: "Envie de ne rien manquer ?",
-    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.",
+    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. C'est 100 % gratuit !",
     newsPlaceholder: "Ton adresse e-mail...",
     newsBtnText: "M'ABONNER"
   },
@@ -40,7 +40,7 @@ const postsI18n = {
     addEdition: "➕ add edition",
     newsCtaBadge: "POS NEWSLETTER",
     newsCtaTitle: "Want to stay in the loop?",
-    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free.",
+    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free!",
     newsPlaceholder: "Your email address...",
     newsBtnText: "SIGN ME UP"
   }
@@ -51,7 +51,7 @@ function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
   const style = document.createElement('style');
   style.id = 'pos-posts-styles';
-  style.textContent = 
+  style.textContent = `
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.8; transform: scale(1.03); }
@@ -233,7 +233,7 @@ function injectPostsStyles() {
       .posts-newsletter-input { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 14px 20px; }
       .posts-newsletter-btn { width: 100%; padding: 14px 0; }
     }
-  ;
+  `;
   document.head.appendChild(style);
 }
 
@@ -244,7 +244,7 @@ function mountPostsHTML() {
 
   const t = postsI18n[postsState.language] || postsI18n.fr;
 
-  target.innerHTML = 
+  target.innerHTML = `
     <div class="posts-header-bar">
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
         📰 <span id="title-news-heading">${t.titleHeading}</span>
@@ -277,7 +277,7 @@ function mountPostsHTML() {
         <div id="posts-modal-content"></div>
       </div>
     </div>
-  ;
+  `;
 }
 
 /* --- Save & Render --- */
@@ -300,13 +300,13 @@ function renderPostsGallery() {
       ? `<img src="${item.cover}" alt="Cover">` 
       : item.cover;
 
-    card.innerHTML = 
+    card.innerHTML = `
       <div class="posts-card-cover">${coverHtml}</div>
       <div class="posts-card-body">
         <div class="posts-card-title">${item.title}</div>
         <div class="posts-card-date">${item.date}</div>
       </div>
-    ;
+    `;
     container.appendChild(card);
   });
 }
@@ -320,18 +320,18 @@ function openPostModal(index) {
     openEditPostModal(index);
   } else {
     const content = document.getElementById('posts-modal-content');
-    content.innerHTML = 
+    content.innerHTML = `
       <h2 style="color:var(--neon-cyan, #38bdf8); margin-bottom:6px;">${item.title}</h2>
       <p style="font-size:12px; color:var(--neon-amber, #f59e0b); font-weight:700; margin-bottom:18px;">📅 ${item.date}</p>
       <div style="font-size:14.5px; line-height:1.7; color:var(--text-main, #fff);">${item.content}</div>
-    ;
+    `;
     document.getElementById('posts-modal-overlay').style.display = 'flex';
   }
 }
 
 function openAddPostModal() {
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = 
+  content.innerHTML = `
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">➕ ajouter une actualité</h3>
     <div class="posts-form-group">
       <label>Titre de l'édition :</label>
@@ -358,7 +358,7 @@ function openAddPostModal() {
       <textarea id="add-post-content" class="posts-form-input" rows="5">Rédigez votre texte ici...</textarea>
     </div>
     <button onclick="saveNewPost()" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; width:100%; font-weight:700; padding:10px; border-radius:8px; border:none; cursor:pointer;">💾 créer l'actualité</button>
-  ;
+  `;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
@@ -376,7 +376,7 @@ function saveNewPost() {
 function openEditPostModal(index) {
   const item = postsData[index];
   const content = document.getElementById('posts-modal-content');
-  content.innerHTML = 
+  content.innerHTML = `
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom:15px;">✏️ modifier l'actualité</h3>
     <div class="posts-form-group">
       <label>Titre :</label>
@@ -406,7 +406,7 @@ function openEditPostModal(index) {
       <button onclick="saveEditPost(${index})" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">💾 enregistrer</button>
       <button onclick="deletePost(${index})" class="cal-btn-sec" style="background:#ef4444; color:#fff; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">🗑️ supprimer</button>
     </div>
-  ;
+  `;
   document.getElementById('posts-modal-overlay').style.display = 'flex';
 }
 
