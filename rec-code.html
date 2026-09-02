@@ -1272,6 +1272,8 @@
         goalText: "rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.",
         titleCycle: "thème du cycle de concert",
         cycleBadge: "thème actuel",
+        cycleName: "solidarité contre les féminicides et les violences",
+        cycleDesc: "à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.",
         titleProgram: "programme du concert & extraits",
         titleRules: "règlement de la chorale"
       },
@@ -1285,6 +1287,8 @@
         goalText: "bring people together through exciting and fun music! singing in our choir lets you practice English and sharpen your pronunciation naturally. above all, it's a supportive space for joy, laughter, and vocal practice led by a passionate native choir director.",
         titleCycle: "concert cycle theme",
         cycleBadge: "current theme",
+        cycleName: "solidarity against femicide and domestic violence",
+        cycleDesc: "for every concert cycle, we choose an essential cause: 50% of ticket sales are donated directly to expert field organizations providing concrete support to victims.",
         titleProgram: "concert lineup & excerpts",
         titleRules: "choir guidelines"
       }
@@ -1314,8 +1318,11 @@
 
       if (document.getElementById('title-cycle')) document.getElementById('title-cycle').innerText = dict.titleCycle;
       if (document.getElementById('cycle-badge')) document.getElementById('cycle-badge').innerText = dict.cycleBadge;
+      if (document.getElementById('cycle-name')) document.getElementById('cycle-name').innerText = dict.cycleName;
+      if (document.getElementById('cycle-desc')) document.getElementById('cycle-desc').innerText = dict.cycleDesc;
+
       if (document.getElementById('title-program')) document.getElementById('title-program').innerText = dict.titleProgram;
-      if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.rulesTitle;
+      if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.titleRules;
 
       const lockText = document.getElementById('lock-text');
       if (lockText) {
