@@ -32,8 +32,8 @@ const postsI18n = {
     newsCtaBadge: "POS NEWSLETTER",
     newsCtaTitle: "Envie de ne rien manquer ?",
     newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.",
-    newsPlaceholder: "Ton adresse e-mail...",
-    newsBtnText: "S'ABONNER 🚀"
+    newsPlaceholder: "exemple@courriel.fr",
+    newsBtnText: "M'ABONNER"
   },
   en: {
     titleHeading: "newsletter archives",
@@ -41,8 +41,8 @@ const postsI18n = {
     newsCtaBadge: "POS NEWSLETTER",
     newsCtaTitle: "Want to stay in the loop?",
     newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free.",
-    newsPlaceholder: "Your email address...",
-    newsBtnText: "SUBSCRIBE 🚀"
+    newsPlaceholder: "example@email.com",
+    newsBtnText: "SIGN ME UP"
   }
 };
 
