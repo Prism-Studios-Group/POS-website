@@ -515,6 +515,12 @@ function openEventDetailModal(ev) {
   const t = calI18n[lang];
 
   if (isCalUnlocked) {
+    const typeOptions = Object.keys(EVENT_COLORS).map(type => {
+      const label = EVENT_LABELS[type][lang];
+      const selected = ev.event_type === type ? 'selected' : '';
+      return `<option value="${type}" ${selected}>${label}</option>`;
+    }).join('');
+
     content.innerHTML = `
       <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">${t.editTitle}</h3>
       
@@ -527,8 +533,14 @@ function openEventDetailModal(ev) {
         <input type="text" id="edit-cal-title-en" class="cal-form-input" value="${ev.title_en}">
       </div>
       <div class="cal-form-group">
-        <label>Date (YYYY-MM-DD) :</label>
-        <input type="text" id="edit-cal-date" class="cal-form-input" value="${ev.event_date}">
+        <label>Catégorie / Type :</label>
+        <select id="edit-cal-type" class="cal-form-input" style="cursor:pointer;">
+          ${typeOptions}
+        </select>
+      </div>
+      <div class="cal-form-group">
+        <label>Date :</label>
+        <input type="date" id="edit-cal-date" class="cal-form-input" value="${ev.event_date}">
       </div>
       <div style="display:flex; gap:10px;">
         <div class="cal-form-group" style="flex:1;">
@@ -541,7 +553,7 @@ function openEventDetailModal(ev) {
         </div>
       </div>
       <div class="cal-form-group">
-        <label>Adresse / Lieu (Lien GPS automatique) :</label>
+        <label>Adresse / Lieu :</label>
         <input type="text" id="edit-cal-loc" class="cal-form-input" value="${ev.location}">
       </div>
       <div class="cal-form-group">
@@ -549,8 +561,8 @@ function openEventDetailModal(ev) {
         <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="2">${ev.description_fr}</textarea>
       </div>
       <div class="cal-form-group">
-        <label>Détails complémentaires / Notes :</label>
-        <textarea id="edit-cal-extra-fr" class="cal-form-input" rows="2" placeholder="ex: boisson obligatoire, apporter son matériel...">${ev.extra_details_fr || ''}</textarea>
+        <label>Détails complémentaires :</label>
+        <textarea id="edit-cal-extra-fr" class="cal-form-input" rows="2">${ev.extra_details_fr || ''}</textarea>
       </div>
 
       <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -703,6 +715,7 @@ function saveCalEventEdit(id) {
     }
     ev.title_fr = document.getElementById('edit-cal-title-fr').value;
     ev.title_en = document.getElementById('edit-cal-title-en').value;
+    ev.event_type = document.getElementById('edit-cal-type').value;
     ev.event_date = document.getElementById('edit-cal-date').value;
     ev.start_time = document.getElementById('edit-cal-start').value;
     ev.end_time = document.getElementById('edit-cal-end').value;
@@ -732,18 +745,36 @@ function duplicateCalEvent(id) {
 
 function openAddCalEventShadowbox() {
   const newId = Date.now();
-  const t = calI18n[calState.language];
+  const lang = calState.language;
+  const t = calI18n[lang];
   const content = document.getElementById('cal-shadowbox-content');
+
+  // Build options from EVENT_COLORS & EVENT_LABELS
+  const typeOptions = Object.keys(EVENT_COLORS).map(type => {
+    const label = EVENT_LABELS[type][lang];
+    return `<option value="${type}">${label}</option>`;
+  }).join('');
+
   content.innerHTML = `
     <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 15px;">${t.newEventTitle}</h3>
+    
     <div class="cal-form-group">
-      <label>Titre (FR) :</label>
-      <input type="text" id="add-cal-title" class="cal-form-input" value="nouvel événement">
+      <label>${lang === "fr" ? "Titre (FR) :" : "Title (FR) :"}</label>
+      <input type="text" id="add-cal-title" class="cal-form-input" value="${lang === "fr" ? "nouvel événement" : "new event"}">
     </div>
+    
     <div class="cal-form-group">
-      <label>Date (YYYY-MM-DD) :</label>
-      <input type="text" id="add-cal-date" class="cal-form-input" value="${isoDateStr(new Date())}">
+      <label>${lang === "fr" ? "Catégorie d'événement :" : "Event Category :"}</label>
+      <select id="add-cal-type" class="cal-form-input" style="cursor:pointer;">
+        ${typeOptions}
+      </select>
     </div>
+    
+    <div class="cal-form-group">
+      <label>${lang === "fr" ? "Date de l'événement :" : "Event Date :"}</label>
+      <input type="date" id="add-cal-date" class="cal-form-input" value="${isoDateStr(new Date())}">
+    </div>
+
     <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000; width:100%; margin-top:10px;" onclick="confirmAddCalEvent(${newId})">${t.createBtn}</button>
   `;
   document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
@@ -751,6 +782,7 @@ function openAddCalEventShadowbox() {
 
 function confirmAddCalEvent(newId) {
   const title = document.getElementById('add-cal-title').value;
+  const eventType = document.getElementById('add-cal-type').value;
   const date = document.getElementById('add-cal-date').value;
 
   const newEv = {
@@ -759,12 +791,21 @@ function confirmAddCalEvent(newId) {
     title_en: title,
     description_fr: "description...",
     description_en: "description...",
-    event_type: "cdl",
+    event_type: eventType,
     event_date: date,
     start_time: "19:00",
     end_time: "21:00",
     location: "rennes"
   };
+
+  if (typeof pushUndoAction === "function") {
+    pushUndoAction({ type: 'addCalEvent', id: newId });
+  }
+
+  calendarEvents.push(newEv);
+  saveCalState();
+  closeCalShadowbox();
+}
 
   if (typeof pushUndoAction === "function") {
     pushUndoAction({ type: 'addCalEvent', id: newId });
