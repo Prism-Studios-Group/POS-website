@@ -107,139 +107,144 @@ function injectPostsStyles() {
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
     /* HIGH-TECH FUTURISTIC SLEEK NEWSLETTER CONTAINER */
-    .posts-newsletter-card {
-      margin-top: 45px;
-      position: relative;
-      border-radius: 24px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(217, 70, 239, 0.2), rgba(245, 158, 11, 0.3));
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.12);
-      transition: box-shadow 0.4s ease;
-    }
-    .posts-newsletter-card:hover {
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 45px rgba(56, 189, 248, 0.25);
-    }
-    .posts-newsletter-content {
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 50%),
-                  radial-gradient(circle at bottom right, rgba(217, 70, 239, 0.12), transparent 50%),
-                  rgba(10, 15, 29, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 23px;
-      padding: 36px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
-      position: relative;
-      overflow: hidden;
-    }
-    .posts-newsletter-content::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 15%; right: 15%; height: 2px;
-      background: linear-gradient(90deg, transparent, #38bdf8, #d946ef, transparent);
-      opacity: 0.8;
-    }
-    .posts-newsletter-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 6px 14px;
-      border-radius: 30px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .posts-newsletter-badge .live-dot {
-      width: 7px;
-      height: 7px;
-      background-color: #38bdf8;
-      border-radius: 50%;
-      display: inline-block;
-      animation: liveDotPulse 2s infinite;
-    }
-    .posts-newsletter-text h3 {
-      font-size: 24px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .posts-newsletter-text p {
-      font-size: 14px;
-      color: #94a3b8;
-      max-width: 460px;
-      line-height: 1.6;
-    }
-    .posts-newsletter-form {
-      display: flex;
-      gap: 10px;
-      flex-grow: 1;
-      max-width: 460px;
-      position: relative;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 6px;
-      border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
-    .posts-newsletter-form:focus-within {
-      border-color: rgba(56, 189, 248, 0.6);
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.2);
-    }
-    .posts-newsletter-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      padding: 12px 18px;
-      font-family: inherit;
-      font-size: 14px;
-      outline: none;
-    }
-    .posts-newsletter-input::placeholder {
-      color: #64748b;
-    }
-    .posts-newsletter-btn {
-      background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #d946ef 100%);
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 4px 15px rgba(217, 70, 239, 0.35);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .posts-newsletter-btn:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 6px 20px rgba(217, 70, 239, 0.5), 0 0 15px rgba(56, 189, 248, 0.4);
-    }
-    .posts-newsletter-btn:active {
-      transform: translateY(1px) scale(0.98);
-    }
+ .posts-newsletter-card {
+  margin-top: 35px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
 
-    @media (max-width: 820px) {
-      .posts-newsletter-content { flex-direction: column; align-items: stretch; padding: 28px 24px; }
-      .posts-newsletter-form { max-width: 100%; flex-direction: column; background: transparent; border: none; box-shadow: none; padding: 0; gap: 12px; }
-      .posts-newsletter-input { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 14px 20px; }
-      .posts-newsletter-btn { width: 100%; padding: 14px 0; }
-    }
-  `;
+.posts-newsletter-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.posts-newsletter-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.posts-newsletter-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.posts-newsletter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.posts-newsletter-badge .live-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.posts-newsletter-text h3 {
+  font-size: 21px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.posts-newsletter-text p {
+  font-size: 13.5px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Unified Pill Input Bar */
+.posts-newsletter-form {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 40px;
+  padding: 5px 6px 5px 18px;
+  gap: 8px;
+  min-width: 310px;
+  flex: 1;
+  max-width: 440px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.posts-newsletter-form:focus-within {
+  border-color: #38bdf8;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.35);
+}
+
+.posts-newsletter-input {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #ffffff !important;
+  font-family: inherit;
+  font-size: 13.5px;
+  padding: 8px 0;
+}
+
+.posts-newsletter-input::placeholder {
+  color: #64748b !important;
+}
+
+.posts-newsletter-btn {
+  background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%) !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.03em;
+  padding: 10px 22px !important;
+  border: none !important;
+  border-radius: 30px !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.posts-newsletter-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(168, 85, 247, 0.5) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .posts-newsletter-card { padding: 22px 20px; }
+  .posts-newsletter-content { flex-direction: column; align-items: stretch; }
+  .posts-newsletter-form { max-width: 100%; min-width: 100%; }
+}
+`;
   document.head.appendChild(style);
 }
 
@@ -264,21 +269,21 @@ function mountPostsHTML() {
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
     <div class="posts-newsletter-card">
-      <div class="posts-newsletter-content">
-        <div class="posts-newsletter-text">
-          <div class="posts-newsletter-badge">
-            <span class="live-dot"></span>
-            <span id="posts-news-badge">${t.newsCtaBadge}</span>
-          </div>
-          <h3 id="posts-news-title">${t.newsCtaTitle}</h3>
-          <p id="posts-news-sub">${t.newsCtaSub}</p>
-        </div>
-        <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
-          <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="${t.newsPlaceholder}" required />
-          <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">${t.newsBtnText}</span></button>
-        </form>
+  <div class="posts-newsletter-content">
+    <div class="posts-newsletter-text">
+      <div class="posts-newsletter-badge">
+        <span class="live-dot"></span>
+        <span id="posts-news-badge">POS NEWSLETTER</span>
       </div>
+      <h3 id="posts-news-title">Envie de ne rien manquer ?</h3>
+      <p id="posts-news-sub">Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.</p>
     </div>
+    <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
+      <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="Ton adresse e-mail..." required />
+      <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">S'ABONNER 🚀</span></button>
+    </form>
+  </div>
+</div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
       <div class="posts-modal-card" onclick="event.stopPropagation()">
