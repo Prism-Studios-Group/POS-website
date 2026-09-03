@@ -29,20 +29,20 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsCtaBadge: "POS NEWSLETTER",
-    newsCtaTitle: "Envie de ne rien manquer ?",
-    newsCtaSub: "Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.",
-    newsPlaceholder: "exemple@courriel.fr",
-    newsBtnText: "M'ABONNER"
+    newsCtaBadge: "⚡ ACCÈS PRIVILÈGE POS",
+    newsCtaTitle: "Prêt·e à faire vibrer tes semaines ?",
+    newsCtaSub: "Rejoins la communauté la plus dynamique de Rennes ! Actualités, exclusivités et événements en avant-première dans ta boîte mail.",
+    newsPlaceholder: "Ton adresse email...",
+    newsBtnText: "REJOINDRE 🚀"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsCtaBadge: "POS NEWSLETTER",
-    newsCtaTitle: "Want to stay in the loop?",
-    newsCtaSub: "Get our latest news, behind-the-scenes updates, and upcoming events delivered straight to your inbox. 100% free.",
-    newsPlaceholder: "example@email.com",
-    newsBtnText: "SIGN ME UP"
+    newsCtaBadge: "⚡ POS INSIDER ACCESS",
+    newsCtaTitle: "Ready to ignite your week?",
+    newsCtaSub: "Join Rennes' most energetic community! Get insider news, priority event invites, and exclusive updates delivered straight to you.",
+    newsPlaceholder: "Your email address...",
+    newsBtnText: "JOIN NOW 🚀"
   }
 };
 
@@ -63,9 +63,9 @@ function injectPostsStyles() {
       50% { opacity: 0.8; transform: scale(1.03); }
     }
     @keyframes liveDotPulse {
-      0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(251, 191, 36, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
     }
 
     .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
@@ -106,145 +106,179 @@ function injectPostsStyles() {
     .posts-btn-add { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); color: var(--text-main, #fff); font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: none; }
     body.body-unlocked .posts-btn-add { display: inline-block; }
 
-    /* HIGH-TECH FUTURISTIC SLEEK NEWSLETTER CONTAINER */
- .posts-newsletter-card {
-  margin-top: 35px;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  border-radius: 20px;
-  padding: 28px 32px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
+    /* =========================================================
+       HIGH-ENERGY VIBRANT NEWSLETTER COMPONENT
+       ========================================================= */
+    .posts-newsletter-card {
+      margin-top: 40px;
+      position: relative;
+      background: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.2) 0%, transparent 50%),
+                  rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 28px;
+      padding: 36px 42px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.15);
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
 
-.posts-newsletter-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
-  pointer-events: none;
-}
+    .posts-newsletter-card:hover {
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(56, 189, 248, 0.25);
+    }
 
-.posts-newsletter-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
-}
+    .posts-newsletter-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, #f59e0b, #d946ef, #38bdf8, #22c55e);
+    }
 
-.posts-newsletter-text {
-  flex: 1;
-  min-width: 260px;
-}
+    .posts-newsletter-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
 
-.posts-newsletter-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
+    /* Left Side: Electric Message & Hook */
+    .posts-newsletter-text {
+      flex: 1 1 320px;
+    }
 
-.posts-newsletter-badge .live-dot {
-  width: 6px;
-  height: 6px;
-  background-color: #38bdf8;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #38bdf8;
-}
+    .posts-newsletter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
+    }
 
-.posts-newsletter-text h3 {
-  font-size: 21px;
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 6px;
-}
+    .posts-newsletter-badge .live-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #fbbf24;
+      border-radius: 50%;
+      animation: liveDotPulse 1.8s infinite;
+    }
 
-.posts-newsletter-text p {
-  font-size: 13.5px;
-  color: #cbd5e1;
-  line-height: 1.5;
-  margin: 0;
-}
+    .posts-newsletter-text h3 {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #d946ef 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.3));
+    }
 
-/* Unified Pill Input Bar */
-.posts-newsletter-form {
-  display: flex;
-  align-items: center;
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  border-radius: 40px;
-  padding: 5px 6px 5px 18px;
-  gap: 8px;
-  min-width: 310px;
-  flex: 1;
-  max-width: 440px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
-}
+    .posts-newsletter-text p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin: 0;
+      max-width: 480px;
+    }
 
-.posts-newsletter-form:focus-within {
-  border-color: #38bdf8;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.35);
-}
+    /* Right Side: Long Dark Oval Form Capsule */
+    .posts-newsletter-form-wrapper {
+      flex: 1 1 360px;
+      display: flex;
+      justify-content: flex-end;
+    }
 
-.posts-newsletter-input {
-  flex: 1;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  color: #ffffff !important;
-  font-family: inherit;
-  font-size: 13.5px;
-  padding: 8px 0;
-}
+    .posts-newsletter-form {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      background: rgba(11, 15, 25, 0.95) !important;
+      border: 2px solid rgba(56, 189, 248, 0.4) !important;
+      border-radius: 60px !important;
+      padding: 6px 8px 6px 22px !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.15) !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
 
-.posts-newsletter-input::placeholder {
-  color: #64748b !important;
-}
+    .posts-newsletter-form:focus-within {
+      border-color: #d946ef !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 2px 6px rgba(0, 0, 0, 0.9), 0 0 25px rgba(217, 70, 239, 0.4) !important;
+      transform: translateY(-2px);
+    }
 
-.posts-newsletter-btn {
-  background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%) !important;
-  color: #0f172a !important;
-  font-weight: 800 !important;
-  font-size: 12.5px !important;
-  letter-spacing: 0.03em;
-  padding: 10px 22px !important;
-  border: none !important;
-  border-radius: 30px !important;
-  cursor: pointer !important;
-  transition: all 0.25s ease !important;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-}
+    .posts-newsletter-input {
+      flex: 1 !important;
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+      font-family: inherit !important;
+      font-size: 14.5px !important;
+      font-weight: 700 !important;
+      padding: 10px 10px 10px 0 !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+    }
 
-.posts-newsletter-btn:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 18px rgba(168, 85, 247, 0.5) !important;
-  color: #ffffff !important;
-}
+    .posts-newsletter-input::placeholder {
+      color: rgba(203, 213, 225, 0.5) !important;
+      font-weight: 400 !important;
+    }
 
-@media (max-width: 768px) {
-  .posts-newsletter-card { padding: 22px 20px; }
-  .posts-newsletter-content { flex-direction: column; align-items: stretch; }
-  .posts-newsletter-form { max-width: 100%; min-width: 100%; }
-}
-`;
+    .posts-newsletter-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #d946ef 100%) !important;
+      color: #000000 !important;
+      font-weight: 900 !important;
+      font-size: 13px !important;
+      letter-spacing: 0.05em !important;
+      text-transform: uppercase !important;
+      padding: 14px 26px !important;
+      border: none !important;
+      border-radius: 50px !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.5) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+    }
+
+    .posts-newsletter-btn:hover {
+      transform: scale(1.06) !important;
+      box-shadow: 0 0 28px rgba(217, 70, 239, 0.8), 0 0 15px rgba(245, 158, 11, 0.8) !important;
+      color: #ffffff !important;
+    }
+
+    .posts-newsletter-btn:active {
+      transform: scale(0.97) !important;
+    }
+
+    @media (max-width: 820px) {
+      .posts-newsletter-card { padding: 28px 24px; }
+      .posts-newsletter-content { flex-direction: column; align-items: stretch; }
+      .posts-newsletter-form-wrapper { justify-content: center; }
+      .posts-newsletter-form { max-width: 100%; }
+    }
+  `;
   document.head.appendChild(style);
 }
 
@@ -269,21 +303,23 @@ function mountPostsHTML() {
     <div class="posts-gallery" id="posts-gallery-container"></div>
 
     <div class="posts-newsletter-card">
-  <div class="posts-newsletter-content">
-    <div class="posts-newsletter-text">
-      <div class="posts-newsletter-badge">
-        <span class="live-dot"></span>
-        <span id="posts-news-badge">POS NEWSLETTER</span>
+      <div class="posts-newsletter-content">
+        <div class="posts-newsletter-text">
+          <div class="posts-newsletter-badge">
+            <span class="live-dot"></span>
+            <span id="posts-news-badge">${t.newsCtaBadge}</span>
+          </div>
+          <h3 id="posts-news-title">${t.newsCtaTitle}</h3>
+          <p id="posts-news-sub">${t.newsCtaSub}</p>
+        </div>
+        <div class="posts-newsletter-form-wrapper">
+          <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
+            <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="${t.newsPlaceholder}" required autocomplete="email" />
+            <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">${t.newsBtnText}</span></button>
+          </form>
+        </div>
       </div>
-      <h3 id="posts-news-title">Envie de ne rien manquer ?</h3>
-      <p id="posts-news-sub">Reçois nos dernières actualités, exclusivités et événements directement dans ta boîte mail. 100 % gratuit.</p>
     </div>
-    <form action="https://app.kit.com/forms/9871438/subscriptions" method="post" target="_blank" class="posts-newsletter-form">
-      <input type="email" name="email_address" class="posts-newsletter-input" id="posts-news-input" placeholder="Ton adresse e-mail..." required />
-      <button type="submit" class="posts-newsletter-btn"><span id="posts-news-btn">S'ABONNER 🚀</span></button>
-    </form>
-  </div>
-</div>
 
     <div class="posts-modal-overlay" id="posts-modal-overlay" onclick="closePostsModalOnOverlay(event)">
       <div class="posts-modal-card" onclick="event.stopPropagation()">
