@@ -140,7 +140,7 @@ const defaultCalendarEvents = [
     description_fr: "répétition de la chorale anglophone : work on Kaval Sviri and Time",
     description_en: "rehearsal for the english choir: work on Kaval Sviri and Time",
     event_type: "choir",
-    event_date: "2026-09-15",
+    event_date: "2026-09-22",
     start_time: "20:00",
     end_time: "21:30",
     location: "à venir !"
