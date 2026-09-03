@@ -32,8 +32,8 @@ const postsI18n = {
     newsCtaBadge: "⚡ ACCÈS PRIVILÈGE POS",
     newsCtaTitle: "Prêt·e à faire vibrer tes semaines ?",
     newsCtaSub: "Rejoins la communauté la plus dynamique de Rennes ! Actualités, exclusivités et événements en avant-première dans ta boîte mail.",
-    newsPlaceholder: "exemple@courriel.fr",
-    newsBtnText: "M'ABONNER"
+    newsPlaceholder: "Ton adresse email...",
+    newsBtnText: "REJOINDRE 🚀"
   },
   en: {
     titleHeading: "newsletter archives",
@@ -41,8 +41,8 @@ const postsI18n = {
     newsCtaBadge: "⚡ POS INSIDER ACCESS",
     newsCtaTitle: "Ready to ignite your week?",
     newsCtaSub: "Join Rennes' most energetic community! Get insider news, priority event invites, and exclusive updates delivered straight to you.",
-    newsPlaceholder: "example@email.com",
-    newsBtnText: "SIGN ME UP"
+    newsPlaceholder: "Your email address...",
+    newsBtnText: "JOIN NOW 🚀"
   }
 };
 
@@ -54,9 +54,12 @@ function isCoverImage(str) {
 
 /* --- Futuristic Cyber Glassmorphic CSS Injection --- */
 function injectPostsStyles() {
-  if (document.getElementById('pos-posts-styles')) return;
-  const style = document.createElement('style');
-  style.id = 'pos-posts-styles';
+  let style = document.getElementById('pos-posts-styles');
+  if (!style) {
+    style = document.createElement('style');
+    style.id = 'pos-posts-styles';
+    document.head.appendChild(style);
+  }
   style.textContent = `
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -203,17 +206,18 @@ function injectPostsStyles() {
       justify-content: flex-end;
     }
 
-    .posts-newsletter-form {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      max-width: 480px;
+    .posts-newsletter-form, form.posts-newsletter-form {
+      display: flex !important;
+      align-items: center !important;
+      width: 100% !important;
+      max-width: 480px !important;
       background: rgba(11, 15, 25, 0.95) !important;
       border: 2px solid rgba(56, 189, 248, 0.4) !important;
       border-radius: 60px !important;
       padding: 6px 8px 6px 22px !important;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.15) !important;
       transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-sizing: border-box !important;
     }
 
     .posts-newsletter-form:focus-within {
@@ -222,7 +226,7 @@ function injectPostsStyles() {
       transform: translateY(-2px);
     }
 
-    .posts-newsletter-input {
+    .posts-newsletter-input, input.posts-newsletter-input, input#posts-news-input {
       flex: 1 !important;
       background: transparent !important;
       border: none !important;
@@ -233,6 +237,8 @@ function injectPostsStyles() {
       font-size: 14.5px !important;
       font-weight: 700 !important;
       padding: 10px 10px 10px 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
       appearance: none !important;
       -webkit-appearance: none !important;
     }
@@ -242,14 +248,15 @@ function injectPostsStyles() {
       font-weight: 400 !important;
     }
 
-    .posts-newsletter-btn {
+    .posts-newsletter-btn, button.posts-newsletter-btn {
       background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #d946ef 100%) !important;
       color: #000000 !important;
       font-weight: 900 !important;
       font-size: 13px !important;
       letter-spacing: 0.05em !important;
       text-transform: uppercase !important;
-      padding: 14px 26px !important;
+      padding: 12px 24px !important;
+      margin: 0 !important;
       border: none !important;
       border-radius: 50px !important;
       cursor: pointer !important;
@@ -279,7 +286,6 @@ function injectPostsStyles() {
       .posts-newsletter-form { max-width: 100%; }
     }
   `;
-  document.head.appendChild(style);
 }
 
 /* --- Mounting Markup --- */
