@@ -133,7 +133,7 @@ const defaultCalendarEvents = [
     end_time: "22:00",
     location: "10 Canal Saint-Martin, 35700 Rennes"
   },
-    {
+  {
     id: 5,
     title_fr: "répétition rennes english choir 3",
     title_en: "rennes english choir rehearsal 3",
@@ -143,6 +143,18 @@ const defaultCalendarEvents = [
     event_date: "2026-09-22",
     start_time: "20:00",
     end_time: "21:30",
+    location: "à venir !"
+  },
+  {
+    id: 6,
+    title_fr: "POS formation bénévoles",
+    title_en: "POS volunteer training",
+    description_fr: "Atelier mensuel pour former les nouveaux/nouvelles bénévoles.",
+    description_en: " Monthly workshop to train new volunteers for the association.",
+    event_type: "atelier",
+    event_date: "2026-09-25",
+    start_time: "19:00",
+    end_time: "20:00",
     location: "à venir !"
   }
 ];
@@ -241,7 +253,7 @@ function injectCalendarStyles() {
 
     .cal-form-group { margin-bottom: 14px; }
     .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
-    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; color-scheme: dark; }
     .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
 
     .map-link { color: var(--cdl-cyan, #38bdf8); text-decoration: underline; font-weight: 700; transition: color 0.2s; }
@@ -266,6 +278,7 @@ function mountCalendarHTML() {
       <div class="cal-admin-tools">
         <button id="cal-lock-btn" class="cal-btn-sec" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">verrouillé</span></button>
         <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()">➕ ajouter un événement</button>
+        <button id="cal-download-btn" class="cal-btn-add" style="background:#22c55e; color:#000; display:none;" onclick="downloadUpdatedCalendarJS()" title="Télécharger calendar.js mis à jour">📥 enregistrer calendar.js</button>
       </div>
     </div>
 
@@ -343,6 +356,9 @@ function renderCalendar() {
   document.getElementById('title-upcoming').innerText = t.upcoming;
   document.getElementById('cal-lock-label').innerText = isCalUnlocked ? t.unlocked : t.locked;
   document.getElementById('cal-add-btn').innerText = t.addEvent;
+
+  const dlBtn = document.getElementById('cal-download-btn');
+  if (dlBtn) dlBtn.style.display = isCalUnlocked ? "inline-block" : "none";
 
   injectFooterDisclaimer();
 
@@ -685,6 +701,9 @@ async function toggleCalLock() {
     isCalUnlocked = false;
     document.getElementById('cal-lock-btn').classList.remove('unlocked');
     document.getElementById('cal-add-btn').style.display = "none";
+    const dlBtn = document.getElementById('cal-download-btn');
+    if (dlBtn) dlBtn.style.display = "none";
+
     if (typeof setGlobalUnlockState === "function") setGlobalUnlockState(false);
     renderCalendar();
   }
@@ -699,6 +718,9 @@ async function verifyCalPin() {
     isCalUnlocked = true;
     document.getElementById('cal-lock-btn').classList.add('unlocked');
     document.getElementById('cal-add-btn').style.display = "inline-block";
+    const dlBtn = document.getElementById('cal-download-btn');
+    if (dlBtn) dlBtn.style.display = "inline-block";
+
     if (typeof setGlobalUnlockState === "function") setGlobalUnlockState(true);
     closeCalShadowbox();
     renderCalendar();
@@ -807,13 +829,35 @@ function confirmAddCalEvent(newId) {
   closeCalShadowbox();
 }
 
-  if (typeof pushUndoAction === "function") {
-    pushUndoAction({ type: 'addCalEvent', id: newId });
+async function downloadUpdatedCalendarJS() {
+  let jsText = "";
+
+  try {
+    const response = await fetch('calendar.js');
+    if (response.ok) {
+      jsText = await response.text();
+    }
+  } catch (err) {
+    console.warn("Could not fetch calendar.js directly. Using fallback replacement.");
   }
 
-  calendarEvents.push(newEv);
-  saveCalState();
-  closeCalShadowbox();
+  const updatedEventsJSON = JSON.stringify(calendarEvents, null, 2);
+
+  if (jsText) {
+    const regex = /const\s+defaultCalendarEvents\s*=\s*\[[\s\S]*?\];/;
+    jsText = jsText.replace(regex, `const defaultCalendarEvents = ${updatedEventsJSON};`);
+  } else {
+    alert("Impossible de lire calendar.js automatiquement. Vérifiez la console.");
+    return;
+  }
+
+  const blob = new Blob([jsText], { type: "application/javascript;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "calendar.js";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 window.syncCalendarLanguage = function(lang) {
