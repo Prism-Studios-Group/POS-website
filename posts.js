@@ -7,19 +7,19 @@ const defaultPostsData = [
     id: 1,
     title: "The POS Monthly Scoop",
     date: "Septembre 2026",
-    cover: "🗣️",
+    cover: "rainbow.blue.jpg",
     content: "Voici les dernières nouvelles exclusives du Rennes Café des Langues... <br><br><b>Au programme ce mois-ci :</b> de nouvelles tables linguistiques et plus de 50 personnes un vendredi sur deux ! Avec un nouveau format : l'événement dure 3 heures, vous venez quand vous voulez. Entre 19h et 20h, des tables de conversation en langues étrangères vous attendent ; ensuite, entre 20h et 21h, un speed dating où chacun parle avec une ou deux personnes en langue(s) étrangère(s) pendant 15 minutes pour pratiquer plus profondément que 'tu fais quoi dans la vie ?' ; enfin, à partir de 21h les tables de conversation reviennent jusqu'à la fin de la soirée." 
   },
   {
     id: 2,
     title: "New at POS! 2026",
     date: "Septembre 2026",
-    cover: "🌍",
+    cover: "rainbow.red.jpg",
     content: "We have the <br><br><b>immense pleasure</b> to announce the return of the Rennes Café des Langues for its fourth season - the longest the Café event has ever lasted in Rennes! We are extremely grateful for the hosts, volunteers, and leadership team for their help in organizing and keeping this awesome event alive for our community members.<br><br>In Rennes, we boast a large linguistic and cultural diversity that, when left malnourished, leaves opportunities for friendship, collective learning, and self-confidence in foreign languages to come to a halt.<br><br>At Prism Outreach Studio (POS), we understand the value that a moment as simple as talking over a coffee can have on the community, especially in a foreign language. Our self-confidence in foreign languages can sometimes hold us back from enjoying the moment as much as we should. That's why this year, <br><br><b>we are ecstatic to introduce the <em>Rennes Social Clubs</em>, meant to boost self-confidence in expressing oneself in foreign languages while having fun and meeting new friends.</b><br><br>In light of this, we introduce the <br><br><b>Rennes English Choir</b>, the first choir in Rennes led 100% in English and meant to support local marginalized or affected populations by <br><br><b>returning 50% of its concert sales to associations that help victims.</b><br><br>Each concert is different with a different theme - check out the 'Rennes English Choir' tab at the top to find out more.<br><br>Welcome to Rennes, welcome to Prism Outreach Studio. Your new stop for language confidence and making friends and networking."
   }
 ];
 
-let postsData = JSON.parse(localStorage.getItem('pos_posts_data')) || defaultPostsData;
+let postsData = JSON.parse(localStorage.getItem('pos_posts_data')) || window.POS_EMBEDDED_POSTS || defaultPostsData;
 
 let postsState = {
   language: localStorage.getItem('pos_lang') || "fr"
@@ -46,6 +46,12 @@ const postsI18n = {
   }
 };
 
+/* --- Helper to detect if cover string is an image file or URL --- */
+function isCoverImage(str) {
+  if (!str) return false;
+  return str.startsWith('http') || /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(str.trim());
+}
+
 /* --- Futuristic Cyber Glassmorphic CSS Injection --- */
 function injectPostsStyles() {
   if (document.getElementById('pos-posts-styles')) return;
@@ -62,14 +68,14 @@ function injectPostsStyles() {
       100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
     }
 
-    .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .posts-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
     .posts-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
     .posts-card {
       background: rgba(15, 23, 42, 0.85); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
       border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; position: relative;
     }
     .posts-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan, #38bdf8); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
-    .posts-card-cover { height: 100px; background: linear-gradient(135deg, #1e1b4b, #31104b); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; }
+    .posts-card-cover { height: 120px; background: linear-gradient(135deg, #1e1b4b, #31104b); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; }
     .posts-card-cover img { width: 100%; height: 100%; object-fit: cover; }
     .posts-card-body { padding: 15px; }
     .posts-card-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text-main, #fff); }
@@ -249,7 +255,10 @@ function mountPostsHTML() {
       <div style="font-size:20px; font-weight:700; color:var(--neon-cyan, #38bdf8);">
         📰 <span id="title-news-heading">${t.titleHeading}</span>
       </div>
-      <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">${t.addEdition}</button>
+      <div>
+        <button class="posts-btn-add" id="posts-add-btn" onclick="openAddPostModal()">${t.addEdition}</button>
+        <button class="posts-btn-add" id="posts-download-btn" style="background:#22c55e; color:#000; display:none;" onclick="downloadUpdatedPostsJS()" title="Télécharger posts.js mis à jour">📥 enregistrer posts.js</button>
+      </div>
     </div>
     
     <div class="posts-gallery" id="posts-gallery-container"></div>
@@ -296,9 +305,9 @@ function renderPostsGallery() {
     card.className = 'posts-card';
     card.onclick = () => openPostModal(index);
 
-    let coverHtml = item.cover.startsWith('http') 
-      ? `<img src="${item.cover}" alt="Cover">` 
-      : item.cover;
+    let coverHtml = isCoverImage(item.cover) 
+      ? `<img src="${item.cover}" alt="Cover" onerror="this.parentElement.innerText='🗞️'">` 
+      : (item.cover || '🗞️');
 
     card.innerHTML = `
       <div class="posts-card-cover">${coverHtml}</div>
@@ -309,6 +318,12 @@ function renderPostsGallery() {
     `;
     container.appendChild(card);
   });
+
+  const dlBtn = document.getElementById('posts-download-btn');
+  if (dlBtn) {
+    const isUnlocked = document.body.classList.contains('body-unlocked');
+    dlBtn.style.display = isUnlocked ? 'inline-block' : 'none';
+  }
 }
 
 /* --- Modals & Editors --- */
@@ -320,7 +335,14 @@ function openPostModal(index) {
     openEditPostModal(index);
   } else {
     const content = document.getElementById('posts-modal-content');
+
+    let coverHTML = '';
+    if (isCoverImage(item.cover)) {
+      coverHTML = `<img src="${item.cover}" alt="${item.title}" style="width:100%; max-height:220px; object-fit:cover; border-radius:12px; margin-bottom:16px;">`;
+    }
+
     content.innerHTML = `
+      ${coverHTML}
       <h2 style="color:var(--neon-cyan, #38bdf8); margin-bottom:6px;">${item.title}</h2>
       <p style="font-size:12px; color:var(--neon-amber, #f59e0b); font-weight:700; margin-bottom:18px;">📅 ${item.date}</p>
       <div style="font-size:14.5px; line-height:1.7; color:var(--text-main, #fff);">${item.content}</div>
@@ -342,8 +364,8 @@ function openAddPostModal() {
       <input type="text" id="add-post-date" class="posts-form-input" value="Octobre 2026">
     </div>
     <div class="posts-form-group">
-      <label>Cover (Emoji ou Image URL) :</label>
-      <input type="text" id="add-post-cover" class="posts-form-input" value="🗞️">
+      <label>Cover (Emoji ou Fichier Image ex: rainbow.blue.jpg) :</label>
+      <input type="text" id="add-post-cover" class="posts-form-input" value="rainbow.blue.jpg">
     </div>
     <div class="posts-form-group">
       <label>Contenu de l'actualité :</label>
@@ -353,9 +375,9 @@ function openAddPostModal() {
         <button class="posts-tool-btn" onclick="insertPostTag('add-post-content', '<u>', '</u>')"><u>U</u></button>
         <button class="posts-tool-btn" onclick="insertPostTag('add-post-content', '<mark>', '</mark>')">Highlight</button>
         <button class="posts-tool-btn" onclick="insertPostTag('add-post-content', '<s>', '</s>')"><s>S</s></button>
-        <button class="posts-tool-btn" onclick="insertPostImageUrl('add-post-content')">📷 Image</button>
+        <button class="posts-tool-btn" style="background:var(--neon-amber, #f59e0b); color:#000;" onclick="insertPostImageUrl('add-post-content')">📷 Image</button>
       </div>
-      <textarea id="add-post-content" class="posts-form-input" rows="5">Rédigez votre texte ici...</textarea>
+      <textarea id="add-post-content" class="posts-form-input" rows="6">Rédigez votre texte ici...</textarea>
     </div>
     <button onclick="saveNewPost()" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; width:100%; font-weight:700; padding:10px; border-radius:8px; border:none; cursor:pointer;">💾 créer l'actualité</button>
   `;
@@ -387,7 +409,7 @@ function openEditPostModal(index) {
       <input type="text" id="edit-post-date" class="posts-form-input" value="${item.date}">
     </div>
     <div class="posts-form-group">
-      <label>Cover (Emoji ou Image URL) :</label>
+      <label>Cover (Emoji ou Fichier Image ex: rainbow.blue.jpg) :</label>
       <input type="text" id="edit-post-cover" class="posts-form-input" value="${item.cover}">
     </div>
     <div class="posts-form-group">
@@ -398,9 +420,9 @@ function openEditPostModal(index) {
         <button class="posts-tool-btn" onclick="insertPostTag('edit-post-content', '<u>', '</u>')"><u>U</u></button>
         <button class="posts-tool-btn" onclick="insertPostTag('edit-post-content', '<mark>', '</mark>')">Highlight</button>
         <button class="posts-tool-btn" onclick="insertPostTag('edit-post-content', '<s>', '</s>')"><s>S</s></button>
-        <button class="posts-tool-btn" onclick="insertPostImageUrl('edit-post-content')">📷 Image</button>
+        <button class="posts-tool-btn" style="background:var(--neon-amber, #f59e0b); color:#000;" onclick="insertPostImageUrl('edit-post-content')">📷 Image</button>
       </div>
-      <textarea id="edit-post-content" class="posts-form-input" rows="6">${item.content}</textarea>
+      <textarea id="edit-post-content" class="posts-form-input" rows="8">${item.content}</textarea>
     </div>
     <div style="display:flex; justify-content:space-between; margin-top:15px;">
       <button onclick="saveEditPost(${index})" class="cal-btn" style="background:var(--neon-cyan, #38bdf8); color:#000; font-weight:700; padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">💾 enregistrer</button>
@@ -437,19 +459,54 @@ function insertPostTag(textareaId, tagOpen, tagClose = '') {
   const selected = text.substring(start, end);
   el.value = text.substring(0, start) + tagOpen + selected + tagClose + text.substring(end);
   el.focus();
+  el.selectionStart = start + tagOpen.length;
+  el.selectionEnd = end + tagOpen.length;
 }
 
 function insertPostImageUrl(textareaId) {
-  const url = prompt("Entrez l'URL de l'image :");
-  if (url) insertPostTag(textareaId, `<img src="${url}" style="width:100%; border-radius:8px; margin:10px 0;">`);
+  const url = prompt("Entrez le nom du fichier image ou son URL (ex: mon-image.jpg) :");
+  if (url) {
+    insertPostTag(textareaId, `<img src="${url}" style="width:100%; border-radius:8px; margin:10px 0;">`);
+  }
 }
 
 function closePostsModal() {
-  document.getElementById('posts-modal-overlay').style.display = 'none';
+  const overlay = document.getElementById('posts-modal-overlay');
+  if (overlay) overlay.style.display = 'none';
 }
 
 function closePostsModalOnOverlay(e) {
   if (e.target.id === 'posts-modal-overlay') closePostsModal();
+}
+
+async function downloadUpdatedPostsJS() {
+  let jsText = "";
+  try {
+    const response = await fetch('posts.js');
+    if (response.ok) {
+      jsText = await response.text();
+    }
+  } catch (err) {
+    console.warn("Could not fetch posts.js directly.");
+  }
+
+  const updatedPostsJSON = JSON.stringify(postsData, null, 2);
+
+  if (jsText) {
+    const regex = /const\s+defaultPostsData\s*=\s*\[[\s\S]*?\];/;
+    jsText = jsText.replace(regex, `const defaultPostsData = ${updatedPostsJSON};`);
+  } else {
+    alert("Impossible de lire posts.js automatiquement.");
+    return;
+  }
+
+  const blob = new Blob([jsText], { type: "application/javascript;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "posts.js";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 /* --- Language Sync Functions --- */
