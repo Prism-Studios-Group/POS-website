@@ -29,20 +29,20 @@ const postsI18n = {
   fr: {
     titleHeading: "archive des actualités",
     addEdition: "➕ ajouter une édition",
-    newsCtaBadge: "⚡ ACCÈS PRIVILÈGE POS",
-    newsCtaTitle: "Prêt·e à faire vibrer tes semaines ?",
-    newsCtaSub: "Rejoins la communauté la plus dynamique de Rennes ! Actualités, exclusivités et événements en avant-première dans ta boîte mail.",
-    newsPlaceholder: "Ton adresse email...",
-    newsBtnText: "REJOINDRE 🚀"
+    newsCtaBadge: "accès privilège POS",
+    newsCtaTitle: "Envie de ne rien manquer ?",
+    newsCtaSub: "rejoins la communauté la plus dynamique de Rennes ! Actualités, exclusivités et événements en avant-première dans ta boîte mail.",
+    newsPlaceholder: "exemple@courriel.fr",
+    newsBtnText: "REJOINDRE"
   },
   en: {
     titleHeading: "newsletter archives",
     addEdition: "➕ add edition",
-    newsCtaBadge: "⚡ POS INSIDER ACCESS",
-    newsCtaTitle: "Ready to ignite your week?",
+    newsCtaBadge: "POS insider access",
+    newsCtaTitle: "Want to stay in the loop?",
     newsCtaSub: "Join Rennes' most energetic community! Get insider news, priority event invites, and exclusive updates delivered straight to you.",
-    newsPlaceholder: "Your email address...",
-    newsBtnText: "JOIN NOW 🚀"
+    newsPlaceholder: "example@email.com",
+    newsBtnText: "SIGN ME UP"
   }
 };
 
