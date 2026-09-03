@@ -32,8 +32,8 @@ const postsI18n = {
     newsCtaBadge: "⚡ ACCÈS PRIVILÈGE POS",
     newsCtaTitle: "Prêt·e à faire vibrer tes semaines ?",
     newsCtaSub: "Rejoins la communauté la plus dynamique de Rennes ! Actualités, exclusivités et événements en avant-première dans ta boîte mail.",
-    newsPlaceholder: "Ton adresse email...",
-    newsBtnText: "REJOINDRE 🚀"
+    newsPlaceholder: "exemple@courriel.fr",
+    newsBtnText: "M'ABONNER"
   },
   en: {
     titleHeading: "newsletter archives",
@@ -41,8 +41,8 @@ const postsI18n = {
     newsCtaBadge: "⚡ POS INSIDER ACCESS",
     newsCtaTitle: "Ready to ignite your week?",
     newsCtaSub: "Join Rennes' most energetic community! Get insider news, priority event invites, and exclusive updates delivered straight to you.",
-    newsPlaceholder: "Your email address...",
-    newsBtnText: "JOIN NOW 🚀"
+    newsPlaceholder: "example@email.com",
+    newsBtnText: "SIGN ME UP"
   }
 };
 
