@@ -84,91 +84,176 @@ const calI18n = {
 const defaultCalendarEvents = [
   {
     "id": 1,
-    "title_fr": "café des langues 70",
-    "title_en": "café des langues 70",
-    "description_fr": "pratique linguistique un vendredi sur deux chew Hostel Rennes pour pratiquer des langues étrangères dans une ambiance conviviale.",
-    "description_en": "bi-weekly meetup at Hostel Rennes to practice multiple foreign languages in a friendly environment.",
-    "extra_details_fr": "pensez à commander une boisson sur place pour remercier l'auberge d'accueil.",
-    "extra_details_en": "remember to order a drink to support our host venue.",
+    "title_fr": "☕ café des langues 70",
+    "title_en": "☕ café des langues 70",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
     "event_type": "cdl",
     "event_date": "2026-09-04",
     "start_time": "19:00",
     "end_time": "22:00",
-    "location": "10 Canal Saint-Martin, 35700 Rennes"
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": [
+      {
+        "time": "19h00 - 20h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      },
+      {
+        "time": "20h00 - 21h00",
+        "fr": "speed dating par langue (changement toutes les 15 min)",
+        "en": "language speed dating (switch every 15 mins)"
+      },
+      {
+        "time": "21h00 - 22h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      }
+    ]
   },
   {
     "id": 2,
-    "title_fr": "répétition rennes english choir 1",
-    "title_en": "rennes english choir rehearsal 1",
-    "description_fr": "répétition de la chorale anglophone : travail sur Moved",
-    "description_en": "rehearsal for the english choir: work on Moved",
-    "event_type": "choir",
-    "event_date": "2026-09-08",
-    "start_time": "20:00",
-    "end_time": "21:30",
-    "location": "à venir !"
-  },
-  {
-    "id": 3,
-    "title_fr": "répétition rennes english choir 2",
-    "title_en": "rennes english choir rehearsal 2",
-    "description_fr": "répétition de la chorale anglophone : travail sur Kaval sviri and Time",
-    "description_en": "rehearsal for the english choir: work on Kaval Sviri and Time",
+    "title_fr": "🎤 répétition rennes english choir 1",
+    "title_en": "🎤 rennes english choir rehearsal 1",
+    "description_fr": "répétition de la chorale anglophone rennaise - travail sur Moved",
+    "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
     "event_date": "2026-09-15",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "à venir !"
+    "location": "à venir !",
+    "schedule": [
+      {
+        "time": "19h30 - 20h00",
+        "fr": "accueil & échauffement vocal",
+        "en": "welcome & vocal warmup"
+      },
+      {
+        "time": "20h00 - 20h45",
+        "fr": "répétition partie 1 (travail du répertoire)",
+        "en": "rehearsal part 1 (repertoire work)"
+      },
+      {
+        "time": "20h45 - 21h00",
+        "fr": "pause & échanges",
+        "en": "break & social time"
+      },
+      {
+        "time": "21h00 - 21h30",
+        "fr": "répétition partie 2 & chant d'ensemble",
+        "en": "rehearsal part 2 & group singing"
+      }
+    ]
   },
   {
-    "id": 4,
-    "title_fr": "café des langues 71",
-    "title_en": "café des langues 71",
-    "description_fr": "pratique linguistique un vendredi sur deux chew Hostel Rennes pour pratiquer des langues étrangères dans une ambiance conviviale.",
-    "description_en": "bi-weekly meetup at Hostel Rennes to practice multiple foreign languages in a friendly environment.",
-    "extra_details_fr": "pensez à commander une boisson sur place pour remercier l'auberge d'accueil.",
-    "event_type": "cdl",
-    "event_date": "2026-09-18",
-    "start_time": "19:00",
-    "end_time": "22:00",
-    "location": "10 Canal Saint-Martin, 35700 Rennes"
-  },
-  {
-    "id": 5,
-    "title_fr": "répétition rennes english choir 3",
-    "title_en": "rennes english choir rehearsal 3",
-    "description_fr": "répétition de la chorale anglophone : work on Kaval Sviri and Time",
-    "description_en": "rehearsal for the english choir: work on Kaval Sviri and Time",
+    "id": 1788272106983,
+    "title_fr": "🎤 répétition rennes english choir 2",
+    "title_en": "🎤 rennes english choir rehearsal 2",
+    "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
+    "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
     "event_date": "2026-09-22",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "à venir !"
+    "location": "à venir !",
+    "schedule": [
+      {
+        "time": "19h30 - 20h00",
+        "fr": "accueil & échauffement vocal",
+        "en": "welcome & vocal warmup"
+      },
+      {
+        "time": "20h00 - 20h45",
+        "fr": "répétition partie 1 (travail du répertoire)",
+        "en": "rehearsal part 1 (repertoire work)"
+      },
+      {
+        "time": "20h45 - 21h00",
+        "fr": "pause & échanges",
+        "en": "break & social time"
+      },
+      {
+        "time": "21h00 - 21h30",
+        "fr": "répétition partie 2 & chant d'ensemble",
+        "en": "rehearsal part 2 & group singing"
+      }
+    ]
   },
   {
-    "id": 6,
-    "title_fr": "POS formation bénévoles",
-    "title_en": "POS volunteer training",
-    "description_fr": "Atelier mensuel pour former les nouveaux/nouvelles bénévoles.",
-    "description_en": " Monthly workshop to train new volunteers for the association.",
-    "event_type": "atelier",
+    "id": 1788300395804,
+    "title_fr": "☕ café des langues 71",
+    "title_en": "☕ café des langues 71",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-09-18",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": [
+      {
+        "time": "19h00 - 20h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      },
+      {
+        "time": "20h00 - 21h00",
+        "fr": "speed dating par langue (changement toutes les 15 min)",
+        "en": "language speed dating (switch every 15 mins)"
+      },
+      {
+        "time": "21h00 - 22h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      }
+    ]
+  },
+  {
+    "id": 1788300761017,
+    "title_fr": "🎤 répétition rennes english choir 3",
+    "title_en": "🎤 rennes english choir rehearsal 3",
+    "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
+    "description_en": "rehearsal for the english choir directed by a native speaker.",
+    "event_type": "choir",
+    "event_date": "2026-09-29",
+    "start_time": "20:00",
+    "end_time": "21:30",
+    "location": "à venir !",
+    "schedule": [
+      {
+        "time": "19h30 - 20h00",
+        "fr": "accueil & échauffement vocal",
+        "en": "welcome & vocal warmup"
+      },
+      {
+        "time": "20h00 - 20h45",
+        "fr": "répétition partie 1 (travail du répertoire)",
+        "en": "rehearsal part 1 (repertoire work)"
+      },
+      {
+        "time": "20h45 - 21h00",
+        "fr": "pause & échanges",
+        "en": "break & social time"
+      },
+      {
+        "time": "21h00 - 21h30",
+        "fr": "répétition partie 2 & chant d'ensemble",
+        "en": "rehearsal part 2 & group singing"
+      }
+    ]
+  },
+  {
+    "id": 1788393130607,
+    "title_fr": "POS Volunteer training",
+    "title_en": "POS Volunteer training",
+    "description_fr": "Atelier mensuel pour former les nouveaux/nouvelles bénévoles.\nMonthly workshop to train new volunteers for the association.",
+    "description_en": "description...",
+    "event_type": "cdl",
     "event_date": "2026-09-25",
     "start_time": "19:00",
     "end_time": "20:00",
-    "location": "à venir !"
-  },
-  {
-    "id": 1788395000043,
-    "title_fr": "Anniversaire Prism Outreach Studio",
-    "title_en": "Prism Outreach Studio's 1st birthday",
-    "description_fr": "1st anniversary of the asso 1901 Prism Outreach Studio, meant to boost self-confidence in language practice and teaching practice initiatives in foreign languages.",
-    "description_en": "description...",
-    "event_type": "special",
-    "event_date": "2026-09-05",
-    "start_time": "0:00",
-    "end_time": "23:59",
     "location": "rennes",
-    "extra_details_fr": "No event to be held as of yet; however, think about becoming a volunteer for the association!"
+    "extra_details_fr": "Bring water! Apporte une gourde !"
   }
 ];
 
