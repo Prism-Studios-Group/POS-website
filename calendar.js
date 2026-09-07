@@ -243,17 +243,17 @@ const defaultCalendarEvents = [
     ]
   },
   {
-    "id": 1788393130607,
-    "title_fr": "POS Volunteer training",
-    "title_en": "POS Volunteer training",
+    "id": 1788817394305,
+    "title_fr": "Formation bénévole",
+    "title_en": "Volunteer training",
     "description_fr": "Atelier mensuel pour former les nouveaux/nouvelles bénévoles.\nMonthly workshop to train new volunteers for the association.",
     "description_en": "description...",
-    "event_type": "cdl",
+    "event_type": "atelier",
     "event_date": "2026-09-25",
     "start_time": "19:00",
     "end_time": "20:00",
     "location": "rennes",
-    "extra_details_fr": "Bring water! Apporte une gourde !"
+    "extra_details_fr": "Bring a water bottle, notebook and a pen!"
   }
 ];
 
