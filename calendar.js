@@ -43,17 +43,17 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 détails complémentaires",
     scheduleTitle: "⚡ déroulement de la soirée",
-    remindMeBtn: "🔔 m'avertir !",
     addToCalTitle: "📅 ajouter à mon calendrier",
-    addToCalSub: "recevez un rappel automatique 24h avant l'événement sur votre agenda :",
+    addToCalSub: "enregistrez l'événement directement sur votre agenda personnel :",
     googleCal: "Google Calendar",
     appleCal: "Apple Calendar / iCal / Outlook (.ics)",
     outlookWeb: "Outlook Web",
-    newsletterBoxTitle: "📰 newsletter mensuelle pos",
-    newsletterOptInLabel: "M'inscrire aussi à la newsletter POS pour ne rien manquer",
-    newsletterDisclaimer: "🔒 Vous pouvez vous désinscrire à tout moment en un clic.",
-    newsletterBtn: "S'inscrire 🚀",
+    stayInformedTitle: "📧 restez informé(e) des événements",
+    stayInformedSub: "entrez votre e-mail pour recevoir nos invitations et actualités :",
+    newsletterDisclaimer: "🔒 Vos données sont protégées. Désinscription possible en 1 clic à tout moment.",
+    newsletterBtn: "m'inscrire 🚀",
     newsletterPlaceholder: "ton.email@exemple.com",
+    confirmInbox: "📩 Inscription envoyée ! N'oubliez pas de vérifier votre boîte mail (et vos spams) pour valider votre invitation.",
     save: "💾 enregistrer",
     duplicate: "📋 dupliquer",
     delete: "🗑️ supprimer",
@@ -84,17 +84,17 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 extra details",
     scheduleTitle: "⚡ event schedule",
-    remindMeBtn: "🔔 remind me!",
     addToCalTitle: "📅 add to my calendar",
-    addToCalSub: "get an automatic reminder 24h before the event on your calendar:",
+    addToCalSub: "save the event directly to your personal calendar:",
     googleCal: "Google Calendar",
     appleCal: "Apple Calendar / iCal / Outlook (.ics)",
     outlookWeb: "Outlook Web",
-    newsletterBoxTitle: "📰 pos monthly newsletter",
-    newsletterOptInLabel: "Also subscribe to the POS newsletter to stay updated",
-    newsletterDisclaimer: "🔒 You can unsubscribe at any time with a single click.",
-    newsletterBtn: "Subscribe 🚀",
+    stayInformedTitle: "📧 stay informed about events",
+    stayInformedSub: "enter your email to receive our invitations and news updates:",
+    newsletterDisclaimer: "🔒 Your data is secure. Unsubscribe with 1 click at any time.",
+    newsletterBtn: "subscribe 🚀",
     newsletterPlaceholder: "your.email@example.com",
+    confirmInbox: "📩 Subscription sent! Please check your inbox (and spam folder) to confirm your invitation.",
     save: "💾 save",
     duplicate: "📋 duplicate",
     delete: "🗑️ delete",
@@ -363,41 +363,36 @@ function downloadICSFile(eventId) {
 
 function handleCalendarNewsletterSubmit(e, eventId) {
   if (e) e.preventDefault();
-  const checkbox = document.getElementById(`cal-news-check-${eventId}`);
   const emailInput = document.getElementById(`cal-news-email-${eventId}`);
   const statusEl = document.getElementById(`cal-news-status-${eventId}`);
   const lang = calState.language;
+  const t = calI18n[lang];
 
   if (!emailInput || !emailInput.value) return;
 
-  if (checkbox && checkbox.checked) {
-    const formData = new FormData();
-    formData.append("email_address", emailInput.value);
-    fetch("https://app.kit.com/forms/9871438/subscriptions", {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
-    }).then(() => {
-      if (statusEl) {
-        statusEl.innerText = lang === "fr" ? "✅ Inscription enregistrée !" : "✅ Subscription saved!";
-        statusEl.style.color = "#22c55e";
-        statusEl.style.display = "block";
-      }
-      emailInput.value = "";
-    }).catch(err => {
-      console.error("Newsletter submission error:", err);
-      if (statusEl) {
-        statusEl.innerText = lang === "fr" ? "✅ Inscription transmise !" : "✅ Subscription submitted!";
-        statusEl.style.color = "#22c55e";
-        statusEl.style.display = "block";
-      }
-      emailInput.value = "";
-    });
-  } else if (statusEl) {
-    statusEl.innerText = lang === "fr" ? "ℹ️ Cochez la case pour vous inscrire à la newsletter." : "ℹ️ Check the box to subscribe to the newsletter.";
-    statusEl.style.color = "#f59e0b";
-    statusEl.style.display = "block";
-  }
+  const formData = new FormData();
+  formData.append("email_address", emailInput.value);
+
+  fetch("https://app.kit.com/forms/9871438/subscriptions", {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  }).then(() => {
+    if (statusEl) {
+      statusEl.innerHTML = t.confirmInbox;
+      statusEl.style.color = "#22c55e";
+      statusEl.style.display = "block";
+    }
+    emailInput.value = "";
+  }).catch(err => {
+    console.error("Newsletter submission error:", err);
+    if (statusEl) {
+      statusEl.innerHTML = t.confirmInbox;
+      statusEl.style.color = "#22c55e";
+      statusEl.style.display = "block";
+    }
+    emailInput.value = "";
+  });
 }
 
 function injectCalendarStyles() {
@@ -872,7 +867,7 @@ function openEventDetailModal(ev) {
     }
 
     content.innerHTML = `
-      <div style="display:flex; justify-style:space-between; align-items:flex-start; gap:12px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:16px;">
         <h2 style="font-size:22px; font-weight:700; color:var(--text-main, #fff); margin:0;">
           ${lang === "fr" ? ev.title_fr : ev.title_en}
         </h2>
@@ -896,7 +891,7 @@ function openEventDetailModal(ev) {
       ${extraHTML}
       ${scheduleHTML}
 
-      <!-- Visually Appealing Add to Calendar Section -->
+      <!-- Add to Calendar Options -->
       <div class="cal-modal-section" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--card-border);">
         <div class="cal-modal-section-title">${t.addToCalTitle}</div>
         <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">${t.addToCalSub}</p>
@@ -913,27 +908,26 @@ function openEventDetailModal(ev) {
           </a>
         </div>
 
-        <!-- Optional Newsletter Integration Box -->
+        <!-- Stay Informed / Email Subscription Box -->
         <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
-          <div style="font-size: 13px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 8px;">
-            ${t.newsletterBoxTitle}
+          <div style="font-size: 13px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 4px;">
+            ${t.stayInformedTitle}
           </div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+            ${t.stayInformedSub}
+          </p>
           <form onsubmit="handleCalendarNewsletterSubmit(event, ${ev.id})">
-            <div style="display:flex; gap:8px; margin-bottom: 8px; flex-wrap:wrap;">
+            <div style="display:flex; gap:8px; margin-bottom: 6px; flex-wrap:wrap;">
               <input type="email" id="cal-news-email-${ev.id}" placeholder="${t.newsletterPlaceholder}" class="cal-form-input" style="flex:1; min-width:180px;" required>
               <button type="submit" class="cal-btn" style="background:var(--neon-amber, #f59e0b); color:#000; white-space:nowrap;">
                 ${t.newsletterBtn}
               </button>
             </div>
-            <label style="font-size: 12px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none;">
-              <input type="checkbox" id="cal-news-check-${ev.id}" checked style="accent-color: var(--cdl-cyan); width: 15px; height: 15px; margin-top:2px;">
-              <span>${t.newsletterOptInLabel}</span>
-            </label>
-            <div style="font-size: 11px; color: rgba(203, 213, 225, 0.7); margin-top: 4px; font-style: italic;">
+            <div style="font-size: 11px; color: rgba(203, 213, 225, 0.75); font-style: italic;">
               ${t.newsletterDisclaimer}
             </div>
           </form>
-          <div id="cal-news-status-${ev.id}" style="font-size: 12.5px; font-weight: 700; color: #22c55e; margin-top: 8px; display: none;"></div>
+          <div id="cal-news-status-${ev.id}" style="font-size: 12.5px; font-weight: 700; margin-top: 10px; line-height: 1.5; display: none;"></div>
         </div>
       </div>
     `;
