@@ -142,10 +142,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Moved",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-09-22",
+    "event_date": "2026-10-06",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "à venir !",
+    "location": "",
     "schedule": [
       {
         "time": "19h30 - 20h00",
@@ -167,7 +167,8 @@ const defaultCalendarEvents = [
         "fr": "répétition partie 2 & chant d'ensemble",
         "en": "rehearsal part 2 & group singing"
       }
-    ]
+    ],
+    "extra_details_fr": ""
   },
   {
     "id": 1788272106983,
@@ -176,10 +177,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-09-29",
+    "event_date": "2026-10-13",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "à venir !",
+    "location": "",
     "schedule": [
       {
         "time": "19h30 - 20h00",
@@ -201,7 +202,8 @@ const defaultCalendarEvents = [
         "fr": "répétition partie 2 & chant d'ensemble",
         "en": "rehearsal part 2 & group singing"
       }
-    ]
+    ],
+    "extra_details_fr": ""
   },
   {
     "id": 1788300395804,
@@ -239,10 +241,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-10-06",
+    "event_date": "2026-10-20",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "à venir !",
+    "location": "",
     "schedule": [
       {
         "time": "19h30 - 20h00",
