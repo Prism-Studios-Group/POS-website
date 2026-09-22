@@ -32,28 +32,23 @@ const calI18n = {
     addEvent: "➕ ajouter un événement",
     undo: "↩️ annuler",
     unlockTitle: "🔒 déverrouiller l'édition",
-    unlockSub: "entrez le code pin formateur pour modifier :",
+    unlockSub: "entre le code pin formateur pour modifier :",
     validate: "valider",
-    incorrectPin: "Code PIN incorrect.",
-    confirmTitle: "êtes-vous sûr ?",
-    confirmDelete: "voulez-vous vraiment supprimer cet événement ?",
+    incorrectPin: "code pin incorrect.",
+    confirmTitle: "es-tu sûr(e) ?",
+    confirmDelete: "veux-tu vraiment supprimer cet événement ?",
     yesDelete: "oui, supprimer",
     cancel: "annuler",
     detailsTitle: "📌 infos pratiques",
     descTitle: "📝 description",
     extraTitle: "💡 détails complémentaires",
     scheduleTitle: "⚡ déroulement de la soirée",
-    addToCalTitle: "📅 ajouter à mon calendrier",
-    addToCalSub: "enregistrez l'événement directement sur votre agenda personnel :",
-    googleCal: "Google Calendar",
-    appleCal: "Apple Calendar / iCal / Outlook (.ics)",
-    outlookWeb: "Outlook Web",
-    stayInformedTitle: "📧 restez informé(e) des événements",
-    stayInformedSub: "entrez votre e-mail pour recevoir nos invitations et actualités :",
-    newsletterDisclaimer: "🔒 Vos données sont protégées. Désinscription possible en 1 clic à tout moment.",
+    newsletterTitle: "📧 reste informé(e) de tous les événements !",
+    newsletterSub: "entre ton e-mail pour recevoir directement les invitations et actualités :",
+    newsletterDisclaimer: "🔒 tes données sont protégées. désinscription en 1 clic à tout moment.",
     newsletterBtn: "m'inscrire 🚀",
     newsletterPlaceholder: "ton.email@exemple.com",
-    confirmInbox: "📩 Inscription envoyée ! N'oubliez pas de vérifier votre boîte mail (et vos spams) pour valider votre invitation.",
+    confirmInbox: "📩 inscription envoyée ! n'oublie pas de vérifier ta boîte mail (et tes spams) pour valider ton invitation.",
     save: "💾 enregistrer",
     duplicate: "📋 dupliquer",
     delete: "🗑️ supprimer",
@@ -75,7 +70,7 @@ const calI18n = {
     unlockTitle: "🔒 unlock editor",
     unlockSub: "enter the trainer pin code to edit:",
     validate: "submit",
-    incorrectPin: "Incorrect PIN code.",
+    incorrectPin: "incorrect pin code.",
     confirmTitle: "are you sure?",
     confirmDelete: "are you sure you want to delete this event?",
     yesDelete: "yes, delete",
@@ -84,17 +79,12 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 extra details",
     scheduleTitle: "⚡ event schedule",
-    addToCalTitle: "📅 add to my calendar",
-    addToCalSub: "save the event directly to your personal calendar:",
-    googleCal: "Google Calendar",
-    appleCal: "Apple Calendar / iCal / Outlook (.ics)",
-    outlookWeb: "Outlook Web",
-    stayInformedTitle: "📧 stay informed about events",
-    stayInformedSub: "enter your email to receive our invitations and news updates:",
-    newsletterDisclaimer: "🔒 Your data is secure. Unsubscribe with 1 click at any time.",
+    newsletterTitle: "📧 stay updated on all upcoming events!",
+    newsletterSub: "enter your email to receive direct invitations and event news:",
+    newsletterDisclaimer: "🔒 your email is safe. unsubscribe anytime in 1 click.",
     newsletterBtn: "subscribe 🚀",
     newsletterPlaceholder: "your.email@example.com",
-    confirmInbox: "📩 Subscription sent! Please check your inbox (and spam folder) to confirm your invitation.",
+    confirmInbox: "📩 subscription sent! please check your inbox (and spam folder) to confirm your invitation.",
     save: "💾 save",
     duplicate: "📋 duplicate",
     delete: "🗑️ delete",
@@ -301,68 +291,6 @@ async function sha256(str) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function formatCalISO(dateStr, timeStr) {
-  if (!dateStr) return "";
-  const cleanDate = dateStr.replace(/-/g, "");
-  const cleanTime = (timeStr || "00:00").replace(/:/g, "") + "00";
-  return `${cleanDate}T${cleanTime}`;
-}
-
-function getGoogleCalendarUrl(ev) {
-  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
-  const desc = calState.language === "fr" ? ev.description_fr : ev.description_en;
-  const start = formatCalISO(ev.event_date, ev.start_time);
-  const end = formatCalISO(ev.event_date, ev.end_time || ev.start_time);
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(desc)}&location=${encodeURIComponent(ev.location || '')}`;
-}
-
-function getOutlookCalendarUrl(ev) {
-  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
-  const desc = calState.language === "fr" ? ev.description_fr : ev.description_en;
-  const start = `${ev.event_date}T${ev.start_time || '00:00'}:00`;
-  const end = `${ev.event_date}T${ev.end_time || '00:00'}:00`;
-  return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(title)}&startdt=${encodeURIComponent(start)}&enddt=${encodeURIComponent(end)}&body=${encodeURIComponent(desc)}&location=${encodeURIComponent(ev.location || '')}`;
-}
-
-function downloadICSFile(eventId) {
-  const ev = calendarEvents.find(e => e.id === eventId);
-  if (!ev) return;
-  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
-  const desc = (calState.language === "fr" ? ev.description_fr : ev.description_en).replace(/\n/g, "\\n");
-  const start = formatCalISO(ev.event_date, ev.start_time);
-  const end = formatCalISO(ev.event_date, ev.end_time || ev.start_time);
-
-  const icsData = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//Prism Outreach Studio//Events Calendar//FR",
-    "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
-    "BEGIN:VEVENT",
-    `UID:pos-event-${ev.id}@prismoutreachstudio.com`,
-    `SUMMARY:${title}`,
-    `DESCRIPTION:${desc}`,
-    `LOCATION:${ev.location || ''}`,
-    `DTSTART:${start}`,
-    `DTEND:${end}`,
-    "BEGIN:VALARM",
-    "ACTION:DISPLAY",
-    "TRIGGER:-P1D",
-    `DESCRIPTION:Rappel: ${title} demain / Reminder: ${title} tomorrow`,
-    "END:VALARM",
-    "END:VEVENT",
-    "END:VCALENDAR"
-  ].join("\r\n");
-
-  const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `event-${ev.id}.ics`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
 function handleCalendarNewsletterSubmit(e, eventId) {
   if (e) e.preventDefault();
   const emailInput = document.getElementById(`cal-news-email-${eventId}`);
@@ -471,16 +399,6 @@ function injectCalendarStyles() {
     .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
     .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
     .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
-
-    .cal-add-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 10px; }
-    .cal-export-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border);
-      color: var(--text-main); padding: 9px 12px; border-radius: 8px; font-weight: 700;
-      font-size: 12.5px; text-decoration: none; cursor: pointer; transition: all 0.2s ease;
-      text-align: center;
-    }
-    .cal-export-btn:hover { background: var(--cdl-cyan, #38bdf8); color: #000; transform: translateY(-2px); }
 
     .cal-form-group { margin-bottom: 14px; }
     .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
@@ -700,7 +618,7 @@ function renderMonthGrid() {
   }
 }
 
-/* Strictly filters to current and future events */
+/* Filtrage strict des événements actuels et futurs */
 function renderUpcoming() {
   const list = document.getElementById('cal-upcoming-list');
   if (!list) return;
@@ -737,7 +655,7 @@ function renderUpcoming() {
   });
 }
 
-/* Strictly filters to current and future events in list view */
+/* Filtrage strict des événements actuels et futurs dans la vue liste */
 function renderListView() {
   const list = document.getElementById('cal-list-view');
   list.innerHTML = '';
@@ -838,8 +756,6 @@ function openEventDetailModal(ev) {
   } else {
     const mapUrl = buildMapUrl(ev.location);
     const extra = lang === "fr" ? (ev.extra_details_fr || '') : (ev.extra_details_en || ev.extra_details_fr || '');
-    const gCalUrl = getGoogleCalendarUrl(ev);
-    const outlookUrl = getOutlookCalendarUrl(ev);
 
     let scheduleHTML = '';
     if (ev.schedule && ev.schedule.length > 0) {
@@ -893,44 +809,26 @@ function openEventDetailModal(ev) {
       ${extraHTML}
       ${scheduleHTML}
 
-      <!-- Add to Calendar Options -->
+      <!-- Section unique d'inscription e-mail -->
       <div class="cal-modal-section" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--card-border);">
-        <div class="cal-modal-section-title">${t.addToCalTitle}</div>
-        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">${t.addToCalSub}</p>
-        
-        <div class="cal-add-grid">
-          <a href="${gCalUrl}" target="_blank" class="cal-export-btn">
-            <span>🌐</span> ${t.googleCal}
-          </a>
-          <button onclick="downloadICSFile(${ev.id})" class="cal-export-btn">
-            <span>🍏</span> ${t.appleCal}
-          </button>
-          <a href="${outlookUrl}" target="_blank" class="cal-export-btn">
-            <span>✉️</span> ${t.outlookWeb}
-          </a>
+        <div style="font-size: 14px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 4px;">
+          ${t.newsletterTitle}
         </div>
-
-        <!-- Stay Informed / Email Subscription Box -->
-        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
-          <div style="font-size: 13px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 4px;">
-            ${t.stayInformedTitle}
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 10px;">
+          ${t.newsletterSub}
+        </p>
+        <form onsubmit="handleCalendarNewsletterSubmit(event, ${ev.id})">
+          <div style="display:flex; gap:8px; margin-bottom: 6px; flex-wrap:wrap;">
+            <input type="email" id="cal-news-email-${ev.id}" placeholder="${t.newsletterPlaceholder}" class="cal-form-input" style="flex:1; min-width:180px;" required>
+            <button type="submit" class="cal-btn" style="background:var(--neon-amber, #f59e0b); color:#000; white-space:nowrap;">
+              ${t.newsletterBtn}
+            </button>
           </div>
-          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-            ${t.stayInformedSub}
-          </p>
-          <form onsubmit="handleCalendarNewsletterSubmit(event, ${ev.id})">
-            <div style="display:flex; gap:8px; margin-bottom: 6px; flex-wrap:wrap;">
-              <input type="email" id="cal-news-email-${ev.id}" placeholder="${t.newsletterPlaceholder}" class="cal-form-input" style="flex:1; min-width:180px;" required>
-              <button type="submit" class="cal-btn" style="background:var(--neon-amber, #f59e0b); color:#000; white-space:nowrap;">
-                ${t.newsletterBtn}
-              </button>
-            </div>
-            <div style="font-size: 11px; color: rgba(203, 213, 225, 0.75); font-style: italic;">
-              ${t.newsletterDisclaimer}
-            </div>
-          </form>
-          <div id="cal-news-status-${ev.id}" style="font-size: 12.5px; font-weight: 700; margin-top: 10px; line-height: 1.5; display: none;"></div>
-        </div>
+          <div style="font-size: 11px; color: rgba(203, 213, 225, 0.75); font-style: italic;">
+            ${t.newsletterDisclaimer}
+          </div>
+        </form>
+        <div id="cal-news-status-${ev.id}" style="font-size: 12.5px; font-weight: 700; margin-top: 10px; line-height: 1.5; display: none;"></div>
       </div>
     `;
   }
