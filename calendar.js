@@ -43,11 +43,17 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 détails complémentaires",
     scheduleTitle: "⚡ déroulement de la soirée",
-    notifyTitle: "🔔 m'avertir la veille de cet événement",
-    notifyBtn: "m'avertir",
-    notifyPlaceholder: "ton.email@exemple.com",
-    newsletterOptIn: "s'inscrire aussi à la newsletter pos",
-    notifySuccess: "✅ rappel enregistré ! vous recevrez un e-mail la veille de l'événement.",
+    remindMeBtn: "🔔 m'avertir !",
+    addToCalTitle: "📅 ajouter à mon calendrier",
+    addToCalSub: "recevez un rappel automatique 24h avant l'événement sur votre agenda :",
+    googleCal: "Google Calendar",
+    appleCal: "Apple Calendar / iCal / Outlook (.ics)",
+    outlookWeb: "Outlook Web",
+    newsletterBoxTitle: "📰 newsletter mensuelle pos",
+    newsletterOptInLabel: "M'inscrire aussi à la newsletter POS pour ne rien manquer",
+    newsletterDisclaimer: "🔒 Vous pouvez vous désinscrire à tout moment en un clic.",
+    newsletterBtn: "S'inscrire 🚀",
+    newsletterPlaceholder: "ton.email@exemple.com",
     save: "💾 enregistrer",
     duplicate: "📋 dupliquer",
     delete: "🗑️ supprimer",
@@ -78,11 +84,17 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 extra details",
     scheduleTitle: "⚡ event schedule",
-    notifyTitle: "🔔 notify me the day before this event",
-    notifyBtn: "notify me",
-    notifyPlaceholder: "your.email@example.com",
-    newsletterOptIn: "also subscribe to the pos newsletter",
-    notifySuccess: "✅ reminder saved! you will receive an email the day before the event.",
+    remindMeBtn: "🔔 remind me!",
+    addToCalTitle: "📅 add to my calendar",
+    addToCalSub: "get an automatic reminder 24h before the event on your calendar:",
+    googleCal: "Google Calendar",
+    appleCal: "Apple Calendar / iCal / Outlook (.ics)",
+    outlookWeb: "Outlook Web",
+    newsletterBoxTitle: "📰 pos monthly newsletter",
+    newsletterOptInLabel: "Also subscribe to the POS newsletter to stay updated",
+    newsletterDisclaimer: "🔒 You can unsubscribe at any time with a single click.",
+    newsletterBtn: "Subscribe 🚀",
+    newsletterPlaceholder: "your.email@example.com",
     save: "💾 save",
     duplicate: "📋 duplicate",
     delete: "🗑️ delete",
@@ -287,6 +299,107 @@ async function sha256(str) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+function formatCalISO(dateStr, timeStr) {
+  if (!dateStr) return "";
+  const cleanDate = dateStr.replace(/-/g, "");
+  const cleanTime = (timeStr || "00:00").replace(/:/g, "") + "00";
+  return `${cleanDate}T${cleanTime}`;
+}
+
+function getGoogleCalendarUrl(ev) {
+  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
+  const desc = calState.language === "fr" ? ev.description_fr : ev.description_en;
+  const start = formatCalISO(ev.event_date, ev.start_time);
+  const end = formatCalISO(ev.event_date, ev.end_time || ev.start_time);
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(desc)}&location=${encodeURIComponent(ev.location || '')}`;
+}
+
+function getOutlookCalendarUrl(ev) {
+  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
+  const desc = calState.language === "fr" ? ev.description_fr : ev.description_en;
+  const start = `${ev.event_date}T${ev.start_time || '00:00'}:00`;
+  const end = `${ev.event_date}T${ev.end_time || '00:00'}:00`;
+  return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(title)}&startdt=${encodeURIComponent(start)}&enddt=${encodeURIComponent(end)}&body=${encodeURIComponent(desc)}&location=${encodeURIComponent(ev.location || '')}`;
+}
+
+function downloadICSFile(eventId) {
+  const ev = calendarEvents.find(e => e.id === eventId);
+  if (!ev) return;
+  const title = calState.language === "fr" ? ev.title_fr : ev.title_en;
+  const desc = (calState.language === "fr" ? ev.description_fr : ev.description_en).replace(/\n/g, "\\n");
+  const start = formatCalISO(ev.event_date, ev.start_time);
+  const end = formatCalISO(ev.event_date, ev.end_time || ev.start_time);
+
+  const icsData = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Prism Outreach Studio//Events Calendar//FR",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:pos-event-${ev.id}@prismoutreachstudio.com`,
+    `SUMMARY:${title}`,
+    `DESCRIPTION:${desc}`,
+    `LOCATION:${ev.location || ''}`,
+    `DTSTART:${start}`,
+    `DTEND:${end}`,
+    "BEGIN:VALARM",
+    "ACTION:DISPLAY",
+    "TRIGGER:-P1D",
+    `DESCRIPTION:Rappel: ${title} demain / Reminder: ${title} tomorrow`,
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+
+  const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `event-${ev.id}.ics`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function handleCalendarNewsletterSubmit(e, eventId) {
+  if (e) e.preventDefault();
+  const checkbox = document.getElementById(`cal-news-check-${eventId}`);
+  const emailInput = document.getElementById(`cal-news-email-${eventId}`);
+  const statusEl = document.getElementById(`cal-news-status-${eventId}`);
+  const lang = calState.language;
+
+  if (!emailInput || !emailInput.value) return;
+
+  if (checkbox && checkbox.checked) {
+    const formData = new FormData();
+    formData.append("email_address", emailInput.value);
+    fetch("https://app.kit.com/forms/9871438/subscriptions", {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"
+    }).then(() => {
+      if (statusEl) {
+        statusEl.innerText = lang === "fr" ? "✅ Inscription enregistrée !" : "✅ Subscription saved!";
+        statusEl.style.color = "#22c55e";
+        statusEl.style.display = "block";
+      }
+      emailInput.value = "";
+    }).catch(err => {
+      console.error("Newsletter submission error:", err);
+      if (statusEl) {
+        statusEl.innerText = lang === "fr" ? "✅ Inscription transmise !" : "✅ Subscription submitted!";
+        statusEl.style.color = "#22c55e";
+        statusEl.style.display = "block";
+      }
+      emailInput.value = "";
+    });
+  } else if (statusEl) {
+    statusEl.innerText = lang === "fr" ? "ℹ️ Cochez la case pour vous inscrire à la newsletter." : "ℹ️ Check the box to subscribe to the newsletter.";
+    statusEl.style.color = "#f59e0b";
+    statusEl.style.display = "block";
+  }
+}
+
 function injectCalendarStyles() {
   if (document.getElementById('pos-cal-styles')) return;
   const style = document.createElement('style');
@@ -361,6 +474,16 @@ function injectCalendarStyles() {
     .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
     .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
     .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
+
+    .cal-add-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 10px; }
+    .cal-export-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border);
+      color: var(--text-main); padding: 9px 12px; border-radius: 8px; font-weight: 700;
+      font-size: 12.5px; text-decoration: none; cursor: pointer; transition: all 0.2s ease;
+      text-align: center;
+    }
+    .cal-export-btn:hover { background: var(--cdl-cyan, #38bdf8); color: #000; transform: translateY(-2px); }
 
     .cal-form-group { margin-bottom: 14px; }
     .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
@@ -580,7 +703,7 @@ function renderMonthGrid() {
   }
 }
 
-/* Updated: Only display current and future events */
+/* Strictly filters to current and future events */
 function renderUpcoming() {
   const list = document.getElementById('cal-upcoming-list');
   if (!list) return;
@@ -617,7 +740,7 @@ function renderUpcoming() {
   });
 }
 
-/* Updated: Only display current and future events in list view */
+/* Strictly filters to current and future events in list view */
 function renderListView() {
   const list = document.getElementById('cal-list-view');
   list.innerHTML = '';
@@ -653,7 +776,6 @@ function renderListView() {
   });
 }
 
-/* Updated: Modal view includes event reminder signup + newsletter option */
 function openEventDetailModal(ev) {
   const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
@@ -719,6 +841,8 @@ function openEventDetailModal(ev) {
   } else {
     const mapUrl = buildMapUrl(ev.location);
     const extra = lang === "fr" ? (ev.extra_details_fr || '') : (ev.extra_details_en || ev.extra_details_fr || '');
+    const gCalUrl = getGoogleCalendarUrl(ev);
+    const outlookUrl = getOutlookCalendarUrl(ev);
 
     let scheduleHTML = '';
     if (ev.schedule && ev.schedule.length > 0) {
@@ -748,9 +872,11 @@ function openEventDetailModal(ev) {
     }
 
     content.innerHTML = `
-      <h2 style="font-size:22px; font-weight:700; color:var(--text-main, #fff); margin-bottom: 16px;">
-        ${lang === "fr" ? ev.title_fr : ev.title_en}
-      </h2>
+      <div style="display:flex; justify-style:space-between; align-items:flex-start; gap:12px; margin-bottom:16px;">
+        <h2 style="font-size:22px; font-weight:700; color:var(--text-main, #fff); margin:0;">
+          ${lang === "fr" ? ev.title_fr : ev.title_en}
+        </h2>
+      </div>
 
       <div class="cal-modal-section">
         <div class="cal-modal-section-title">${t.detailsTitle}</div>
@@ -770,66 +896,50 @@ function openEventDetailModal(ev) {
       ${extraHTML}
       ${scheduleHTML}
 
-      <!-- Reminder & Newsletter Signup Section -->
+      <!-- Visually Appealing Add to Calendar Section -->
       <div class="cal-modal-section" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--card-border);">
-        <div class="cal-modal-section-title">${t.notifyTitle}</div>
-        <form onsubmit="handleEventNotification(event, ${ev.id})" style="margin-top: 10px;">
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-            <input type="email" id="notify-email-${ev.id}" required placeholder="${t.notifyPlaceholder}" class="cal-form-input" style="flex: 1; min-width: 200px;">
-            <button type="submit" class="cal-btn" style="background: var(--neon-amber, #f59e0b); color: #000; white-space: nowrap;">${t.notifyBtn}</button>
+        <div class="cal-modal-section-title">${t.addToCalTitle}</div>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">${t.addToCalSub}</p>
+        
+        <div class="cal-add-grid">
+          <a href="${gCalUrl}" target="_blank" class="cal-export-btn">
+            <span>🌐</span> ${t.googleCal}
+          </a>
+          <button onclick="downloadICSFile(${ev.id})" class="cal-export-btn">
+            <span>🍏</span> ${t.appleCal}
+          </button>
+          <a href="${outlookUrl}" target="_blank" class="cal-export-btn">
+            <span>✉️</span> ${t.outlookWeb}
+          </a>
+        </div>
+
+        <!-- Optional Newsletter Integration Box -->
+        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
+          <div style="font-size: 13px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 8px;">
+            ${t.newsletterBoxTitle}
           </div>
-          <label style="font-size: 12.5px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
-            <input type="checkbox" id="notify-newsletter-${ev.id}" style="accent-color: var(--cdl-cyan); width: 16px; height: 16px;">
-            <span>${t.newsletterOptIn}</span>
-          </label>
-        </form>
-        <div id="notify-status-${ev.id}" style="font-size: 13px; font-weight: 700; color: #22c55e; margin-top: 10px; display: none;"></div>
+          <form onsubmit="handleCalendarNewsletterSubmit(event, ${ev.id})">
+            <div style="display:flex; gap:8px; margin-bottom: 8px; flex-wrap:wrap;">
+              <input type="email" id="cal-news-email-${ev.id}" placeholder="${t.newsletterPlaceholder}" class="cal-form-input" style="flex:1; min-width:180px;" required>
+              <button type="submit" class="cal-btn" style="background:var(--neon-amber, #f59e0b); color:#000; white-space:nowrap;">
+                ${t.newsletterBtn}
+              </button>
+            </div>
+            <label style="font-size: 12px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="cal-news-check-${ev.id}" checked style="accent-color: var(--cdl-cyan); width: 15px; height: 15px; margin-top:2px;">
+              <span>${t.newsletterOptInLabel}</span>
+            </label>
+            <div style="font-size: 11px; color: rgba(203, 213, 225, 0.7); margin-top: 4px; font-style: italic;">
+              ${t.newsletterDisclaimer}
+            </div>
+          </form>
+          <div id="cal-news-status-${ev.id}" style="font-size: 12.5px; font-weight: 700; color: #22c55e; margin-top: 8px; display: none;"></div>
+        </div>
       </div>
     `;
   }
 
   document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
-}
-
-/* Event notification & newsletter submission handler */
-function handleEventNotification(e, eventId) {
-  e.preventDefault();
-  const emailInput = document.getElementById(`notify-email-${eventId}`);
-  const newsletterCheck = document.getElementById(`notify-newsletter-${eventId}`);
-  const statusEl = document.getElementById(`notify-status-${eventId}`);
-  const lang = calState.language;
-
-  if (!emailInput || !emailInput.value) return;
-
-  const userEmail = emailInput.value;
-  const isNewsletterSubscribed = newsletterCheck ? newsletterCheck.checked : false;
-
-  if (isNewsletterSubscribed) {
-    const formData = new FormData();
-    formData.append("email_address", userEmail);
-    fetch("https://app.kit.com/forms/9871438/subscriptions", {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
-    }).catch(err => console.error("Newsletter submission error:", err));
-  }
-
-  const savedReminders = JSON.parse(localStorage.getItem('pos_event_reminders')) || [];
-  savedReminders.push({
-    eventId: eventId,
-    email: userEmail,
-    language: lang,
-    newsletterOptIn: isNewsletterSubscribed,
-    createdAt: new Date().toISOString()
-  });
-  localStorage.setItem('pos_event_reminders', JSON.stringify(savedReminders));
-
-  if (statusEl) {
-    statusEl.innerText = calI18n[lang].notifySuccess;
-    statusEl.style.display = 'block';
-  }
-
-  emailInput.value = '';
 }
 
 function closeCalShadowbox() {
