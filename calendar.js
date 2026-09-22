@@ -26,6 +26,7 @@ const calI18n = {
     month: "mois",
     list: "liste",
     upcoming: "⚡ événements à venir",
+    noUpcoming: "aucun événement à venir.",
     locked: "verrouillé",
     unlocked: "déverrouillé",
     addEvent: "➕ ajouter un événement",
@@ -42,6 +43,11 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 détails complémentaires",
     scheduleTitle: "⚡ déroulement de la soirée",
+    notifyTitle: "🔔 m'avertir la veille de cet événement",
+    notifyBtn: "m'avertir",
+    notifyPlaceholder: "ton.email@exemple.com",
+    newsletterOptIn: "s'inscrire aussi à la newsletter pos",
+    notifySuccess: "✅ rappel enregistré ! vous recevrez un e-mail la veille de l'événement.",
     save: "💾 enregistrer",
     duplicate: "📋 dupliquer",
     delete: "🗑️ supprimer",
@@ -55,6 +61,7 @@ const calI18n = {
     month: "month",
     list: "list",
     upcoming: "⚡ upcoming events",
+    noUpcoming: "no upcoming events.",
     locked: "locked",
     unlocked: "unlocked",
     addEvent: "➕ add an event",
@@ -71,6 +78,11 @@ const calI18n = {
     descTitle: "📝 description",
     extraTitle: "💡 extra details",
     scheduleTitle: "⚡ event schedule",
+    notifyTitle: "🔔 notify me the day before this event",
+    notifyBtn: "notify me",
+    notifyPlaceholder: "your.email@example.com",
+    newsletterOptIn: "also subscribe to the pos newsletter",
+    notifySuccess: "✅ reminder saved! you will receive an email the day before the event.",
     save: "💾 save",
     duplicate: "📋 duplicate",
     delete: "🗑️ delete",
@@ -568,12 +580,23 @@ function renderMonthGrid() {
   }
 }
 
+/* Updated: Only display current and future events */
 function renderUpcoming() {
   const list = document.getElementById('cal-upcoming-list');
   if (!list) return;
   list.innerHTML = '';
   const lang = calState.language;
-  const filtered = calendarEvents.filter(e => calState.activeFilters.has(e.event_type)).sort((a,b) => a.event_date.localeCompare(b.event_date));
+  const t = calI18n[lang];
+  const todayISO = isoDateStr(new Date());
+
+  const filtered = calendarEvents
+    .filter(e => calState.activeFilters.has(e.event_type) && e.event_date >= todayISO)
+    .sort((a,b) => a.event_date.localeCompare(b.event_date));
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<p style="font-size:13.5px; color:var(--text-muted); padding:10px 0;">${t.noUpcoming}</p>`;
+    return;
+  }
 
   filtered.slice(0, 4).forEach(ev => {
     const row = document.createElement('div');
@@ -594,14 +617,20 @@ function renderUpcoming() {
   });
 }
 
+/* Updated: Only display current and future events in list view */
 function renderListView() {
   const list = document.getElementById('cal-list-view');
   list.innerHTML = '';
   const lang = calState.language;
-  const filtered = calendarEvents.filter(e => calState.activeFilters.has(e.event_type)).sort((a,b) => a.event_date.localeCompare(b.event_date));
+  const t = calI18n[lang];
+  const todayISO = isoDateStr(new Date());
+
+  const filtered = calendarEvents
+    .filter(e => calState.activeFilters.has(e.event_type) && e.event_date >= todayISO)
+    .sort((a,b) => a.event_date.localeCompare(b.event_date));
 
   if (filtered.length === 0) {
-    list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">[ aucun événement ]</p>`;
+    list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">${t.noUpcoming}</p>`;
     return;
   }
 
@@ -624,6 +653,7 @@ function renderListView() {
   });
 }
 
+/* Updated: Modal view includes event reminder signup + newsletter option */
 function openEventDetailModal(ev) {
   const content = document.getElementById('cal-shadowbox-content');
   const lang = calState.language;
@@ -739,10 +769,67 @@ function openEventDetailModal(ev) {
 
       ${extraHTML}
       ${scheduleHTML}
+
+      <!-- Reminder & Newsletter Signup Section -->
+      <div class="cal-modal-section" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--card-border);">
+        <div class="cal-modal-section-title">${t.notifyTitle}</div>
+        <form onsubmit="handleEventNotification(event, ${ev.id})" style="margin-top: 10px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+            <input type="email" id="notify-email-${ev.id}" required placeholder="${t.notifyPlaceholder}" class="cal-form-input" style="flex: 1; min-width: 200px;">
+            <button type="submit" class="cal-btn" style="background: var(--neon-amber, #f59e0b); color: #000; white-space: nowrap;">${t.notifyBtn}</button>
+          </div>
+          <label style="font-size: 12.5px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="notify-newsletter-${ev.id}" style="accent-color: var(--cdl-cyan); width: 16px; height: 16px;">
+            <span>${t.newsletterOptIn}</span>
+          </label>
+        </form>
+        <div id="notify-status-${ev.id}" style="font-size: 13px; font-weight: 700; color: #22c55e; margin-top: 10px; display: none;"></div>
+      </div>
     `;
   }
 
   document.getElementById('cal-shadowbox-overlay').style.display = 'flex';
+}
+
+/* Event notification & newsletter submission handler */
+function handleEventNotification(e, eventId) {
+  e.preventDefault();
+  const emailInput = document.getElementById(`notify-email-${eventId}`);
+  const newsletterCheck = document.getElementById(`notify-newsletter-${eventId}`);
+  const statusEl = document.getElementById(`notify-status-${eventId}`);
+  const lang = calState.language;
+
+  if (!emailInput || !emailInput.value) return;
+
+  const userEmail = emailInput.value;
+  const isNewsletterSubscribed = newsletterCheck ? newsletterCheck.checked : false;
+
+  if (isNewsletterSubscribed) {
+    const formData = new FormData();
+    formData.append("email_address", userEmail);
+    fetch("https://app.kit.com/forms/9871438/subscriptions", {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"
+    }).catch(err => console.error("Newsletter submission error:", err));
+  }
+
+  const savedReminders = JSON.parse(localStorage.getItem('pos_event_reminders')) || [];
+  savedReminders.push({
+    eventId: eventId,
+    email: userEmail,
+    language: lang,
+    newsletterOptIn: isNewsletterSubscribed,
+    createdAt: new Date().toISOString()
+  });
+  localStorage.setItem('pos_event_reminders', JSON.stringify(savedReminders));
+
+  if (statusEl) {
+    statusEl.innerText = calI18n[lang].notifySuccess;
+    statusEl.style.display = 'block';
+  }
+
+  emailInput.value = '';
 }
 
 function closeCalShadowbox() {
@@ -870,7 +957,6 @@ function openAddCalEventShadowbox() {
   const t = calI18n[lang];
   const content = document.getElementById('cal-shadowbox-content');
 
-  // Build options from EVENT_COLORS & EVENT_LABELS
   const typeOptions = Object.keys(EVENT_COLORS).map(type => {
     const label = EVENT_LABELS[type][lang];
     return `<option value="${type}">${label}</option>`;
