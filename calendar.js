@@ -132,10 +132,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Moved",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-10-06",
+    "event_date": "2026-10-13",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "",
+    "location": "à venir !",
     "schedule": [
       {
         "time": "19h30 - 20h00",
@@ -167,10 +167,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-10-13",
+    "event_date": "2026-10-20",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "",
+    "location": "à venir !",
     "schedule": [
       {
         "time": "19h30 - 20h00",
@@ -197,12 +197,12 @@ const defaultCalendarEvents = [
   },
   {
     "id": 1788300395804,
-    "title_fr": "☕ café des langues 71",
-    "title_en": "☕ café des langues 71",
+    "title_fr": "☕ café des langues 72",
+    "title_en": "☕ café des langues 72",
     "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
     "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
     "event_type": "cdl",
-    "event_date": "2026-09-18",
+    "event_date": "2026-10-02",
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
@@ -222,7 +222,8 @@ const defaultCalendarEvents = [
         "fr": "discussion libre aux tables de langues",
         "en": "open discussion at language tables"
       }
-    ]
+    ],
+    "extra_details_fr": "72/100"
   },
   {
     "id": 1788300761017,
@@ -231,10 +232,10 @@ const defaultCalendarEvents = [
     "description_fr": "répétition de la chorale anglophone rennaise - travail sur Kvala sviri + Time",
     "description_en": "rehearsal for the english choir directed by a native speaker.",
     "event_type": "choir",
-    "event_date": "2026-10-20",
+    "event_date": "2026-10-27",
     "start_time": "20:00",
     "end_time": "21:30",
-    "location": "",
+    "location": "à venir !",
     "schedule": [
       {
         "time": "19h30 - 20h00",
@@ -271,6 +272,96 @@ const defaultCalendarEvents = [
     "end_time": "20:00",
     "location": "rennes",
     "extra_details_fr": "Bring a water bottle, notebook and a pen!"
+  },
+  {
+    "id": 1790084509559,
+    "title_fr": "☕ café des langues 71",
+    "title_en": "☕ café des langues 71",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-09-18",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": [
+      {
+        "time": "19h00 - 20h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      },
+      {
+        "time": "20h00 - 21h00",
+        "fr": "speed dating par langue (changement toutes les 15 min)",
+        "en": "language speed dating (switch every 15 mins)"
+      },
+      {
+        "time": "21h00 - 22h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      }
+    ],
+    "extra_details_fr": ""
+  },
+  {
+    "id": 1791288379519,
+    "title_fr": "☕ café des langues 73",
+    "title_en": "☕ café des langues 73",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-10-16",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": [
+      {
+        "time": "19h00 - 20h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      },
+      {
+        "time": "20h00 - 21h00",
+        "fr": "speed dating par langue (changement toutes les 15 min)",
+        "en": "language speed dating (switch every 15 mins)"
+      },
+      {
+        "time": "21h00 - 22h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      }
+    ],
+    "extra_details_fr": "73/100"
+  },
+  {
+    "id": 1791288410038,
+    "title_fr": "🎃 café des langues 74",
+    "title_en": "👻 café des langues 74",
+    "description_fr": "👻 rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\n🎃meet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-10-30",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": [
+      {
+        "time": "19h00 - 20h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      },
+      {
+        "time": "20h00 - 21h00",
+        "fr": "speed dating par langue (changement toutes les 15 min)",
+        "en": "language speed dating (switch every 15 mins)"
+      },
+      {
+        "time": "21h00 - 22h00",
+        "fr": "discussion libre aux tables de langues",
+        "en": "open discussion at language tables"
+      }
+    ],
+    "extra_details_fr": "74/100"
   }
 ];
 
