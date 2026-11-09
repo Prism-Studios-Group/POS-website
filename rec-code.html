@@ -2,7 +2,7 @@
 <html lang="fr"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rennes English Choir</title>
+  <title>Rennes English Choir — Espace Vocal & Solidaire</title>
   <link rel="icon" type="image/png" href="P-OS.png">
   <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,16 +11,18 @@
 
   <style>
     :root {
-      --bg-dark: #0a0814;
-      --card-bg: rgba(26, 20, 41, 0.82);
-      --card-border: rgba(251, 191, 36, 0.25);
+      /* Cozy, Healing, Acoustic Lounge Palette inspired by warm wood & candlelight */
+      --bg-dark: #0d0a0d;
+      --card-bg: rgba(26, 19, 23, 0.86);
+      --card-border: rgba(245, 158, 11, 0.28);
       --stage-gold: #fbbf24;
       --stage-amber: #f59e0b;
-      --stage-magenta: #d946ef;
-      --stage-violet: #a855f7;
+      --stage-terracotta: #d96338;
+      --stage-cinnamon: #b45309;
+      --stage-warm-wood: #78350f;
       --neon-amber: #f59e0b;
-      --text-main: #f8fafc;
-      --text-muted: #cbd5e1;
+      --text-main: #fdfbf7;
+      --text-muted: #d6ccc2;
       --cdl-cyan: #38bdf8;
       --pos-coral: #f97316;
     }
@@ -31,20 +33,22 @@
       font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 20% 15%, rgba(217, 70, 239, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 80% 85%, rgba(251, 191, 36, 0.15) 0%, transparent 45%);
+        radial-gradient(circle at 18% 12%, rgba(217, 99, 56, 0.16) 0%, transparent 48%),
+        radial-gradient(circle at 82% 28%, rgba(245, 158, 11, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 50% 88%, rgba(180, 83, 9, 0.12) 0%, transparent 55%);
       color: var(--text-main);
       min-height: 100vh;
       line-height: 1.7;
       letter-spacing: 0.02em;
+      transition: background 0.3s ease;
     }
 
     /* Pencil Buttons */
     .edit-pencil {
-      display: none; background: var(--neon-amber); color: #000; border: none;
+      display: none; background: var(--stage-amber); color: #000; border: none;
       border-radius: 50%; width: 26px; height: 26px; font-size: 12px; font-weight: 700;
       cursor: pointer; margin-left: 8px; vertical-align: middle; text-align: center;
-      line-height: 26px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); transition: transform 0.2s ease;
+      line-height: 26px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); transition: transform 0.2s ease;
     }
     .edit-pencil:hover { transform: scale(1.15); }
     body.body-unlocked .edit-pencil { display: inline-block; }
@@ -52,14 +56,133 @@
     /* Layout Container & Buffer Margins */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 
+    /* Cozy Ambient Music / Healing Player Bar */
+    .healing-music-bar {
+      background: linear-gradient(135deg, rgba(45, 26, 28, 0.95), rgba(30, 20, 25, 0.95));
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.12);
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .healing-music-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+    .music-disc {
+      font-size: 20px;
+      display: inline-block;
+      animation: spinSlow 8s linear infinite;
+      animation-play-state: paused;
+    }
+    .music-disc.playing {
+      animation-play-state: running;
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .music-btn {
+      background: linear-gradient(135deg, var(--stage-gold), var(--stage-amber));
+      color: #000;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+      transition: all 0.2s ease;
+    }
+    .music-btn:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Big Noticeable Rehearsal Space Callout */
+    .rehearsal-callout-card {
+      background: linear-gradient(135deg, rgba(69, 26, 19, 0.92) 0%, rgba(46, 20, 24, 0.95) 100%);
+      border: 2px solid var(--stage-amber);
+      border-radius: 18px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(245, 158, 11, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .rehearsal-callout-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .rehearsal-icon-wrap {
+      font-size: 40px;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4));
+    }
+    .rehearsal-text h2 {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--stage-gold);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .rehearsal-text p {
+      font-size: 14.5px;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    .rehearsal-email-btn {
+      background: linear-gradient(135deg, var(--stage-gold), var(--pos-coral));
+      color: #000;
+      font-weight: 700;
+      font-size: 14.5px;
+      padding: 12px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.45);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .rehearsal-email-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.65);
+      color: #000;
+    }
+
+    /* Sign-up Banner (Tutoiement & Warm Golden Glow) */
     .signup-banner {
-      background: linear-gradient(135deg, #fef08a 0%, #fde047 50%, #f59e0b 100%);
+      background: linear-gradient(135deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
       border: 3px solid #fef08a; border-radius: 18px; padding: 22px 28px; margin-bottom: 28px;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.55);
       display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #0f172a;
     }
     .signup-text h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-    .signup-text p { font-size: 14.5px; color: #334155; font-weight: 700; }
+    .signup-text p { font-size: 14.5px; color: #292524; font-weight: 700; }
 
     .signup-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -70,9 +193,10 @@
     .signup-btn:hover { transform: translateY(-2px) scale(1.03); background: #1e293b; }
 
     .glass-card {
-      background: var(--card-bg); backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border); border-radius: 16px; padding: 26px;
-      margin-bottom: 28px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+      background: var(--card-bg); backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border); border-radius: 18px; padding: 26px;
+      margin-bottom: 28px; box-shadow: 0 10px 32px 0 rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s ease;
     }
 
     .hero-header { display: flex; align-items: center; gap: 22px; }
@@ -81,15 +205,32 @@
     .choir-img {
       width: 95px; height: 95px; border-radius: 50%; object-fit: cover;
       object-position: center center;
-      border: 3px solid var(--stage-gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+      border: 3px solid var(--stage-gold); box-shadow: 0 0 22px rgba(245, 158, 11, 0.45);
     }
 
-    .title-area h1 { font-size: 26px; font-weight: 700; background: linear-gradient(135deg, var(--stage-gold), var(--stage-magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .title-area h1 {
+      font-size: 26px; font-weight: 700;
+      background: linear-gradient(135deg, var(--stage-gold) 20%, var(--stage-terracotta) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
 
-    .section-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--stage-gold); display: flex; align-items: center; justify-content: space-between; }
+    .section-title {
+      font-size: 20px; font-weight: 700; margin-bottom: 20px;
+      color: var(--stage-gold); display: flex; align-items: center; justify-content: space-between;
+    }
 
-    .charity-card { background: linear-gradient(135deg, rgba(217, 70, 239, 0.15), rgba(251, 191, 36, 0.1)); border: 1px solid var(--stage-magenta); border-radius: 14px; padding: 20px; margin-top: 15px; }
-    .charity-badge { display: inline-block; background: var(--stage-magenta); color: #fff; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+    .charity-card {
+      background: linear-gradient(135deg, rgba(217, 99, 56, 0.16), rgba(245, 158, 11, 0.12));
+      border: 1px solid var(--stage-terracotta); border-radius: 14px; padding: 22px; margin-top: 15px;
+    }
+    .charity-badge {
+      display: inline-block; background: var(--stage-terracotta); color: #fff;
+      font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px;
+    }
+    .charity-zero-box {
+      margin-top: 14px; background: rgba(0, 0, 0, 0.35); border-left: 3px solid var(--stage-gold);
+      padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13.5px; color: var(--text-main);
+    }
 
     /* Timeline & Program Schedule */
     .program-timeline { position: relative; padding-left: 20px; border-left: 2px solid var(--stage-gold); }
@@ -98,29 +239,29 @@
     .program-tag { display: inline-block; background: rgba(251, 191, 36, 0.15); color: var(--stage-gold); font-weight: 700; padding: 2px 10px; border-radius: 6px; font-size: 13px; margin-bottom: 8px; }
 
     .song-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-    .song-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; gap: 10px; min-height: 44px; }
+    .song-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; gap: 10px; min-height: 44px; }
     .song-info { font-size: 14.5px; }
 
-    .yt-listen-btn { display: inline-flex; align-items: center; gap: 6px; background: #ff0000; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: transform 0.2s ease; flex-shrink: 0; }
-    .yt-listen-btn:hover { transform: scale(1.05); background: #cc0000; }
+    .yt-listen-btn { display: inline-flex; align-items: center; gap: 6px; background: #e11d48; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: transform 0.2s ease, background 0.2s; flex-shrink: 0; }
+    .yt-listen-btn:hover { transform: scale(1.05); background: #be123c; }
 
     /* Rules Dropdowns (Left Aligned) */
-    .rule-dropdown { background: rgba(15, 12, 28, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
+    .rule-dropdown { background: rgba(20, 15, 20, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
     .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
     .rule-dropdown summary::after { content: "▼"; font-size: 12px; transition: transform 0.2s ease; margin-left: 10px; }
-    .rule-dropdown[open] summary::after { transform: rotate(180deg); color: var(--stage-magenta); }
+    .rule-dropdown[open] summary::after { transform: rotate(180deg); color: var(--stage-terracotta); }
     .rule-body { padding: 0 18px 16px 18px; color: var(--text-muted); font-size: 14.5px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; text-align: left; }
 
     #rules-closing { margin-top: 35px; padding-top: 15px; text-align: center; font-weight: 700; color: var(--stage-gold); border-top: 1px dashed rgba(255, 255, 255, 0.1); }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; }
-    .modal-content { background: #0f172a; border: 1px solid var(--stage-gold); border-radius: 16px; max-width: 650px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); text-align: left; }
+    .modal-content { background: #130f14; border: 1px solid var(--stage-gold); border-radius: 16px; max-width: 650px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); text-align: left; }
     .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
 
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--stage-gold); margin-bottom: 5px; }
-    .form-control { width: 100%; background: #1e293b; border: 1px solid var(--card-border); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
+    .form-control { width: 100%; background: #231b20; border: 1px solid var(--card-border); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
 
     .btn-primary { background: var(--stage-gold); color: #000; font-weight: 700; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
     .btn-sec { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
@@ -130,11 +271,12 @@
     .social-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
     .social-btn:hover { background: var(--stage-gold); color: #000; }
   </style>
+  
   <style id="pos-nav-styles">
     .global-nav {
       position: sticky; top: 0; z-index: 9999;
-      background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); padding: 12px 20px;
+      background: rgba(14, 11, 16, 0.93); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border, rgba(245, 158, 11, 0.25)); padding: 12px 20px;
     }
     .nav-inner {
       max-width: 1200px; margin: 0 auto;
@@ -152,32 +294,31 @@
 
     .nav-menu { display: flex; align-items: center; gap: 8px; position: relative; }
     .nav-tab {
-      color: var(--text-muted, #cbd5e1); text-decoration: none; font-weight: 700;
+      color: var(--text-muted, #d6ccc2); text-decoration: none; font-weight: 700;
       font-size: 13.5px; padding: 6px 12px; border-radius: 20px;
       white-space: nowrap; border: 1px solid transparent; transition: all 0.25s ease;
     }
-    .nav-tab:hover { color: var(--text-main, #fff); border-color: rgba(56, 189, 248, 0.3); background: rgba(255, 255, 255, 0.04); }
-    .nav-tab.active { color: #000; background: var(--cdl-cyan, #38bdf8); box-shadow: 0 0 12px var(--cdl-cyan, #38bdf8); }
+    .nav-tab:hover { color: var(--text-main, #fff); border-color: rgba(245, 158, 11, 0.35); background: rgba(255, 255, 255, 0.04); }
+    .nav-tab.active { color: #000; background: var(--stage-gold, #fbbf24); box-shadow: 0 0 14px var(--stage-gold, #fbbf24); }
 
-    /* Reduced Dropdown Menu for >3 Initiatives */
     .nav-dropdown { position: relative; display: inline-block; }
     .nav-dropdown-content {
       display: none; position: absolute; top: 100%; left: 0;
-      background: #0f172a; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); border-radius: 12px;
+      background: #181216; border: 1px solid var(--card-border, rgba(245, 158, 11, 0.25)); border-radius: 12px;
       min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 10000; padding: 8px 0;
     }
     .nav-dropdown:hover .nav-dropdown-content { display: block; }
     .nav-dropdown-item {
-      display: block; padding: 8px 16px; color: var(--text-muted, #cbd5e1);
+      display: block; padding: 8px 16px; color: var(--text-muted, #d6ccc2);
       text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.2s;
     }
-    .nav-dropdown-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); }
-    .nav-dropdown-item.active { color: var(--cdl-cyan, #38bdf8); font-weight: 900; }
+    .nav-dropdown-item:hover { background: rgba(245, 158, 11, 0.15); color: var(--stage-gold, #fbbf24); }
+    .nav-dropdown-item.active { color: var(--stage-gold, #fbbf24); font-weight: 900; }
 
     .right-controls { display: flex; align-items: center; gap: 8px; }
 
     .join-btn {
-      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #f97316); color: #000000;
+      background: linear-gradient(135deg, var(--neon-amber, #f59e0b), #ea580c); color: #000000;
       font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 20px;
       text-decoration: none; white-space: nowrap; box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
       transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 5px;
@@ -192,102 +333,18 @@
     .lock-btn.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
 
     .download-icon-btn {
-      display: none; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25));
+      display: none; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border, rgba(245, 158, 11, 0.25));
       color: var(--text-main, #fff); font-size: 15px; padding: 5px 10px; border-radius: 20px;
       cursor: pointer; transition: all 0.25s ease; vertical-align: middle;
     }
-    .download-icon-btn:hover { background: var(--neon-amber, #f59e0b); transform: scale(1.1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+    .download-icon-btn:hover { background: var(--neon-amber, #f59e0b); color: #000; transform: scale(1.1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
     body.body-unlocked .download-icon-btn { display: inline-block; }
 
-    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border, rgba(56, 189, 248, 0.25)); flex-shrink: 0; }
-    .lang-btn { background: transparent; border: none; color: var(--text-muted, #cbd5e1); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
-    .lang-btn.active { background: var(--cdl-cyan, #38bdf8); color: #000; }
+    .lang-toggle { display: flex; background: rgba(255, 255, 255, 0.08); padding: 3px; border-radius: 30px; border: 1px solid var(--card-border, rgba(245, 158, 11, 0.25)); flex-shrink: 0; }
+    .lang-btn { background: transparent; border: none; color: var(--text-muted, #d6ccc2); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .lang-btn.active { background: var(--stage-gold, #fbbf24); color: #000; }
   </style>
-  <style id="pos-cal-styles">
-    .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
-    .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
-    .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
-    .cal-filter-checkbox { accent-color: var(--cdl-cyan, #38bdf8); width: 15px; height: 15px; cursor: pointer; }
-    .cal-admin-tools { display: flex; gap: 8px; flex-wrap: wrap; }
-    .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
-    .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
-    .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
-    .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-    .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
-    .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
-    .cal-btn.active { background: var(--cdl-cyan, #38bdf8) !important; color: #000 !important; }
-    .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
-    
-    .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
-    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-    .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
-    .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.15); }
-    .day-cell.other-month { opacity: 0.3; background: rgba(15, 23, 42, 0.4); }
-    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
-    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
-    .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
-
-    .event-pill {
-      font-size: 11px; font-weight: 700; padding: 4px 6px; border-radius: 6px; color: #000;
-      cursor: pointer; line-height: 1.25; display: flex; flex-direction: column; gap: 2px;
-      user-select: none; word-break: break-word;
-    }
-    .event-pill-time {
-      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.15);
-      padding: 1px 4px; border-radius: 3px; align-self: flex-start;
-    }
-    .event-pill-title {
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .event-pill[draggable="true"] { cursor: grab; }
-    .event-pill[draggable="true"]:active { cursor: grabbing; opacity: 0.6; }
-
-    .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
-    .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
-    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
-    .event-row:hover { transform: translateX(4px); border-color: var(--cdl-cyan, #38bdf8); }
-    .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
-    .event-date-box { text-align: center; min-width: 40px; }
-    .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
-    .event-date-month { font-size: 11px; color: var(--text-muted); }
-    .event-name { font-weight: 700; font-size: 15px; }
-    .event-meta { font-size: 12.5px; color: var(--text-muted); }
-
-    .cal-shadowbox-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
-    }
-    .cal-shadowbox-card {
-      background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
-      max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 26px;
-      position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
-      text-align: left; margin: auto;
-    }
-    .cal-shadowbox-close { position: absolute; top: 18px; right: 22px; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
-    .cal-shadowbox-close:hover { color: #ef4444; }
-    
-    .cal-modal-section { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-    .cal-modal-section-title { font-size: 14px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 8px; }
-    .cal-modal-timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--cdl-cyan, #38bdf8); margin-top: 10px; }
-    .cal-modal-item { position: relative; margin-bottom: 10px; padding-left: 14px; font-size: 13.5px; }
-    .cal-modal-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--cdl-cyan, #38bdf8); }
-    .cal-modal-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--cdl-cyan, #38bdf8); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px; }
-
-    .cal-form-group { margin-bottom: 14px; }
-    .cal-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); margin-bottom: 5px; }
-    .cal-form-input { width: 100%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 9px 12px; border-radius: 8px; font-family: inherit; font-size: 13.5px; }
-    .cal-form-input:focus { outline: none; border-color: var(--neon-amber, #f59e0b); }
-
-    .map-link { color: var(--cdl-cyan, #38bdf8); text-decoration: underline; font-weight: 700; transition: color 0.2s; }
-    .map-link:hover { color: var(--neon-amber, #f59e0b); }
-
-    #pos-ai-disclaimer {
-      margin-top: 25px; padding: 16px 20px; background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
-      font-size: 12.5px; line-height: 1.6; color: var(--text-muted); text-align: center;
-    }
-  </style></head>
+</head>
 <body class="">
 
   <!-- Navigation Bar -->
@@ -320,14 +377,49 @@
 
   <div class="container">
 
-    <!-- Sign-up Banner (Tutoiement) -->
+    <!-- Cozy Healing Music Player Bar -->
+    <div class="healing-music-bar">
+      <div class="healing-music-info">
+        <span class="music-disc" id="music-disc-icon">🕯️</span>
+        <div>
+          <strong style="color:var(--stage-gold); font-size:13px;" id="music-title-text">espace de calme &amp; apaisement</strong>
+          <span style="font-size:12px; color:var(--text-muted); display:block;" id="music-sub-text">ambiance musicale douce &amp; acoustique</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="music-btn" id="music-toggle-btn" onclick="toggleAmbientMusic()">
+          <span id="music-btn-icon">▶</span> <span id="music-btn-label">écouter la musique</span>
+        </button>
+      </div>
+    </div>
+    <!-- Hidden iframe player for peaceful ambient acoustic vibe -->
+    <div id="ambient-player-container" style="display:none; width:0; height:0; overflow:hidden;">
+      <iframe id="ambient-audio-frame" width="1" height="1" src="" title="Healing Calm Ambient Music" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    </div>
+
+    <!-- Sign-up Banner (100% Free & Open) -->
     <div class="signup-banner">
       <div class="signup-text">
-        <h2 id="signup-title">🎵 rejoins la chorale ! <button class="edit-pencil" onclick="editChoirBanner()">✏️</button></h2>
-        <p id="signup-subtitle">inscriptions ouvertes à toutes et tous — aucun niveau requis</p>
+        <h2 id="signup-title">🎵 rejoins la chorale ! (100% gratuit) <button class="edit-pencil" onclick="editChoirBanner()">✏️</button></h2>
+        <p id="signup-subtitle">inscriptions ouvertes à toutes et tous — 100% gratuit, sans adhésion payante &amp; aucun niveau requis</p>
       </div>
       <a href="https://forms.gle/ShLsiv7pqAgxkqXU9" target="_blank" class="signup-btn" id="signup-btn-text">
         <span>t'inscrire au formulaire</span> ↗
+      </a>
+    </div>
+
+    <!-- Noticeable Rehearsal Space Callout -->
+    <div class="rehearsal-callout-card">
+      <div class="rehearsal-icon-wrap">🏠🎶</div>
+      <div class="rehearsal-text">
+        <h2 id="rehearsal-title">nous cherchons un lieu de répétition à rennes !</h2>
+        <p id="rehearsal-desc">
+          Tu disposes d'une salle, d'un atelier, d'un espace associatif ou d'un lieu chaleureux pouvant accueillir nos répétitions ?<br>
+          <strong>Aide-nous à faire vivre notre chorale 100% bénévole et solidaire :</strong>
+        </p>
+      </div>
+      <a href="mailto:rennescafedeslangues@gmail.com?subject=Lieu%20de%20r%C3%A9p%C3%A9tition%20-%20Rennes%20English%20Choir" class="rehearsal-email-btn" id="rehearsal-btn">
+        <span>✉️ nous proposer un lieu :</span> <strong>rennescafedeslangues@gmail.com</strong>
       </a>
     </div>
 
@@ -339,7 +431,7 @@
       </div>
       <div class="title-area">
         <h1>rennes english choir <button class="edit-pencil" onclick="editChoirHeader()">✏️</button></h1>
-        <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">chorale anglophone pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.</p>
+        <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">chorale anglophone 100% gratuite pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.</p>
       </div>
     </header>
 
@@ -349,248 +441,102 @@
         <span>🎤 <span id="title-goals">notre objectif</span></span>
         <button class="edit-pencil" onclick="editChoirGoal()">✏️</button>
       </div>
-      <p id="goal-text" style="line-height: 1.7;">rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.</p>
+      <p id="goal-text" style="line-height: 1.7;">rassembler les gens autour de musiques stimulantes, bienveillantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un espace de guérison, de rires et de partage avec un chef de chœur passionné.</p>
     </section>
 
-    <!-- Concert Cycle Section -->
+    <!-- Concert Cycle Section (100% For Charity / We Retain NOTHING) -->
     <section class="glass-card">
       <div class="section-title">
-        <span>🎗️ <span id="title-cycle">thème du cycle de concert</span></span>
+        <span>🎗️ <span id="title-cycle">thème du cycle de concert &amp; engagement caritatif</span></span>
         <button class="edit-pencil" onclick="editConcertCycle()">✏️</button>
       </div>
       <div class="charity-card">
         <span class="charity-badge" id="cycle-badge">thème actuel</span>
         <h3 style="font-size: 18px; color: var(--stage-gold); margin-bottom: 8px;" id="cycle-name">solidarité contre les féminicides et les violences</h3>
-        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.</p>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;" id="cycle-desc">la chorale est 100% gratuite pour tous les choristes, et 100% de la billetterie de nos concerts est reversée directement à des associations expertes sur le terrain : nous ne conservons strictement RIEN (0€ retenu). chaque note chantée soutient concrètement les victimes et les structures d'accompagnement.</p>
+        <div class="charity-zero-box" id="cycle-zero-box">
+          💛 <strong>Engagement solidaire absolu :</strong> la participation est 100% gratuite et l'intégralité des recettes (100%) va directement aux œuvres caritatives — l'association ne retient absolument aucun bénéfice.
+        </div>
       </div>
     </section>
 
-    <!-- Fully Modular Program & Lineup Section -->
+    <!-- Modular Program & Lineup Section -->
     <section class="glass-card">
       <div class="section-title">
         <span>🎶 <span id="title-program">programme du concert &amp; extraits</span></span>
         <button class="edit-pencil" onclick="openProgramManagerModal()">✏️</button>
       </div>
       
-      <div class="program-timeline" id="program-timeline-container"><div class="program-step">
-            <span class="program-tag">ouverture - secret 🤫</span>
-            <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">Welcome to Rennes English Choir.</div>
-          </div><div class="program-step">
-            <span class="program-tag">part 1: the struggle</span>
-            <div class="song-list">
-              <div class="song-item">
-                <span class="song-info">secret 🤫</span>
-                
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">kaval sviri</span>
-                <a href="https://www.youtube.com/watch?v=EXfJaLNgrno&amp;list=PLHwFIt-Sqqow&amp;index=18" target="_blank" class="yt-listen-btn">▶ youtube</a>
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">time</span>
-                <a href="https://www.youtube.com/watch?v=xLFqwk6aCA4&amp;list=PLHwFIt-Sqqow&amp;index=2" target="_blank" class="yt-listen-btn">▶ youtube</a>
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">secret 🤫</span>
-                
-              </div>
+      <div class="program-timeline" id="program-timeline-container">
+        <!-- Step 1: Overture -->
+        <div class="program-step">
+          <span class="program-tag">Moved</span>
+          <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">We are Rennes English Choir. Welcome to our show.</div>
+        </div>
+
+        <!-- Step 2: Part 1 -->
+        <div class="program-step">
+          <span class="program-tag">part one: the problem</span>
+          <div class="song-list">
+            <div class="song-item">
+              <span class="song-info">kaval sviri</span>
+              <a href="https://www.youtube.com/watch?v=V43CwQ4iVqs" target="_blank" class="yt-listen-btn">▶ youtube</a>
             </div>
-          </div><div class="program-step">
-            <span class="program-tag">entracte / intermission</span>
-            <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">the breakaway</div>
-          </div><div class="program-step">
-            <span class="program-tag">part 2: stronger together</span>
-            <div class="song-list">
-              <div class="song-item">
-                <span class="song-info">hopedrunk everasking</span>
-                <a href="https://www.youtube.com/watch?v=c5RnQYDEapQ" target="_blank" class="yt-listen-btn">▶ youtube</a>
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">what happens when a woman</span>
-                <a href="https://www.youtube.com/watch?v=v_Lq-XFQAU8&amp;list=PLHwFIt-Sqqow&amp;index=7" target="_blank" class="yt-listen-btn">▶ youtube</a>
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">secret 🤫</span>
-                
-              </div>
-            
-              <div class="song-item">
-                <span class="song-info">finale</span>
-                
-              </div>
+            <div class="song-item">
+              <span class="song-info">time (reinvented)</span>
             </div>
-          </div><div class="program-step">
-            <span class="program-tag">REC - all members</span>
-            <div class="song-list">
-              <div class="song-item">
-                <span class="song-info">And so it goes</span>
-                <a href="https://www.youtube.com/watch?v=DXzgiZrGZjw&amp;list=PLHwFIt-Sqqow&amp;index=9" target="_blank" class="yt-listen-btn">▶ youtube</a>
-              </div>
+            <div class="song-item">
+              <span class="song-info">blackbird by NYVC</span>
+              <a href="https://www.youtube.com/watch?v=n9ot2MyW2w0" target="_blank" class="yt-listen-btn">▶ youtube</a>
             </div>
-          </div></div>
+            <div class="song-item">
+              <span class="song-info">secret 🤫</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Entracte -->
+        <div class="program-step">
+          <span class="program-tag">entracte / intermission</span>
+          <div style="font-weight: 700; margin-top: 4px; font-size:14px; color:var(--text-main);">the breakaway</div>
+        </div>
+
+        <!-- Step 4: Part 2 -->
+        <div class="program-step">
+          <span class="program-tag">part two: stronger together</span>
+          <div class="song-list">
+            <div class="song-item">
+              <span class="song-info">and so it goes + surprise</span>
+            </div>
+            <div class="song-item">
+              <span class="song-info">Rennes Got Talent: performances by our members</span>
+            </div>
+            <div class="song-item">
+              <span class="song-info">what happens when a woman</span>
+              <a href="https://www.youtube.com/watch?v=v_Lq-XFQAU8&amp;list=PLHwFIt-Sqqow&amp;index=7" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+            <div class="song-item">
+              <span class="song-info">finale: secret</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Mass Choir Piece -->
+        <div class="program-step">
+          <span class="program-tag">mass choir piece: all members</span>
+          <div class="song-list">
+            <div class="song-item">
+              <span class="song-info">joy (unspeakable)</span>
+              <a href="https://www.youtube.com/watch?v=7at-L4lN60o" target="_blank" class="yt-listen-btn">▶ youtube</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Interactive Calendar Container -->
     <section class="glass-card">
-      <div id="pos-calendar">
-    <div class="cal-toolbar-top">
-      <div class="cal-filters" id="cal-filters"><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('cdl')">
-      <span style="color:#38bdf8">●</span> café des langues
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('choir')">
-      <span style="color:#fbbf24">●</span> rennes english choir
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('special')">
-      <span style="color:#e74c3c">●</span> événement spécial
-    </label><label class="cal-filter-item">
-      <input type="checkbox" class="cal-filter-checkbox" checked="" onchange="toggleCalFilter('atelier')">
-      <span style="color:#a855f7">●</span> atelier / cours
-    </label></div>
-      <div class="cal-admin-tools">
-        <button id="cal-lock-btn" class="cal-btn-sec unlocked" onclick="toggleCalLock()">🔒 <span id="cal-lock-label">déverrouillé</span></button>
-        <button id="cal-add-btn" class="cal-btn-add" onclick="openAddCalEventShadowbox()" style="display: inline-block;">➕ ajouter un événement</button>
-      </div>
-    </div>
-
-    <div class="cal-header">
-      <div class="cal-nav-group">
-        <button class="cal-btn" onclick="navCal(-1)">‹</button>
-        <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
-        <button class="cal-btn" onclick="navCal(1)">›</button>
-      </div>
-      <h2 class="cal-month-title" id="cal-title">septembre 2026</h2>
-      <div class="cal-view-group">
-        <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
-        <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
-      </div>
-    </div>
-
-    <div id="cal-month-view">
-      <div class="weekdays-grid" id="cal-weekdays"><div>dim.</div><div>lun.</div><div>mar.</div><div>mer.</div><div>jeu.</div><div>ven.</div><div>sam.</div></div>
-      <div class="month-grid" id="cal-month-grid"><div class="day-cell  other-month" data-date="2026-08-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-08-31"><div class="day-number">31</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell today " data-date="2026-09-03"><div class="day-number">3</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-04"><div class="day-number">4</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
-        <span class="event-pill-time">⏰ 19:00</span>
-        <span class="event-pill-title">☕ café des langues 70</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-05"><div class="day-number">5</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-06"><div class="day-number">6</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-07"><div class="day-number">7</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-08"><div class="day-number">8</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 1</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-09"><div class="day-number">9</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-10"><div class="day-number">10</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-11"><div class="day-number">11</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-12"><div class="day-number">12</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-13"><div class="day-number">13</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-14"><div class="day-number">14</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-15"><div class="day-number">15</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 2</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-16"><div class="day-number">16</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-17"><div class="day-number">17</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-18"><div class="day-number">18</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
-        <span class="event-pill-time">⏰ 19:00</span>
-        <span class="event-pill-title">☕ café des langues 71</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-19"><div class="day-number">19</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-20"><div class="day-number">20</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-21"><div class="day-number">21</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-22"><div class="day-number">22</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(251, 191, 36);">
-        <span class="event-pill-time">⏰ 20:00</span>
-        <span class="event-pill-title">🎤 répétition rennes english choir 3</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-23"><div class="day-number">23</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-24"><div class="day-number">24</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-25"><div class="day-number">25</div><div class="day-events"><div class="event-pill" draggable="true" style="background-color: rgb(56, 189, 248);">
-        <span class="event-pill-time">⏰ 19:00</span>
-        <span class="event-pill-title">POS Volunteer training</span>
-      </div></div></div><div class="day-cell  " data-date="2026-09-26"><div class="day-number">26</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-27"><div class="day-number">27</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-28"><div class="day-number">28</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-29"><div class="day-number">29</div><div class="day-events"></div></div><div class="day-cell  " data-date="2026-09-30"><div class="day-number">30</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-01"><div class="day-number">1</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-02"><div class="day-number">2</div><div class="day-events"></div></div><div class="day-cell  other-month" data-date="2026-10-03"><div class="day-number">3</div><div class="day-events"></div></div></div>
-    </div>
-
-    <div id="cal-list-view" hidden=""></div>
-
-    <div class="upcoming-section">
-      <h3 class="upcoming-title" id="title-upcoming">⚡ événements à venir</h3>
-      <div id="cal-upcoming-list"><div class="event-row">
-      <div class="event-color-bar" style="background:#38bdf8"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">04</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">☕ café des langues 70</div>
-        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#fbbf24"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">08</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">🎤 répétition rennes english choir 1</div>
-        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#fbbf24"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">15</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">🎤 répétition rennes english choir 2</div>
-        <div class="event-meta">⏰ 20:00 - 21:30 @ à venir !</div>
-      </div>
-    </div><div class="event-row">
-      <div class="event-color-bar" style="background:#38bdf8"></div>
-      <div class="event-date-box">
-        <div class="event-date-day">18</div>
-        <div class="event-date-month">09</div>
-      </div>
-      <div>
-        <div class="event-name">☕ café des langues 71</div>
-        <div class="event-meta">⏰ 19:00 - 22:00 @ 10 Canal Saint-Martin, 35700 Rennes</div>
-      </div>
-    </div></div>
-    </div>
-
-    <div class="cal-shadowbox-overlay" id="cal-shadowbox-overlay" onclick="closeCalShadowboxOnOverlay(event)" style="display: none;">
-      <div class="cal-shadowbox-card" onclick="event.stopPropagation()">
-        <span class="cal-shadowbox-close" onclick="closeCalShadowbox()">×</span>
-        <div id="cal-shadowbox-content">
-      <h3 style="color:var(--neon-amber, #f59e0b); margin-bottom: 18px;">✏️ modifier l'événement</h3>
-      
-      <div class="cal-form-group">
-        <label>Titre (FR) :</label>
-        <input type="text" id="edit-cal-title-fr" class="cal-form-input" value="Volunteer training">
-      </div>
-      <div class="cal-form-group">
-        <label>Titre (EN) :</label>
-        <input type="text" id="edit-cal-title-en" class="cal-form-input" value="Volunteer training">
-      </div>
-      <div class="cal-form-group">
-        <label>Date (YYYY-MM-DD) :</label>
-        <input type="text" id="edit-cal-date" class="cal-form-input" value="2026-09-25">
-      </div>
-      <div style="display:flex; gap:10px;">
-        <div class="cal-form-group" style="flex:1;">
-          <label>Début :</label>
-          <input type="text" id="edit-cal-start" class="cal-form-input" value="19:00">
-        </div>
-        <div class="cal-form-group" style="flex:1;">
-          <label>Fin :</label>
-          <input type="text" id="edit-cal-end" class="cal-form-input" value="21:00">
-        </div>
-      </div>
-      <div class="cal-form-group">
-        <label>Adresse / Lieu (Lien GPS automatique) :</label>
-        <input type="text" id="edit-cal-loc" class="cal-form-input" value="rennes">
-      </div>
-      <div class="cal-form-group">
-        <label>Description :</label>
-        <textarea id="edit-cal-desc-fr" class="cal-form-input" rows="2">description...</textarea>
-      </div>
-      <div class="cal-form-group">
-        <label>Détails complémentaires / Notes :</label>
-        <textarea id="edit-cal-extra-fr" class="cal-form-input" rows="2" placeholder="ex: boisson obligatoire, apporter son matériel..."></textarea>
-      </div>
-
-      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="cal-btn" style="background:var(--cdl-cyan, #38bdf8); color:#000;" onclick="saveCalEventEdit(1788393130607)">💾 enregistrer</button>
-        <button class="cal-btn" onclick="duplicateCalEvent(1788393130607)">📋 dupliquer</button>
-        <button class="cal-btn-sec" onclick="confirmDeleteCalEventModal(1788393130607)">🗑️ supprimer</button>
-      </div>
-    </div>
-      </div>
-    </div>
-  </div>
+      <div id="pos-calendar"></div>
     </section>
     <script src="calendar.js"></script>
 
@@ -601,25 +547,7 @@
         <button class="edit-pencil" onclick="openChoirRulesManagerModal()">✏️</button>
       </div>
       
-      <div id="choir-rules-container"><details class="rule-dropdown">
-          <summary>1. <span>cadre et objectifs</span></summary>
-          <div class="rule-body">le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau.</div>
-        </details><details class="rule-dropdown">
-          <summary>2. <span>assiduité et répétitions</span></summary>
-          <div class="rule-body">la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux.</div>
-        </details><details class="rule-dropdown">
-          <summary>3. <span>environnement sûr et bienveillant</span></summary>
-          <div class="rule-body">notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur.</div>
-        </details><details class="rule-dropdown">
-          <summary>4. <span>engagement caritatif et concerts</span></summary>
-          <div class="rule-body">chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets.</div>
-        </details><details class="rule-dropdown">
-          <summary>5. <span>vie privée et communications</span></summary>
-          <div class="rule-body">les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe.</div>
-        </details><details class="rule-dropdown">
-          <summary>6. <span>modération et contact</span></summary>
-          <div class="rule-body">l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com.</div>
-        </details></div>
+      <div id="choir-rules-container"></div>
 
       <p id="rules-closing">💫 on a hâte de chanter avec toi ! à très bientôt aux répétitions !</p>
     </section>
@@ -640,165 +568,7 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="closeModal()">×</span>
       <h2 id="modal-title" style="color: var(--stage-gold); margin-bottom: 15px;">✏️ gestionnaire du programme du concert</h2>
-      <div id="modal-body" style="line-height: 1.6; color: var(--text-main);">
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie ou ajoute des étapes (Textes, Entractes, Chansons) au programme. Laisse le champ lien YouTube vide pour masquer le bouton :</p>
-        <div id="program-editor-list">
-          
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="program-tag" style="margin:0;">Étape #1 (Texte / Entracte)</span>
-                <button onclick="deleteProgramStep(0)" class="btn-danger">🗑️ supprimer étape</button>
-              </div>
-
-              <div class="form-group">
-                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
-                <input type="text" id="step-tag-0" class="form-control" value="ouverture - secret 🤫">
-              </div>
-
-              
-                <div class="form-group">
-                  <label>Description / Titre :</label>
-                  <input type="text" id="step-title-0" class="form-control" value="Welcome to Rennes English Choir.">
-                </div>
-              
-            </div>
-          
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="program-tag" style="margin:0;">Étape #2 (Chansons)</span>
-                <button onclick="deleteProgramStep(1)" class="btn-danger">🗑️ supprimer étape</button>
-              </div>
-
-              <div class="form-group">
-                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
-                <input type="text" id="step-tag-1" class="form-control" value="première partie : le problème">
-              </div>
-
-              
-                <label style="display:block; font-size:12.5px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Chansons de cette partie :</label>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-1-0" class="form-control" value="secret 🤫" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-1-0" class="form-control" value="" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(1, 0)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-1-1" class="form-control" value="kaval sviri" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-1-1" class="form-control" value="https://www.youtube.com/watch?v=EXfJaLNgrno&amp;list=PLHwFIt-Sqqow&amp;index=18" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(1, 1)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-1-2" class="form-control" value="time" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-1-2" class="form-control" value="https://www.youtube.com/watch?v=xLFqwk6aCA4&amp;list=PLHwFIt-Sqqow&amp;index=2" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(1, 2)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-1-3" class="form-control" value="secret 🤫" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-1-3" class="form-control" value="" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(1, 3)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                <button onclick="addSongToStep(1)" class="btn-sec" style="font-size:11px; padding:4px 10px; margin-top:4px;">➕ ajouter une chanson</button>
-              
-            </div>
-          
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="program-tag" style="margin:0;">Étape #3 (Texte / Entracte)</span>
-                <button onclick="deleteProgramStep(2)" class="btn-danger">🗑️ supprimer étape</button>
-              </div>
-
-              <div class="form-group">
-                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
-                <input type="text" id="step-tag-2" class="form-control" value="entracte / intermission">
-              </div>
-
-              
-                <div class="form-group">
-                  <label>Description / Titre :</label>
-                  <input type="text" id="step-title-2" class="form-control" value="pause">
-                </div>
-              
-            </div>
-          
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="program-tag" style="margin:0;">Étape #4 (Chansons)</span>
-                <button onclick="deleteProgramStep(3)" class="btn-danger">🗑️ supprimer étape</button>
-              </div>
-
-              <div class="form-group">
-                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
-                <input type="text" id="step-tag-3" class="form-control" value="part 2: fighting back, together">
-              </div>
-
-              
-                <label style="display:block; font-size:12.5px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Chansons de cette partie :</label>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-3-0" class="form-control" value="hopedrunk everasking" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-3-0" class="form-control" value="https://www.youtube.com/watch?v=c5RnQYDEapQ" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(3, 0)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-3-1" class="form-control" value="what happens when a woman" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-3-1" class="form-control" value="https://www.youtube.com/watch?v=v_Lq-XFQAU8&amp;list=PLHwFIt-Sqqow&amp;index=7" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(3, 1)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-3-2" class="form-control" value="secret 🤫" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-3-2" class="form-control" value="https://www.youtube.com/results?search_query=Andra+Day+Rise+Up" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(3, 2)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-3-3" class="form-control" value="finale" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-3-3" class="form-control" value="" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(3, 3)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                <button onclick="addSongToStep(3)" class="btn-sec" style="font-size:11px; padding:4px 10px; margin-top:4px;">➕ ajouter une chanson</button>
-              
-            </div>
-          
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="program-tag" style="margin:0;">Étape #5 (Chansons)</span>
-                <button onclick="deleteProgramStep(4)" class="btn-danger">🗑️ supprimer étape</button>
-              </div>
-
-              <div class="form-group">
-                <label>Nom du Tag (ex: ouverture, entracte, première partie) :</label>
-                <input type="text" id="step-tag-4" class="form-control" value="REC - all members">
-              </div>
-
-              
-                <label style="display:block; font-size:12.5px; font-weight:700; color:var(--stage-gold); margin-bottom:6px;">Chansons de cette partie :</label>
-                
-                  <div style="display:flex; gap:6px; margin-bottom:6px; align-items:center;">
-                    <input type="text" id="song-title-4-0" class="form-control" value="And so it goes" placeholder="Titre chanson" style="flex:2;">
-                    <input type="text" id="song-url-4-0" class="form-control" value="https://www.youtube.com/watch?v=DXzgiZrGZjw&amp;list=PLHwFIt-Sqqow&amp;index=9" placeholder="Lien YouTube (optionnel)" style="flex:2;">
-                    <button onclick="deleteSongFromStep(4, 0)" class="btn-danger" style="padding:4px 8px; font-size:11px;">✕</button>
-                  </div>
-                
-                <button onclick="addSongToStep(4)" class="btn-sec" style="font-size:11px; padding:4px 10px; margin-top:4px;">➕ ajouter une chanson</button>
-              
-            </div>
-          
-        </div>
-
-        <div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
-          <button onclick="addProgramStep('songs')" class="btn-sec">➕ ajouter partie chansons</button>
-          <button onclick="addProgramStep('text')" class="btn-sec">➕ ajouter entracte / texte</button>
-        </div>
-
-        <button onclick="saveFullProgram()" class="btn-primary" style="width:100%;">💾 enregistrer le programme</button>
-      </div>
+      <div id="modal-body" style="line-height: 1.6; color: var(--text-main);"></div>
     </div>
   </div>
 
@@ -806,6 +576,41 @@
     const TRAINER_PIN_HASH = "c9693df0c3bd56a2c6b9bebbb0e51210e771823498faec23398581961e8aa3d2";
     let isUnlocked = false;
     let currentLanguage = localStorage.getItem('pos_lang') || 'fr';
+
+    /* Relaxing ambient audio player state */
+    let isAmbientPlaying = false;
+    const AMBIENT_YOUTUBE_URL = "https://www.youtube-nocookie.com/embed/5qap5aO4i9A?autoplay=1&loop=1&playlist=5qap5aO4i9A&enablejsapi=1";
+
+    function toggleAmbientMusic() {
+      const frame = document.getElementById('ambient-audio-frame');
+      const btnIcon = document.getElementById('music-btn-icon');
+      const btnLabel = document.getElementById('music-btn-label');
+      const disc = document.getElementById('music-disc-icon');
+      const isFr = currentLanguage === 'fr';
+
+      if (!isAmbientPlaying) {
+        if (frame) frame.src = AMBIENT_YOUTUBE_URL;
+        isAmbientPlaying = true;
+        if (btnIcon) btnIcon.innerText = "⏸";
+        if (btnLabel) btnLabel.innerText = isFr ? "mettre en pause" : "pause calm music";
+        if (disc) disc.classList.add('playing');
+      } else {
+        if (frame) frame.src = "";
+        isAmbientPlaying = false;
+        if (btnIcon) btnIcon.innerText = "▶";
+        if (btnLabel) btnLabel.innerText = isFr ? "écouter la musique" : "play calm music";
+        if (disc) disc.classList.remove('playing');
+      }
+    }
+
+    // Auto-warm user interaction: gentle unlock of healing ambiance
+    function initGentleAmbientOnInteraction() {
+      const startOnce = () => {
+        window.removeEventListener('click', startOnce);
+        // Optional autoplay if user requested, or keeps it ready
+      };
+      window.addEventListener('click', startOnce, { once: true });
+    }
 
     async function sha256(str) {
       const encoder = new TextEncoder();
@@ -852,7 +657,6 @@
     function downloadUpdatedHTML() {
       if (typeof closeModal === 'function') closeModal();
       if (typeof closeCalShadowbox === 'function') closeCalShadowbox();
-      if (typeof closePostsModal === 'function') closePostsModal();
 
       const wasUnlocked = document.body.classList.contains('body-unlocked');
       document.body.classList.remove('body-unlocked');
@@ -874,7 +678,7 @@
 
     const defaultEvents = [
       { id: "cdl", image: "hermine-futuristic.png", tag: "échanges linguistiques", title: "rennes café des langues", desc: "rencontres hebdomadaires gratuites pour pratiquer plus de 53 langues, échanger et faire de belles rencontres sans cours magistraux.", details: "nos événements ont lieu tous les mercredis soir de 19h à 22h dans nos bars partenaires à rennes. ouvert à tous les niveaux.", url: "cdl-code.html" },
-      { id: "choir", image: "choir.png", tag: "chorale & musique", title: "rennes english choir", desc: "ensemble vocal anglophone dirigé par un chef natif. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives.", details: "répétitions régulières et concerts engagés. 50% de la billetterie est reversée à des associations d'aide aux victimes de violences.", url: "rec-code.html" }
+      { id: "choir", image: "choir.png", tag: "chorale & musique", title: "rennes english choir", desc: "ensemble vocal anglophone 100% gratuit dirigé par un chef de chœur passionné. chantez des morceaux stimulants, travaillez votre prononciation et soutenez des causes caritatives (100% des recettes reversées).", details: "répétitions régulières et concerts engagés. 100% de la billetterie est reversée aux associations d'aide aux victimes de violences : nous ne gardons rien.", url: "rec-code.html" }
     ];
 
     let eventsData = JSON.parse(localStorage.getItem('pos_events_data')) || defaultEvents;
@@ -911,48 +715,62 @@
       }
     }
 
-    /* Default Full Program Structure */
+    /* Program Data Lineup */
     const defaultProgramData = [
       {
         type: "text",
-        tag: "ouverture - secret 🤫",
-        title: "Welcome to Rennes English Choir."
+        tag: "Moved",
+        title: "We are Rennes English Choir. Welcome to our show."
       },
       {
         type: "songs",
-        tag: "première partie : le problème",
+        tag: "part one: the problem",
         songs: [
-          { title: "secret 🤫", url: "" },
-          { title: "kaval sviri", url: "https://www.youtube.com/watch?v=EXfJaLNgrno&list=PLHwFIt-Sqqow&index=18" },
-          { title: "time", url: "https://www.youtube.com/watch?v=xLFqwk6aCA4&list=PLHwFIt-Sqqow&index=2" },
+          { title: "kaval sviri", url: "https://www.youtube.com/watch?v=V43CwQ4iVqs" },
+          { title: "time (reinvented)", url: "" },
+          { title: "blackbird by NYVC", url: "https://www.youtube.com/watch?v=n9ot2MyW2w0" },
           { title: "secret 🤫", url: "" }
         ]
       },
       {
         type: "text",
         tag: "entracte / intermission",
-        title: "pause"
+        title: "the breakaway"
       },
       {
         type: "songs",
-        tag: "part 2: fighting back, together",
+        tag: "part two: stronger together",
         songs: [
-          { title: "hopedrunk everasking", url: "https://www.youtube.com/watch?v=c5RnQYDEapQ" },
+          { title: "and so it goes + surprise", url: "" },
+          { title: "Rennes Got Talent: performances by our members", url: "" },
           { title: "what happens when a woman", url: "https://www.youtube.com/watch?v=v_Lq-XFQAU8&list=PLHwFIt-Sqqow&index=7" },
-          { title: "secret 🤫", url: "" },
-          { title: "finale", url: "" }
+          { title: "finale: secret", url: "" }
         ]
       },
       {
         type: "songs",
-        tag: "REC - all members",
+        tag: "mass choir piece: all members",
         songs: [
-          { title: "And so it goes", url: "https://www.youtube.com/watch?v=DXzgiZrGZjw&list=PLHwFIt-Sqqow&index=9" }
+          { title: "joy (unspeakable)", url: "https://www.youtube.com/watch?v=7at-L4lN60o" }
         ]
       }
     ];
 
-    let programData = JSON.parse(localStorage.getItem('pos_choir_program_full')) || defaultProgramData;
+    // Versioned storage key ensures everyone sees the updated lineup immediately
+    const PROGRAM_STORAGE_VERSION = "rec_program_2026_v2";
+    let programData = (() => {
+      try {
+        const storedVersion = localStorage.getItem('pos_choir_program_version');
+        if (storedVersion !== PROGRAM_STORAGE_VERSION) {
+          localStorage.setItem('pos_choir_program_version', PROGRAM_STORAGE_VERSION);
+          localStorage.setItem('pos_choir_program_full', JSON.stringify(defaultProgramData));
+          return defaultProgramData;
+        }
+        return JSON.parse(localStorage.getItem('pos_choir_program_full')) || defaultProgramData;
+      } catch (e) {
+        return defaultProgramData;
+      }
+    })();
 
     function renderProgramTimeline() {
       const container = document.getElementById('program-timeline-container');
@@ -999,7 +817,7 @@
         <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifie ou ajoute des étapes (Textes, Entractes, Chansons) au programme. Laisse le champ lien YouTube vide pour masquer le bouton :</p>
         <div id="program-editor-list">
           ${programData.map((step, sIdx) => `
-            <div style="background:#1e293b; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
+            <div style="background:#1f171d; border:1px solid var(--card-border); padding:12px; border-radius:8px; margin-bottom:14px;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                 <span class="program-tag" style="margin:0;">Étape #${sIdx + 1} (${step.type === 'text' ? 'Texte / Entracte' : 'Chansons'})</span>
                 <button onclick="deleteProgramStep(${sIdx})" class="btn-danger">🗑️ supprimer étape</button>
@@ -1090,7 +908,6 @@
       closeModal();
     }
 
-    /* Helper function to dynamically extract active language text */
     function getRuleText(rule, lang) {
       if (rule[lang]) return rule[lang];
       if (lang === 'fr' && rule.fr) return rule.fr;
@@ -1098,31 +915,31 @@
       return { title: rule.title || "", body: rule.body || "" };
     }
 
-    /* Dynamic Bilingual Choir Rules System */
+    /* Dynamic Bilingual Choir Rules System (100% Free & 100% for Charities) */
     const defaultChoirRules = [
       {
-        fr: { title: "cadre et objectifs", body: "le rennes english choir est une initiative de l'association prism outreach studio (pos). notre but est d'offrir un espace convivial et stimulant pour chanter en anglais, améliorer ta prononciation et partager des moments musicaux chaleureux sans jugement de niveau." },
-        en: { title: "framework and goals", body: "the rennes english choir is an initiative of the prism outreach studio (pos) association. our goal is to offer a friendly and stimulating space to sing in english, improve your pronunciation, and share warm musical moments without judgment." }
+        fr: { title: "cadre et gratuité totale", body: "le rennes english choir est une initiative solidaire et 100% bénévole de prism outreach studio. l'accès à la chorale est entièrement gratuit : aucune cotisation ni frais d'inscription ne sont demandés. notre but est d'offrir un espace chaleureux et inclusif pour chanter en anglais sans aucun jugement." },
+        en: { title: "framework and 100% free participation", body: "the rennes english choir is a 100% free, volunteer initiative by prism outreach studio. joining the choir is entirely free with zero membership fees. our goal is to offer a warm and supportive space to sing in english together without any judgment." }
       },
       {
-        fr: { title: "assiduité et répétitions", body: "la préparation des concerts nécessite un travail collectif régulier. la présence aux répétitions est vivement encouragée afin de garantir la cohésion du groupe et l'aboutissement des projets musicaux." },
-        en: { title: "rehearsals and attendance", body: "concert preparation requires regular collective work. attending rehearsals is strongly encouraged to ensure group cohesion and the success of musical projects." }
+        fr: { title: "assiduité et répétitions", body: "la préparation des concerts nécessite un travail d'équipe régulier. la présence aux répétitions est vivement encouragée afin de garantir la sérénité du groupe et la beauté de nos morceaux." },
+        en: { title: "rehearsals and attendance", body: "concert preparation requires regular collective work. attending rehearsals is strongly encouraged to ensure group cohesion and the success of our shared musical pieces." }
       },
       {
-        fr: { title: "environnement sûr et bienveillant", body: "notre ensemble repose sur le respect et l'inclusivité. aucun harcèlement, discrimination ou comportement déplacé n'est toléré. nous chantons pour apprendre ensemble dans la bonne humeur." },
-        en: { title: "safe and welcoming environment", body: "our ensemble is built on respect and inclusivity. no harassment, discrimination, or inappropriate behavior is tolerated. we sing to learn together in high spirits." }
+        fr: { title: "espace bienveillant & apaisant", body: "notre ensemble repose sur le respect, l'inclusivité et la douceur. aucun harcèlement ni jugement de niveau n'est toléré : la chorale est un lieu sécurisant pour libérer sa voix et s'épanouir." },
+        en: { title: "safe & healing environment", body: "our ensemble is built on mutual respect, warmth, and inclusivity. no judgment or discriminatory behavior is tolerated: this choir is a safe and soothing home to find your voice." }
       },
       {
-        fr: { title: "engagement caritatif et concerts", body: "chaque cycle s'associe à une cause sociale. en participant aux concerts, chaque choriste contribue directement à soutenir des associations partenaires grâce aux 50% issus des ventes de billets." },
-        en: { title: "charity commitment and concerts", body: "each cycle partners with a social cause. by taking part in concerts, each singer directly contributes to supporting partner associations through 50% of ticket sales." }
+        fr: { title: "engagement caritatif : 100% reversé, 0€ retenu", body: "à chaque cycle de concert, 100% des recettes de billetterie sont reversées directement aux associations de soutien aux victimes : nous ne gardons absolument RIEN (0€ retenu). nous chantons pour une cause réelle." },
+        en: { title: "charity commitment: 100% donated, 0€ kept", body: "for every concert cycle, 100% of all ticket sales go straight to field charities supporting victims: we retain absolutely NOTHING. every single note sung directly serves those in need." }
       },
       {
-        fr: { title: "vie privée et communications", body: "les échanges entre membres doivent rester respectueux. le démarchage ou le contact direct (dm) non sollicité est interdit. les communications officielles se font via nos canaux de groupe." },
-        en: { title: "privacy and communications", body: "interactions between members must remain respectful. unsolicited sales outreach or direct messages (DMs) are forbidden. official communications take place via group channels." }
+        fr: { title: "vie privée et communications", body: "les échanges entre membres doivent rester bienveillants et respectueux. le démarchage ou le contact direct (DM) non sollicité est interdit. les communications officielles se font via nos canaux de groupe." },
+        en: { title: "privacy and communications", body: "interactions between members must remain warm and respectful. unsolicited commercial outreach or direct messages (DMs) are forbidden. official communications take place via group channels." }
       },
       {
-        fr: { title: "modération et contact", body: "l'association se réserve le droit d'exclure tout membre dont le comportement nuit au groupe ou ne respecte pas le règlement. pour toute question : rennescafedeslangues@gmail.com." },
-        en: { title: "moderation and contact", body: "the association reserves the right to exclude any member whose behavior harms the group or breaks guidelines. for any questions: rennescafedeslangues@gmail.com." }
+        fr: { title: "recherche de lieu & contact", body: "nous recherchons constamment un lieu chaleureux pour répéter à rennes ! si tu peux nous aider ou pour toute question : rennescafedeslangues@gmail.com." },
+        en: { title: "rehearsal space search & contact", body: "we are actively looking for a welcoming rehearsal venue in rennes! if you can host us or for any inquiry: rennescafedeslangues@gmail.com." }
       }
     ];
 
@@ -1162,7 +979,7 @@
           ${choirRulesData.map((r, i) => {
             const text = getRuleText(r, currentLanguage);
             return `
-              <div style="background:#1e293b; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
+              <div style="background:#1f171d; padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--card-border);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                   <strong style="color:var(--stage-gold);">Règle #${i + 1}</strong>
                   <button onclick="removeChoirRuleFromForm(${i})" class="btn-danger">🗑️ supprimer</button>
@@ -1209,7 +1026,6 @@
       closeModal();
     }
 
-    /* --- Editors --- */
     function editChoirBanner() {
       const title = document.getElementById('signup-title').innerText;
       const sub = document.getElementById('signup-subtitle').innerText;
@@ -1322,31 +1138,47 @@
     const i18n = {
       fr: {
         navJoin: "rejoins-nous !",
-        bannerTitle: "🎵 rejoins la chorale !",
-        bannerSub: "inscriptions ouvertes à toutes et tous — aucun niveau requis",
+        musicTitle: "espace de calme & apaisement",
+        musicSub: "ambiance musicale douce & acoustique",
+        musicPlay: "écouter la musique",
+        musicPause: "mettre en pause",
+        bannerTitle: "🎵 rejoins la chorale ! (100% gratuit)",
+        bannerSub: "inscriptions ouvertes à toutes et tous — 100% gratuit, sans adhésion payante & aucun niveau requis",
         bannerBtn: "t'inscrire au formulaire",
-        directorSub: "chorale anglophone pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.",
+        rehearsalTitle: "nous cherchons un lieu de répétition à rennes !",
+        rehearsalDesc: "Tu disposes d'une salle, d'un atelier, d'un espace associatif ou d'un lieu chaleureux pouvant accueillir nos répétitions ?<br><strong>Aide-nous à faire vivre notre chorale 100% bénévole et solidaire :</strong>",
+        rehearsalBtnPrefix: "✉️ nous proposer un lieu :",
+        directorSub: "chorale anglophone 100% gratuite pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.",
         titleGoals: "notre objectif",
-        goalText: "rassembler les gens autour de musiques stimulantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un moment de plaisir, de rires et de partage avec un chef de chœur natif passionné.",
-        titleCycle: "thème du cycle de concert",
+        goalText: "rassembler les gens autour de musiques stimulantes, bienveillantes et amusantes ! la chorale permet de chanter ensemble tout en pratiquant l'anglais et en déliant ta prononciation, rendant l'expression orale plus fluide et naturelle. c'est avant tout un espace de guérison, de rires et de partage avec un chef de chœur passionné.",
+        titleCycle: "thème du cycle de concert & engagement caritatif",
         cycleBadge: "thème actuel",
         cycleName: "solidarité contre les féminicides et les violences",
-        cycleDesc: "à chaque cycle de concert, nous choisissons une cause essentielle : 50% de la billetterie est reversée directement à des associations expertes sur le terrain qui accompagnent concrètement les victimes.",
+        cycleDesc: "la chorale est 100% gratuite pour tous les choristes, et 100% de la billetterie de nos concerts est reversée directement à des associations expertes sur le terrain : nous ne conservons strictement RIEN (0€ retenu). chaque note chantée soutient concrètement les victimes et les structures d'accompagnement.",
+        cycleZero: "💛 <strong>Engagement solidaire absolu :</strong> la participation est 100% gratuite et l'intégralité des recettes (100%) va directement aux œuvres caritatives — l'association ne retient absolument aucun bénéfice.",
         titleProgram: "programme du concert & extraits",
         titleRules: "règlement de la chorale"
       },
       en: {
         navJoin: "join us!",
-        bannerTitle: "🎵 join the choir!",
-        bannerSub: "open to everyone — no prior vocal experience required",
+        musicTitle: "peaceful & healing space",
+        musicSub: "gentle acoustic calming ambiance",
+        musicPlay: "play calm music",
+        musicPause: "pause calm music",
+        bannerTitle: "🎵 join the choir! (100% free)",
+        bannerSub: "open to everyone — 100% free, no membership fee & no prior experience needed",
         bannerBtn: "sign up here",
-        directorSub: "english-speaking choir to free your voice, feel confident with your accent, and give back to the community.",
+        rehearsalTitle: "we are looking for a rehearsal space in rennes!",
+        rehearsalDesc: "Do you have a hall, workshop, community venue or cozy space in Rennes to host our rehearsals?<br><strong>Help us keep this 100% free, community-powered choir singing:</strong>",
+        rehearsalBtnPrefix: "✉️ offer a space:",
+        directorSub: "100% free english-speaking choir to free your voice, feel confident with your accent, and give back to the community.",
         titleGoals: "our goal",
-        goalText: "bring people together through exciting and fun music! singing in our choir lets you practice English and sharpen your pronunciation naturally. above all, it's a supportive space for joy, laughter, and vocal practice led by a passionate native choir director.",
-        titleCycle: "concert cycle theme",
+        goalText: "bring people together through exciting, healing and uplifting music! singing in our choir lets you practice English and sharpen your pronunciation naturally. above all, it's a supportive space for joy, laughter, and vocal freedom led by a passionate choir director.",
+        titleCycle: "concert cycle theme & charity commitment",
         cycleBadge: "current theme",
         cycleName: "solidarity against femicide and domestic violence",
-        cycleDesc: "for every concert cycle, we choose an essential cause: 50% of ticket sales are donated directly to expert field organizations providing concrete support to victims.",
+        cycleDesc: "our choir is 100% free for all members, and 100% of all concert ticket sales go directly to field charities: we retain absolutely NOTHING (0€ kept). every note sung directly empowers victims and frontline support organizations.",
+        cycleZero: "💛 <strong>Total Solidarity Commitment:</strong> joining is 100% free and 100% of all ticket sales go straight to charity — we retain zero profit.",
         titleProgram: "concert lineup & excerpts",
         titleRules: "choir guidelines"
       }
@@ -1363,11 +1195,23 @@
       const dict = i18n[lang] || i18n.fr;
 
       if (document.getElementById('nav-join-text')) document.getElementById('nav-join-text').innerText = dict.navJoin;
+      if (document.getElementById('music-title-text')) document.getElementById('music-title-text').innerText = dict.musicTitle;
+      if (document.getElementById('music-sub-text')) document.getElementById('music-sub-text').innerText = dict.musicSub;
+      if (document.getElementById('music-btn-label')) {
+        document.getElementById('music-btn-label').innerText = isAmbientPlaying ? dict.musicPause : dict.musicPlay;
+      }
+
       if (document.getElementById('signup-title')) document.getElementById('signup-title').childNodes[0].nodeValue = dict.bannerTitle + " ";
       if (document.getElementById('signup-subtitle')) document.getElementById('signup-subtitle').innerText = dict.bannerSub;
       if (document.getElementById('signup-btn-text')) {
         const span = document.getElementById('signup-btn-text').querySelector('span');
         if (span) span.innerText = dict.bannerBtn;
+      }
+
+      if (document.getElementById('rehearsal-title')) document.getElementById('rehearsal-title').innerText = dict.rehearsalTitle;
+      if (document.getElementById('rehearsal-desc')) document.getElementById('rehearsal-desc').innerHTML = dict.rehearsalDesc;
+      if (document.getElementById('rehearsal-btn')) {
+        document.getElementById('rehearsal-btn').innerHTML = `<span>${dict.rehearsalBtnPrefix}</span> <strong>rennescafedeslangues@gmail.com</strong>`;
       }
 
       if (document.getElementById('director-subtitle')) document.getElementById('director-subtitle').innerText = dict.directorSub;
@@ -1378,6 +1222,7 @@
       if (document.getElementById('cycle-badge')) document.getElementById('cycle-badge').innerText = dict.cycleBadge;
       if (document.getElementById('cycle-name')) document.getElementById('cycle-name').innerText = dict.cycleName;
       if (document.getElementById('cycle-desc')) document.getElementById('cycle-desc').innerText = dict.cycleDesc;
+      if (document.getElementById('cycle-zero-box')) document.getElementById('cycle-zero-box').innerHTML = dict.cycleZero;
 
       if (document.getElementById('title-program')) document.getElementById('title-program').innerText = dict.titleProgram;
       if (document.getElementById('title-rules')) document.getElementById('title-rules').innerText = dict.titleRules;
@@ -1392,9 +1237,6 @@
 
       if (typeof window.syncCalendarLanguage === "function") {
         window.syncCalendarLanguage(lang);
-      }
-      if (typeof window.syncPostsLanguage === "function") {
-        window.syncPostsLanguage(lang);
       }
     }
 
@@ -1414,8 +1256,8 @@
       setLanguage(currentLanguage);
       renderProgramTimeline();
       renderChoirRules();
+      initGentleAmbientOnInteraction();
     };
   </script>
-
 
 </body></html>
