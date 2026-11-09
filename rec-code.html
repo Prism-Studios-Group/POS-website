@@ -4,6 +4,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rennes English Choir — Espace Vocal & Solidaire</title>
   <link rel="icon" type="image/png" href="P-OS.png">
+  <meta name="description" content="Chorale anglophone 100% gratuite et solidaire à Rennes. Chantez sans jugement, pratiquez votre anglais et soutenez des causes caritatives.">
+
+  <!-- Open Graph / WhatsApp / Facebook / LinkedIn / Discord -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://prism-studios-group.github.io/POS-website/rec-code.html">
+  <meta property="og:title" content="Rennes English Choir">
+  <meta property="og:description" content="Chorale anglophone 100% gratuite et solidaire à Rennes. Chantez sans jugement, pratiquez votre anglais et soutenez des causes caritatives.">
+  <meta property="og:image" content="https://prism-studios-group.github.io/POS-website/choir.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rennes English Choir">
+  <meta name="twitter:description" content="Chorale anglophone 100% gratuite et solidaire à Rennes. 100% des recettes reversées aux œuvres caritatives.">
+  <meta name="twitter:image" content="https://prism-studios-group.github.io/POS-website/choir.png">
+
   <!-- Dyslexia-Friendly & Legible Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -435,14 +450,17 @@
       </a>
     </div>
 
-    <!-- Header Section -->
+   <!-- Header Section -->
     <header class="glass-card hero-header">
       <div class="choir-img-wrapper">
         <img src="choir.png" id="choir-poster-img" alt="Rennes English Choir Poster" class="choir-img">
         <button class="edit-pencil" onclick="editChoirHeader()" style="position:absolute; bottom:0; right:-5px;">✏️</button>
       </div>
       <div class="title-area">
-        <h1>rennes english choir <button class="edit-pencil" onclick="editChoirHeader()">✏️</button></h1>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h1>rennes english choir</h1>
+          <button class="edit-pencil" onclick="editChoirHeader()">✏️</button>
+        </div>
         <p style="font-size: 14px; color: var(--text-muted);" id="director-subtitle">chorale anglophone 100% gratuite pour libérer ta voix, te sentir bien dans ton accent et t'engager pour la communauté.</p>
       </div>
     </header>
