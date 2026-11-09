@@ -11,7 +11,7 @@
 
   <style>
     :root {
-      /* Cozy, Healing, Acoustic Lounge Palette inspired by warm wood & candlelight */
+      /* Cozy, Healing, Acoustic Lounge Palette */
       --bg-dark: #0d0a0d;
       --card-bg: rgba(26, 19, 23, 0.86);
       --card-border: rgba(245, 158, 11, 0.28);
@@ -54,30 +54,41 @@
     body.body-unlocked .edit-pencil { display: inline-block; }
 
     /* Layout Container & Buffer Margins */
-    .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+    .container { max-width: 1200px; margin: 24px auto 30px; padding: 0 20px; }
 
-    /* Cozy Ambient Music / Healing Player Bar */
+    /* Slim & Compact Healing Music Ribbon */
     .healing-music-bar {
-      background: linear-gradient(135deg, rgba(45, 26, 28, 0.95), rgba(30, 20, 25, 0.95));
-      border: 1px solid rgba(251, 191, 36, 0.35);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.12);
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin-bottom: 24px;
+      background: rgba(28, 18, 24, 0.82);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: 12px;
+      padding: 6px 14px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 10px;
       flex-wrap: wrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
     .healing-music-info {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 13.5px;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .healing-music-credit {
+      color: var(--stage-gold);
+      text-decoration: underline;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+    .healing-music-credit:hover {
+      color: #fff;
     }
     .music-disc {
-      font-size: 20px;
+      font-size: 15px;
       display: inline-block;
       animation: spinSlow 8s linear infinite;
       animation-play-state: paused;
@@ -93,20 +104,22 @@
       background: linear-gradient(135deg, var(--stage-gold), var(--stage-amber));
       color: #000;
       border: none;
-      padding: 6px 16px;
-      border-radius: 20px;
+      padding: 4px 12px;
+      border-radius: 16px;
       font-weight: 700;
-      font-size: 12.5px;
+      font-size: 11.5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
-      transition: all 0.2s ease;
+      gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .music-btn:hover {
-      transform: translateY(-1px) scale(1.03);
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.5);
+      transform: scale(1.03);
+      box-shadow: 0 3px 12px rgba(245, 158, 11, 0.45);
     }
 
     /* Big Noticeable Rehearsal Space Callout */
@@ -245,7 +258,7 @@
     .yt-listen-btn { display: inline-flex; align-items: center; gap: 6px; background: #e11d48; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; transition: transform 0.2s ease, background 0.2s; flex-shrink: 0; }
     .yt-listen-btn:hover { transform: scale(1.05); background: #be123c; }
 
-    /* Rules Dropdowns (Left Aligned) */
+    /* Rules Dropdowns */
     .rule-dropdown { background: rgba(20, 15, 20, 0.7); border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; text-align: left; }
     .rule-dropdown summary { padding: 14px 18px; font-weight: 700; color: var(--stage-gold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
     .rule-dropdown summary::-webkit-details-marker { display: none; }
@@ -377,24 +390,23 @@
 
   <div class="container">
 
-    <!-- Cozy Healing Music Player Bar -->
+    <!-- Compact Healing Music Ribbon -->
     <div class="healing-music-bar">
       <div class="healing-music-info">
         <span class="music-disc" id="music-disc-icon">🕯️</span>
-        <div>
-          <strong style="color:var(--stage-gold); font-size:13px;" id="music-title-text">espace de calme &amp; apaisement</strong>
-          <span style="font-size:12px; color:var(--text-muted); display:block;" id="music-sub-text">ambiance musicale douce &amp; acoustique</span>
-        </div>
+        <span id="music-label-text">ambiance apaisante :</span>
+        <strong style="color:var(--text-main);">Redwood Resonance ᨒ</strong>
+        <span>—</span>
+        <span>crédit : <a href="https://www.youtube.com/watch?v=t3LCXpKI9K0" target="_blank" class="healing-music-credit" title="Écouter la composition de Dianna Lopez sur YouTube">Dianna Lopez ↗</a></span>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <button class="music-btn" id="music-toggle-btn" onclick="toggleAmbientMusic()">
-          <span id="music-btn-icon">▶</span> <span id="music-btn-label">écouter la musique</span>
-        </button>
-      </div>
+      <button class="music-btn" id="music-toggle-btn" onclick="toggleAmbientMusic()">
+        <span id="music-btn-icon">▶</span> <span id="music-btn-label">écouter</span>
+      </button>
     </div>
-    <!-- Hidden iframe player for peaceful ambient acoustic vibe -->
-    <div id="ambient-player-container" style="display:none; width:0; height:0; overflow:hidden;">
-      <iframe id="ambient-audio-frame" width="1" height="1" src="" title="Healing Calm Ambient Music" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+    <!-- Active Off-Screen Audio Player (No display:none, ensures real audio playback in all browsers) -->
+    <div id="ambient-player-container" style="position: fixed; bottom: -250px; right: 0; width: 200px; height: 150px; opacity: 0.001; pointer-events: none; z-index: -999;">
+      <iframe id="ambient-audio-frame" width="200" height="150" src="" title="Healing Guitar Frequencies - Dianna Lopez" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <!-- Sign-up Banner (100% Free & Open) -->
@@ -577,9 +589,9 @@
     let isUnlocked = false;
     let currentLanguage = localStorage.getItem('pos_lang') || 'fr';
 
-    /* Relaxing ambient audio player state */
+    /* Relaxing ambient audio player state using Dianna Lopez's Redwood Resonance */
     let isAmbientPlaying = false;
-    const AMBIENT_YOUTUBE_URL = "https://www.youtube-nocookie.com/embed/5qap5aO4i9A?autoplay=1&loop=1&playlist=5qap5aO4i9A&enablejsapi=1";
+    const AMBIENT_VIDEO_ID = "t3LCXpKI9K0";
 
     function toggleAmbientMusic() {
       const frame = document.getElementById('ambient-audio-frame');
@@ -589,27 +601,22 @@
       const isFr = currentLanguage === 'fr';
 
       if (!isAmbientPlaying) {
-        if (frame) frame.src = AMBIENT_YOUTUBE_URL;
+        if (frame) {
+          frame.src = `https://www.youtube-nocookie.com/embed/${AMBIENT_VIDEO_ID}?autoplay=1&playsinline=1&controls=0&loop=1&playlist=${AMBIENT_VIDEO_ID}`;
+        }
         isAmbientPlaying = true;
         if (btnIcon) btnIcon.innerText = "⏸";
-        if (btnLabel) btnLabel.innerText = isFr ? "mettre en pause" : "pause calm music";
+        if (btnLabel) btnLabel.innerText = isFr ? "pause" : "pause";
         if (disc) disc.classList.add('playing');
       } else {
-        if (frame) frame.src = "";
+        if (frame) {
+          frame.src = "";
+        }
         isAmbientPlaying = false;
         if (btnIcon) btnIcon.innerText = "▶";
-        if (btnLabel) btnLabel.innerText = isFr ? "écouter la musique" : "play calm music";
+        if (btnLabel) btnLabel.innerText = isFr ? "écouter" : "listen";
         if (disc) disc.classList.remove('playing');
       }
-    }
-
-    // Auto-warm user interaction: gentle unlock of healing ambiance
-    function initGentleAmbientOnInteraction() {
-      const startOnce = () => {
-        window.removeEventListener('click', startOnce);
-        // Optional autoplay if user requested, or keeps it ready
-      };
-      window.addEventListener('click', startOnce, { once: true });
     }
 
     async function sha256(str) {
@@ -756,7 +763,6 @@
       }
     ];
 
-    // Versioned storage key ensures everyone sees the updated lineup immediately
     const PROGRAM_STORAGE_VERSION = "rec_program_2026_v2";
     let programData = (() => {
       try {
@@ -1138,10 +1144,9 @@
     const i18n = {
       fr: {
         navJoin: "rejoins-nous !",
-        musicTitle: "espace de calme & apaisement",
-        musicSub: "ambiance musicale douce & acoustique",
-        musicPlay: "écouter la musique",
-        musicPause: "mettre en pause",
+        musicLabel: "ambiance apaisante :",
+        musicPlay: "écouter",
+        musicPause: "pause",
         bannerTitle: "🎵 rejoins la chorale ! (100% gratuit)",
         bannerSub: "inscriptions ouvertes à toutes et tous — 100% gratuit, sans adhésion payante & aucun niveau requis",
         bannerBtn: "t'inscrire au formulaire",
@@ -1161,10 +1166,9 @@
       },
       en: {
         navJoin: "join us!",
-        musicTitle: "peaceful & healing space",
-        musicSub: "gentle acoustic calming ambiance",
-        musicPlay: "play calm music",
-        musicPause: "pause calm music",
+        musicLabel: "calming ambiance:",
+        musicPlay: "listen",
+        musicPause: "pause",
         bannerTitle: "🎵 join the choir! (100% free)",
         bannerSub: "open to everyone — 100% free, no membership fee & no prior experience needed",
         bannerBtn: "sign up here",
@@ -1195,8 +1199,7 @@
       const dict = i18n[lang] || i18n.fr;
 
       if (document.getElementById('nav-join-text')) document.getElementById('nav-join-text').innerText = dict.navJoin;
-      if (document.getElementById('music-title-text')) document.getElementById('music-title-text').innerText = dict.musicTitle;
-      if (document.getElementById('music-sub-text')) document.getElementById('music-sub-text').innerText = dict.musicSub;
+      if (document.getElementById('music-label-text')) document.getElementById('music-label-text').innerText = dict.musicLabel;
       if (document.getElementById('music-btn-label')) {
         document.getElementById('music-btn-label').innerText = isAmbientPlaying ? dict.musicPause : dict.musicPlay;
       }
@@ -1256,7 +1259,6 @@
       setLanguage(currentLanguage);
       renderProgramTimeline();
       renderChoirRules();
-      initGentleAmbientOnInteraction();
     };
   </script>
 
