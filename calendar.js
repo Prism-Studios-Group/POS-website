@@ -20,6 +20,157 @@ const EVENT_LABELS = {
   atelier: { fr: "atelier / cours", en: "workshop / class" }
 };
 
+/* French Public Holidays & Cultural Celebrations */
+const FRENCH_HOLIDAYS = {
+  "01-01": { fr: "jour de l'an 🎉", en: "new year's day 🎉" },
+  "01-06": { fr: "épiphanie 👑", en: "epiphany 👑" },
+  "02-02": { fr: "chandeleur 🥞", en: "crêpe day 🥞" },
+  "02-14": { fr: "saint-valentin 💘", en: "valentine's day 💘" },
+  "03-20": { fr: "printemps 🌱", en: "first day of spring 🌱" },
+  "05-01": { fr: "fête du travail 🌿", en: "labor day 🌿" },
+  "05-08": { fr: "victoire 1945 🇫🇷", en: "victory day 🇫🇷" },
+  "06-21": { fr: "fête de la musique 🎵", en: "music day 🎵" },
+  "07-14": { fr: "fête nationale 🎆", en: "bastille day 🎆" },
+  "08-15": { fr: "assomption 🕊️", en: "assumption 🕊️" },
+  "10-31": { fr: "halloween 🎃", en: "halloween 🎃" },
+  "11-01": { fr: "toussaint 🍁", en: "all saints' day 🍁" },
+  "11-11": { fr: "armistice 1918 🕊️", en: "armistice day 🕊️" },
+  "12-24": { fr: "réveillon noël 🕯️", en: "christmas eve 🕯️" },
+  "12-25": { fr: "noël 🎄", en: "christmas 🎄" },
+  "12-31": { fr: "saint-sylvestre 🥂", en: "new year's eve 🥂" },
+  // Movable French holidays (Easter, Ascension, Pentecost)
+  "2026-04-06": { fr: "lundi de pâques 🐣", en: "easter monday 🐣" },
+  "2026-05-14": { fr: "ascension 🕊️", en: "ascension day 🕊️" },
+  "2026-05-25": { fr: "pentecôte 🕊️", en: "whit monday 🕊️" },
+  "2027-03-29": { fr: "lundi de pâques 🐣", en: "easter monday 🐣" },
+  "2027-05-06": { fr: "ascension 🕊️", en: "ascension day 🕊️" },
+  "2027-05-17": { fr: "pentecôte 🕊️", en: "whit monday 🕊️" }
+};
+
+/* Seasonal Visual Themes (Month indexed 0 to 11) */
+const SEASONAL_THEMES = {
+  0: { // Janvier
+    emoji: "❄️",
+    titleSuffix: "❄️ 👑 ✨",
+    badgeFr: "bonne année & galette des rois",
+    badgeEn: "happy new year & epiphany",
+    bgTint: "rgba(14, 165, 233, 0.08)",
+    accentColor: "#38bdf8",
+    cellBg: "rgba(18, 30, 49, 0.78)",
+    cellBorder: "rgba(56, 189, 248, 0.22)"
+  },
+  1: { // Février
+    emoji: "🥞",
+    titleSuffix: "🥞 🎭 💖",
+    badgeFr: "chandeleur, carnaval & saint-valentin",
+    badgeEn: "crêpe day, carnival & valentine",
+    bgTint: "rgba(244, 114, 182, 0.08)",
+    accentColor: "#f472b6",
+    cellBg: "rgba(35, 24, 38, 0.78)",
+    cellBorder: "rgba(244, 114, 182, 0.22)"
+  },
+  2: { // Mars
+    emoji: "🌱",
+    titleSuffix: "🌱 🌷 ☀️",
+    badgeFr: "équinoxe & réveil du printemps",
+    badgeEn: "spring renewal & sunshine",
+    bgTint: "rgba(52, 211, 153, 0.08)",
+    accentColor: "#34d399",
+    cellBg: "rgba(18, 36, 32, 0.78)",
+    cellBorder: "rgba(52, 211, 153, 0.22)"
+  },
+  3: { // Avril
+    emoji: "🌸",
+    titleSuffix: "🌸 🐣 🍫",
+    badgeFr: "printemps en fleurs & fête de pâques",
+    badgeEn: "blossom season & easter chocolates",
+    bgTint: "rgba(232, 121, 249, 0.08)",
+    accentColor: "#e879f9",
+    cellBg: "rgba(32, 23, 44, 0.78)",
+    cellBorder: "rgba(232, 121, 249, 0.22)"
+  },
+  4: { // Mai
+    emoji: "🌿",
+    titleSuffix: "🌿 ☀️ 💐",
+    badgeFr: "muguet, ponts de mai & grand final",
+    badgeEn: "lily of the valley & sunny finale",
+    bgTint: "rgba(74, 222, 128, 0.08)",
+    accentColor: "#4ade80",
+    cellBg: "rgba(18, 38, 28, 0.78)",
+    cellBorder: "rgba(74, 222, 128, 0.22)"
+  },
+  5: { // Juin
+    emoji: "☀️",
+    titleSuffix: "☀️ 🎵 🌊",
+    badgeFr: "fête de la musique & été",
+    badgeEn: "music day & summer kickoff",
+    bgTint: "rgba(251, 191, 36, 0.08)",
+    accentColor: "#fbbf24",
+    cellBg: "rgba(38, 32, 18, 0.78)",
+    cellBorder: "rgba(251, 191, 36, 0.22)"
+  },
+  6: { // Juillet
+    emoji: "🎆",
+    titleSuffix: "🎆 🏖️ ☀️",
+    badgeFr: "fête nationale & estivales",
+    badgeEn: "bastille day & summer holidays",
+    bgTint: "rgba(56, 189, 248, 0.08)",
+    accentColor: "#38bdf8",
+    cellBg: "rgba(18, 30, 49, 0.78)",
+    cellBorder: "rgba(56, 189, 248, 0.22)"
+  },
+  7: { // Août
+    emoji: "🌻",
+    titleSuffix: "🌻 🏖️ 🍉",
+    badgeFr: "douceur d'août & vacances",
+    badgeEn: "august sun & summer ease",
+    bgTint: "rgba(245, 158, 11, 0.08)",
+    accentColor: "#f59e0b",
+    cellBg: "rgba(38, 28, 18, 0.78)",
+    cellBorder: "rgba(245, 158, 11, 0.22)"
+  },
+  8: { // Septembre
+    emoji: "🎒",
+    titleSuffix: "🎒 🍂 ☕",
+    badgeFr: "rentrée culturelle & retrouvailles",
+    badgeEn: "back to school & cozy beginnings",
+    bgTint: "rgba(56, 189, 248, 0.07)",
+    accentColor: "#38bdf8",
+    cellBg: "rgba(22, 30, 49, 0.78)",
+    cellBorder: "rgba(56, 189, 248, 0.2)"
+  },
+  9: { // Octobre
+    emoji: "🎃",
+    titleSuffix: "🎃 🍁 👻",
+    badgeFr: "feuilles d'or & ambiance halloween",
+    badgeEn: "autumn foliage & spooky season",
+    bgTint: "rgba(249, 115, 22, 0.09)",
+    accentColor: "#f97316",
+    cellBg: "rgba(38, 26, 18, 0.78)",
+    cellBorder: "rgba(249, 115, 22, 0.24)"
+  },
+  10: { // Novembre
+    emoji: "🌰",
+    titleSuffix: "🌰 🧣 ☕",
+    badgeFr: "douceur d'automne & veillées chaleureuses",
+    badgeEn: "cozy autumn nights & warm tea",
+    bgTint: "rgba(217, 119, 6, 0.08)",
+    accentColor: "#d97706",
+    cellBg: "rgba(36, 26, 20, 0.78)",
+    cellBorder: "rgba(217, 119, 6, 0.22)"
+  },
+  11: { // Décembre
+    emoji: "🎄",
+    titleSuffix: "🎄 ✨ ❄️",
+    badgeFr: "magie de noël & dernière de la saison",
+    badgeEn: "holiday season & winter magic",
+    bgTint: "rgba(16, 185, 129, 0.09)",
+    accentColor: "#10b981",
+    cellBg: "rgba(18, 36, 30, 0.78)",
+    cellBorder: "rgba(52, 211, 153, 0.26)"
+  }
+};
+
 const calI18n = {
   fr: {
     today: "aujourd'hui",
@@ -95,6 +246,24 @@ const calI18n = {
   }
 };
 
+const cdlSchedule = [
+  {
+    "time": "19h00 - 20h00",
+    "fr": "discussion libre aux tables de langues",
+    "en": "open discussion at language tables"
+  },
+  {
+    "time": "20h00 - 21h00",
+    "fr": "speed dating par langue (changement toutes les 15 min)",
+    "en": "language speed dating (switch every 15 mins)"
+  },
+  {
+    "time": "21h00 - 22h00",
+    "fr": "discussion libre aux tables de langues",
+    "en": "open discussion at language tables"
+  }
+];
+
 const defaultCalendarEvents = [
   {
     "id": 1,
@@ -107,23 +276,7 @@ const defaultCalendarEvents = [
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
-    "schedule": [
-      {
-        "time": "19h00 - 20h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      },
-      {
-        "time": "20h00 - 21h00",
-        "fr": "speed dating par langue (changement toutes les 15 min)",
-        "en": "language speed dating (switch every 15 mins)"
-      },
-      {
-        "time": "21h00 - 22h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      }
-    ]
+    "schedule": cdlSchedule
   },
   {
     "id": 2,
@@ -137,26 +290,10 @@ const defaultCalendarEvents = [
     "end_time": "21:30",
     "location": "à venir !",
     "schedule": [
-      {
-        "time": "19h30 - 20h00",
-        "fr": "accueil & échauffement vocal",
-        "en": "welcome & vocal warmup"
-      },
-      {
-        "time": "20h00 - 20h45",
-        "fr": "répétition partie 1 (travail du répertoire)",
-        "en": "rehearsal part 1 (repertoire work)"
-      },
-      {
-        "time": "20h45 - 21h00",
-        "fr": "pause & échanges",
-        "en": "break & social time"
-      },
-      {
-        "time": "21h00 - 21h30",
-        "fr": "répétition partie 2 & chant d'ensemble",
-        "en": "rehearsal part 2 & group singing"
-      }
+      { "time": "19h30 - 20h00", "fr": "accueil & échauffement vocal", "en": "welcome & vocal warmup" },
+      { "time": "20h00 - 20h45", "fr": "répétition partie 1 (travail du répertoire)", "en": "rehearsal part 1 (repertoire work)" },
+      { "time": "20h45 - 21h00", "fr": "pause & échanges", "en": "break & social time" },
+      { "time": "21h00 - 21h30", "fr": "répétition partie 2 & chant d'ensemble", "en": "rehearsal part 2 & group singing" }
     ],
     "extra_details_fr": ""
   },
@@ -172,26 +309,10 @@ const defaultCalendarEvents = [
     "end_time": "21:30",
     "location": "à venir !",
     "schedule": [
-      {
-        "time": "19h30 - 20h00",
-        "fr": "accueil & échauffement vocal",
-        "en": "welcome & vocal warmup"
-      },
-      {
-        "time": "20h00 - 20h45",
-        "fr": "répétition partie 1 (travail du répertoire)",
-        "en": "rehearsal part 1 (repertoire work)"
-      },
-      {
-        "time": "20h45 - 21h00",
-        "fr": "pause & échanges",
-        "en": "break & social time"
-      },
-      {
-        "time": "21h00 - 21h30",
-        "fr": "répétition partie 2 & chant d'ensemble",
-        "en": "rehearsal part 2 & group singing"
-      }
+      { "time": "19h30 - 20h00", "fr": "accueil & échauffement vocal", "en": "welcome & vocal warmup" },
+      { "time": "20h00 - 20h45", "fr": "répétition partie 1 (travail du répertoire)", "en": "rehearsal part 1 (repertoire work)" },
+      { "time": "20h45 - 21h00", "fr": "pause & échanges", "en": "break & social time" },
+      { "time": "21h00 - 21h30", "fr": "répétition partie 2 & chant d'ensemble", "en": "rehearsal part 2 & group singing" }
     ],
     "extra_details_fr": ""
   },
@@ -206,23 +327,7 @@ const defaultCalendarEvents = [
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
-    "schedule": [
-      {
-        "time": "19h00 - 20h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      },
-      {
-        "time": "20h00 - 21h00",
-        "fr": "speed dating par langue (changement toutes les 15 min)",
-        "en": "language speed dating (switch every 15 mins)"
-      },
-      {
-        "time": "21h00 - 22h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      }
-    ],
+    "schedule": cdlSchedule,
     "extra_details_fr": "72/100"
   },
   {
@@ -237,26 +342,10 @@ const defaultCalendarEvents = [
     "end_time": "21:30",
     "location": "à venir !",
     "schedule": [
-      {
-        "time": "19h30 - 20h00",
-        "fr": "accueil & échauffement vocal",
-        "en": "welcome & vocal warmup"
-      },
-      {
-        "time": "20h00 - 20h45",
-        "fr": "répétition partie 1 (travail du répertoire)",
-        "en": "rehearsal part 1 (repertoire work)"
-      },
-      {
-        "time": "20h45 - 21h00",
-        "fr": "pause & échanges",
-        "en": "break & social time"
-      },
-      {
-        "time": "21h00 - 21h30",
-        "fr": "répétition partie 2 & chant d'ensemble",
-        "en": "rehearsal part 2 & group singing"
-      }
+      { "time": "19h30 - 20h00", "fr": "accueil & échauffement vocal", "en": "welcome & vocal warmup" },
+      { "time": "20h00 - 20h45", "fr": "répétition partie 1 (travail du répertoire)", "en": "rehearsal part 1 (repertoire work)" },
+      { "time": "20h45 - 21h00", "fr": "pause & échanges", "en": "break & social time" },
+      { "time": "21h00 - 21h30", "fr": "répétition partie 2 & chant d'ensemble", "en": "rehearsal part 2 & group singing" }
     ],
     "extra_details_fr": ""
   },
@@ -284,23 +373,7 @@ const defaultCalendarEvents = [
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
-    "schedule": [
-      {
-        "time": "19h00 - 20h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      },
-      {
-        "time": "20h00 - 21h00",
-        "fr": "speed dating par langue (changement toutes les 15 min)",
-        "en": "language speed dating (switch every 15 mins)"
-      },
-      {
-        "time": "21h00 - 22h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      }
-    ],
+    "schedule": cdlSchedule,
     "extra_details_fr": ""
   },
   {
@@ -314,23 +387,7 @@ const defaultCalendarEvents = [
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
-    "schedule": [
-      {
-        "time": "19h00 - 20h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      },
-      {
-        "time": "20h00 - 21h00",
-        "fr": "speed dating par langue (changement toutes les 15 min)",
-        "en": "language speed dating (switch every 15 mins)"
-      },
-      {
-        "time": "21h00 - 22h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      }
-    ],
+    "schedule": cdlSchedule,
     "extra_details_fr": "73/100"
   },
   {
@@ -344,28 +401,231 @@ const defaultCalendarEvents = [
     "start_time": "19:00",
     "end_time": "22:00",
     "location": "10 Canal Saint-Martin, 35700 Rennes",
-    "schedule": [
-      {
-        "time": "19h00 - 20h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      },
-      {
-        "time": "20h00 - 21h00",
-        "fr": "speed dating par langue (changement toutes les 15 min)",
-        "en": "language speed dating (switch every 15 mins)"
-      },
-      {
-        "time": "21h00 - 22h00",
-        "fr": "discussion libre aux tables de langues",
-        "en": "open discussion at language tables"
-      }
-    ],
+    "schedule": cdlSchedule,
     "extra_details_fr": "74/100"
+  },
+  {
+    "id": 1792000000075,
+    "title_fr": "☕ café des langues 75",
+    "title_en": "☕ café des langues 75",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-11-13",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "75/100"
+  },
+  {
+    "id": 1792000000076,
+    "title_fr": "☕ café des langues 76",
+    "title_en": "☕ café des langues 76",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-11-27",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "76/100"
+  },
+  {
+    "id": 1792000000077,
+    "title_fr": "🎄 café des langues 77 — dernière de la saison !",
+    "title_en": "🎄 café des langues 77 — last of the season!",
+    "description_fr": "🎄 dernier café des langues de la saison avant la trêve hivernale ! rencontre à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance festive et chaleureuse.\nlast meet-up of the season before the winter break! practice multiple languages in a fun, friendly and festive environment.",
+    "description_en": "last café des langues of the season before the winter break! gathering to practice over 53 languages in a festive and friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2026-12-11",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "77/100 — ❄️ dernier café des langues de la saison ! reprise le vendredi 8 janvier 2027. très belles fêtes à tous et à toutes ! ✨"
+  },
+  {
+    "id": 1792000000078,
+    "title_fr": "👑 café des langues 78 — rentrée 2027",
+    "title_en": "👑 café des langues 78 — 2027 kick-off",
+    "description_fr": "première rencontre de la nouvelle année 2027 ! rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nfirst meet-up of 2027 at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "first meet-up of 2027! gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-01-08",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "78/100 — 👑 bonne année 2027 & reprise des cafés des langues ! galette des rois & retrouvailles."
+  },
+  {
+    "id": 1792000000079,
+    "title_fr": "❄️ café des langues 79",
+    "title_en": "❄️ café des langues 79",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-01-22",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "79/100"
+  },
+  {
+    "id": 1792000000080,
+    "title_fr": "🥞 café des langues 80",
+    "title_en": "🥞 café des langues 80",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-02-05",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "80/100 — 🥞 ambiance chandeleur & crêpes !"
+  },
+  {
+    "id": 1792000000081,
+    "title_fr": "🎭 café des langues 81",
+    "title_en": "🎭 café des langues 81",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-02-19",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "81/100 — 💘 ambiance carnaval & saint-valentin !"
+  },
+  {
+    "id": 1792000000082,
+    "title_fr": "☕ café des langues 82",
+    "title_en": "☕ café des langues 82",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-03-05",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "82/100"
+  },
+  {
+    "id": 1792000000083,
+    "title_fr": "🌱 café des langues 83",
+    "title_en": "🌱 café des langues 83",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-03-19",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "83/100 — 🌱 célébration de l'équinoxe de printemps !"
+  },
+  {
+    "id": 1792000000084,
+    "title_fr": "🐣 café des langues 84",
+    "title_en": "🐣 café des langues 84",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-04-02",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "84/100 — 🍫 spécial pâques & chocolats !"
+  },
+  {
+    "id": 1792000000085,
+    "title_fr": "🌸 café des langues 85",
+    "title_en": "🌸 café des langues 85",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-04-16",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "85/100"
+  },
+  {
+    "id": 1792000000086,
+    "title_fr": "🌼 café des langues 86",
+    "title_en": "🌼 café des langues 86",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-04-30",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "86/100 — 🌿 veille du 1er mai & fête du travail !"
+  },
+  {
+    "id": 1792000000087,
+    "title_fr": "🌿 café des langues 87",
+    "title_en": "🌿 café des langues 87",
+    "description_fr": "rencontre un vendredi sur deux à l'Auberge de jeunesse Hostel Rennes pour pratiquer plusieurs langues dans une ambiance conviviale.\nmeet-up every other Friday at Hostel Rennes to practice multiple languages in a fun and friendly environment.",
+    "description_en": "weekly bar gathering to practice over 53 languages in a friendly environment.",
+    "event_type": "cdl",
+    "event_date": "2027-05-14",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "87/100"
+  },
+  {
+    "id": 1792000000088,
+    "title_fr": "🎉 café des langues 88 — grande clôture de la saison !",
+    "title_en": "🎉 café des langues 88 — season grand finale!",
+    "description_fr": "dernier café des langues de la saison 2026-2027 ! venez fêter la fin de l'année scolaire et d'une superbe série d'échanges linguistiques à l'Auberge de jeunesse Hostel Rennes.\nlast café des langues of the 2026-2027 season! join us to celebrate the end of a wonderful season together before the summer break.",
+    "description_en": "grand season finale of café des langues for 2026-2027! final gathering to practice languages before the summer.",
+    "event_type": "cdl",
+    "event_date": "2027-05-28",
+    "start_time": "19:00",
+    "end_time": "22:00",
+    "location": "10 Canal Saint-Martin, 35700 Rennes",
+    "schedule": cdlSchedule,
+    "extra_details_fr": "88/100 — 🌟 dernier café des langues de la saison ! merci à toutes et à tous pour cette magnifique année."
   }
 ];
 
-let calendarEvents = JSON.parse(localStorage.getItem('pos_calendar_events')) || window.POS_EMBEDDED_CALENDAR_EVENTS || defaultCalendarEvents;
+/* Safe local cache initialization: merges new default events seamlessly */
+let calendarEvents = (() => {
+  try {
+    const raw = localStorage.getItem('pos_calendar_events');
+    if (!raw) return defaultCalendarEvents;
+    const stored = JSON.parse(raw);
+    if (!Array.isArray(stored)) return defaultCalendarEvents;
+
+    const storedIds = new Set(stored.map(e => e.id));
+    let hasNew = false;
+    defaultCalendarEvents.forEach(defEv => {
+      if (!storedIds.has(defEv.id)) {
+        stored.push(defEv);
+        hasNew = true;
+      }
+    });
+    if (hasNew) {
+      localStorage.setItem('pos_calendar_events', JSON.stringify(stored));
+    }
+    return stored;
+  } catch (err) {
+    return defaultCalendarEvents;
+  }
+})();
 
 let calState = {
   currentView: "month",
@@ -421,6 +681,14 @@ function injectCalendarStyles() {
   const style = document.createElement('style');
   style.id = 'pos-cal-styles';
   style.textContent = `
+    #pos-calendar {
+      background: radial-gradient(circle at 85% 15%, var(--season-bg-tint, rgba(56, 189, 248, 0.08)), transparent 60%), rgba(15, 23, 42, 0.72);
+      border: 1px solid var(--season-cell-border, rgba(56, 189, 248, 0.22));
+      border-radius: 18px;
+      padding: 16px;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.42);
+    }
     .cal-toolbar-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
     .cal-filters { display: flex; flex-wrap: wrap; gap: 12px; }
     .cal-filter-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
@@ -429,28 +697,60 @@ function injectCalendarStyles() {
     .cal-btn-sec { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .cal-btn-sec.unlocked { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #86efac; }
     .cal-btn-add { background: var(--neon-amber, #f59e0b); color: #000; border: none; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: none; }
+    
     .cal-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
     .cal-nav-group, .cal-view-group { display: flex; gap: 6px; }
+    .cal-title-container { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
     .cal-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
-    .cal-btn.active { background: var(--cdl-cyan, #38bdf8) !important; color: #000 !important; }
-    .cal-month-title { font-size: 20px; font-weight: 700; color: var(--cdl-cyan, #38bdf8); text-transform: lowercase; }
+    .cal-btn.active { background: var(--season-accent, var(--cdl-cyan, #38bdf8)) !important; color: #000 !important; }
+    
+    .cal-month-title {
+      font-size: 20px; font-weight: 700; color: var(--season-accent, var(--cdl-cyan, #38bdf8));
+      text-transform: lowercase; display: inline-flex; align-items: center; gap: 8px; margin: 0;
+      transition: color 0.3s ease;
+    }
+    .cal-season-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--season-cell-border, rgba(56, 189, 248, 0.22));
+      color: var(--season-accent, var(--cdl-cyan, #38bdf8)); display: inline-flex; align-items: center; gap: 5px;
+      text-transform: lowercase; letter-spacing: 0.2px; transition: all 0.3s ease;
+    }
     
     .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 700; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
     .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-    .day-cell { min-height: 110px; background: rgba(22, 30, 49, 0.75); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.2s ease; }
+    
+    .day-cell {
+      min-height: 112px; background: var(--season-cell-bg, rgba(22, 30, 49, 0.75));
+      border: 1px solid var(--season-cell-border, rgba(56, 189, 248, 0.2));
+      border-radius: 12px; padding: 8px; display: flex; flex-direction: column; overflow: hidden;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+    }
     .day-cell.drag-over { border: 2px dashed var(--neon-amber, #f59e0b); background: rgba(245, 158, 11, 0.15); }
-    .day-cell.other-month { opacity: 0.3; background: rgba(15, 23, 42, 0.4); }
-    .day-cell.today { border: 2px solid var(--cdl-cyan, #38bdf8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
-    .day-number { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-muted); }
+    .day-cell.other-month { opacity: 0.28; background: rgba(15, 23, 42, 0.35); }
+    .day-cell.today {
+      border: 2px solid var(--season-accent, var(--cdl-cyan, #38bdf8));
+      box-shadow: 0 0 16px var(--season-cell-border, rgba(56, 189, 248, 0.4));
+    }
+    
+    .day-cell-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 4px; }
+    .day-number { font-weight: 700; font-size: 13px; color: var(--text-muted); }
+    .day-holiday-pill {
+      font-size: 9.5px; font-weight: 700; color: var(--neon-amber, #f59e0b);
+      background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.32);
+      padding: 1px 6px; border-radius: 6px; white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; max-width: 78%; line-height: 1.25; user-select: none;
+    }
+    
     .day-events { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
 
     .event-pill {
       font-size: 11px; font-weight: 700; padding: 4px 6px; border-radius: 6px; color: #000;
       cursor: pointer; line-height: 1.25; display: flex; flex-direction: column; gap: 2px;
-      user-select: none; word-break: break-word;
+      user-select: none; word-break: break-word; transition: transform 0.15s ease, filter 0.15s ease;
     }
+    .event-pill:hover { transform: translateY(-1px); filter: brightness(1.08); }
     .event-pill-time {
-      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.15);
+      font-size: 9.5px; font-weight: 800; opacity: 0.9; background: rgba(0, 0, 0, 0.16);
       padding: 1px 4px; border-radius: 3px; align-self: flex-start;
     }
     .event-pill-title {
@@ -461,8 +761,8 @@ function injectCalendarStyles() {
 
     .upcoming-section { margin-top: 35px; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.1); }
     .upcoming-title { font-size: 17px; font-weight: 700; color: var(--neon-amber, #f59e0b); margin-bottom: 15px; }
-    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease; }
-    .event-row:hover { transform: translateX(4px); border-color: var(--cdl-cyan, #38bdf8); }
+    .event-row { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; }
+    .event-row:hover { transform: translateX(4px); border-color: var(--season-accent, var(--cdl-cyan, #38bdf8)); }
     .event-color-bar { width: 6px; height: 38px; border-radius: 4px; }
     .event-date-box { text-align: center; min-width: 40px; }
     .event-date-day { font-size: 18px; font-weight: 700; line-height: 1; }
@@ -528,7 +828,10 @@ function mountCalendarHTML() {
         <button class="cal-btn" onclick="navCalToday()" id="btn-cal-today">aujourd'hui</button>
         <button class="cal-btn" onclick="navCal(1)">›</button>
       </div>
-      <h2 class="cal-month-title" id="cal-title">...</h2>
+      <div class="cal-title-container">
+        <h2 class="cal-month-title" id="cal-title">...</h2>
+        <div class="cal-season-badge" id="cal-season-badge"></div>
+      </div>
       <div class="cal-view-group">
         <button class="cal-btn view-btn active" data-view="month" onclick="setCalView('month')" id="btn-view-month">mois</button>
         <button class="cal-btn view-btn" data-view="list" onclick="setCalView('list')" id="btn-view-list">liste</button>
@@ -602,9 +905,30 @@ function renderCalendar() {
 
   injectFooterDisclaimer();
 
-  document.getElementById('cal-title').innerText = calState.currentDate.toLocaleDateString(
+  // Dynamic seasonal theme application
+  const monthIdx = calState.currentDate.getMonth();
+  const season = SEASONAL_THEMES[monthIdx] || SEASONAL_THEMES[0];
+  const calRoot = document.getElementById('pos-calendar');
+  if (calRoot) {
+    calRoot.style.setProperty('--season-accent', season.accentColor);
+    calRoot.style.setProperty('--season-bg-tint', season.bgTint);
+    calRoot.style.setProperty('--season-cell-bg', season.cellBg);
+    calRoot.style.setProperty('--season-cell-border', season.cellBorder);
+  }
+
+  const formattedMonth = calState.currentDate.toLocaleDateString(
     lang === "fr" ? "fr-FR" : "en-US", { month: "long", year: "numeric" }
   );
+
+  document.getElementById('cal-title').innerHTML = `
+    <span>${formattedMonth}</span>
+    <span style="font-size: 18px; filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));">${season.titleSuffix}</span>
+  `;
+
+  const badgeEl = document.getElementById('cal-season-badge');
+  if (badgeEl) {
+    badgeEl.innerHTML = `<span>${season.emoji}</span> <span>${lang === "fr" ? season.badgeFr : season.badgeEn}</span>`;
+  }
 
   const filterBox = document.getElementById('cal-filters');
   filterBox.innerHTML = '';
@@ -633,6 +957,7 @@ function renderCalendar() {
     renderListView();
   }
 
+  // Upcoming events are always rendered strictly relative to real-world today
   renderUpcoming();
 }
 
@@ -649,11 +974,18 @@ function renderWeekdays() {
 function renderMonthGrid() {
   const grid = document.getElementById('cal-month-grid');
   grid.innerHTML = '';
-  const firstDay = new Date(calState.currentDate.getFullYear(), calState.currentDate.getMonth(), 1);
-  const startWeekday = firstDay.getDay();
-  const firstCellDate = new Date(firstDay); firstCellDate.setDate(firstCellDate.getDate() - startWeekday);
+  const year = calState.currentDate.getFullYear();
+  const month = calState.currentDate.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const startWeekday = firstDay.getDay(); // 0 is Sunday
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalCells = (startWeekday + daysInMonth > 35) ? 42 : 35;
+  const firstCellDate = new Date(firstDay);
+  firstCellDate.setDate(firstCellDate.getDate() - startWeekday);
 
-  for (let i = 0; i < 35; i++) {
+  const lang = calState.language;
+
+  for (let i = 0; i < totalCells; i++) {
     const cellDate = new Date(firstCellDate); cellDate.setDate(cellDate.getDate() + i);
     const cellISO = isoDateStr(cellDate);
     const isToday = cellISO === isoDateStr(new Date());
@@ -662,7 +994,19 @@ function renderMonthGrid() {
     const cell = document.createElement('div');
     cell.className = `day-cell ${isToday ? 'today' : ''} ${isOtherMonth ? 'other-month' : ''}`;
     cell.dataset.date = cellISO;
-    cell.innerHTML = `<div class="day-number">${cellDate.getDate()}</div>`;
+
+    // Detect French holidays & festive observances
+    const holiday = FRENCH_HOLIDAYS[cellISO] || FRENCH_HOLIDAYS[cellISO.slice(5)];
+    const holidayHTML = holiday 
+      ? `<span class="day-holiday-pill" title="${lang === 'fr' ? holiday.fr : holiday.en}">${lang === 'fr' ? holiday.fr : holiday.en}</span>` 
+      : '';
+
+    cell.innerHTML = `
+      <div class="day-cell-top">
+        <span class="day-number">${cellDate.getDate()}</span>
+        ${holidayHTML}
+      </div>
+    `;
 
     cell.addEventListener('dragover', (e) => {
       if (isCalUnlocked) { e.preventDefault(); cell.classList.add('drag-over'); }
@@ -709,13 +1053,15 @@ function renderMonthGrid() {
   }
 }
 
-/* Filtrage strict des événements actuels et futurs */
+/* Strictly filters current and future events based on the real date of today */
 function renderUpcoming() {
   const list = document.getElementById('cal-upcoming-list');
   if (!list) return;
   list.innerHTML = '';
   const lang = calState.language;
   const t = calI18n[lang];
+
+  // Always calculated from actual today (new Date()), regardless of month viewed
   const todayISO = isoDateStr(new Date());
 
   const filtered = calendarEvents
@@ -746,7 +1092,7 @@ function renderUpcoming() {
   });
 }
 
-/* Filtrage strict des événements actuels et futurs dans la vue liste */
+/* Strict upcoming filtering for list view based on real today */
 function renderListView() {
   const list = document.getElementById('cal-list-view');
   list.innerHTML = '';
